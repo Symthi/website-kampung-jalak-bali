@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kampung Jalak Bali - Destinasi Wisata Edukasi di Bali</title>
+    <style>
+        /* Reset dan gaya dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header dan Navigasi */
+        header {
+            background-color: #1a6b3b;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd166;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/random/1600x900/?bali,nature') no-repeat center center/cover;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        .hero-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #ffd166;
+            color: #333;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #ffc145;
+        }
+        
+        /* Section Umum */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: #1a6b3b;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #ffd166;
+        }
+        
+        /* Tentang Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Wisata Section */
+        .wisata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .wisata-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .wisata-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .wisata-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .wisata-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .wisata-card:hover .wisata-image img {
+            transform: scale(1.1);
+        }
+        
+        .wisata-content {
+            padding: 1.5rem;
+        }
+        
+        .wisata-content h3 {
+            margin-bottom: 0.5rem;
+            color: #1a6b3b;
+        }
+        
+        .wisata-content p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        /* Galeri Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Kontak Section */
+        .contact-container {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .contact-info, .contact-form {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: #1a6b3b;
+        }
+        
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item i {
+            margin-right: 10px;
+            color: #1a6b3b;
+        }
+        
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a6b3b;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column {
+            flex: 1;
+            margin-right: 2rem;
+        }
+        
+        .footer-column:last-child {
+            margin-right: 0;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd166;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #ffd166;
+            color: #333;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+        
+        /* Responsif */
+        @media (max-width: 992px) {
+            .about-content, .contact-container {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-wrap: wrap;
+            }
+            
+            .footer-column {
+                flex-basis: 45%;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a6b3b;
+                flex-direction: column;
+                padding: 1rem 0;
+                text-align: center;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-column {
+                flex-basis: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                height: 60vh;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="https://via.placeholder.com/50x50/1a6b3b/ffffff?text=J" alt="Logo Kampung Jalak Bali">
+                <h1>Kampung Jalak Bali</h1>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#tentang">Tentang</a></li>
+                    <li><a href="#wisata">Wisata</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Selamat Datang di Kampung Jalak Bali</h2>
+            <p>Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.</p>
+            <a href="#tentang" class="btn">Jelajahi Sekarang</a>
+        </div>
+    </section>
+
+    <!-- Tentang Section -->
+    <section id="tentang" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tentang Kampung Jalak Bali</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Kampung Jalak Bali adalah sebuah destinasi wisata edukasi yang terletak di Bali, Indonesia. Tempat ini berfokus pada konservasi dan pelestarian burung Jalak Bali (Leucopsar rothschildi), spesies endemik yang terancam punah.</p>
+                    <p>Didirikan dengan tujuan untuk meningkatkan kesadaran masyarakat tentang pentingnya pelestarian alam, kampung ini menawarkan berbagai kegiatan edukatif dan wisata yang menarik bagi pengunjung dari segala usia.</p>
+                    <p>Selain fokus pada konservasi burung Jalak Bali, kampung ini juga mempromosikan budaya lokal Bali melalui berbagai aktivitas tradisional yang dapat diikuti oleh pengunjung.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,village" alt="Kampung Jalak Bali">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wisata Section -->
+    <section id="wisata" class="wisata">
+        <div class="container">
+            <div class="section-title">
+                <h2>Wisata Edukasi</h2>
+            </div>
+            <div class="wisata-grid">
+                <div class="wisata-card">
+                    <div class="wisata-image">
+                        <img src="https://source.unsplash.com/random/600x400/?bird" alt="Konservasi Jalak Bali">
+                    </div>
+                    <div class="wisata-content">
+                        <h3>Konservasi Jalak Bali</h3>
+                        <p>Pelajari tentang upaya konservasi burung Jalak Bali yang dilakukan di kampung ini, termasuk program penangkaran dan pelepasliaran.</p>
+                        <a href="#" class="btn">Selengkapnya</a>
+                    </div>
+                </div>
+                <div class="wisata-card">
+                    <div class="wisata-image">
+                        <img src="https://source.unsplash.com/random/600x400/?bali,culture" alt="Budaya Lokal">
+                    </div>
+                    <div class="wisata-content">
+                        <h3>Budaya Lokal</h3>
+                        <p>Jelajahi kekayaan budaya Bali melalui berbagai aktivitas tradisional seperti menari, membuat canang, dan belajar bahasa Bali.</p>
+                        <a href="#" class="btn">Selengkapnya</a>
+                    </div>
+                </div>
+                <div class="wisata-card">
+                    <div class="wisata-image">
+                        <img src="https://source.unsplash.com/random/600x400/?nature,walk" alt="Ekowisata">
+                    </div>
+                    <div class="wisata-content">
+                        <h3>Ekowisata</h3>
+                        <p>Nikmati keindahan alam sekitar kampung dengan berjalan-jalan di jalur ekowisata yang telah disediakan.</p>
+                        <a href="#" class="btn">Selengkapnya</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Section -->
+    <section id="galeri" class="galeri">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galeri</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,bird" alt="Galeri 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,traditional" alt="Galeri 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,nature" alt="Galeri 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,village" alt="Galeri 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,conservation" alt="Galeri 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/600x400/?bali,education" alt="Galeri 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak Section -->
+    <section id="kontak" class="kontak">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kontak Kami</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i>📍</i>
+                            <p>Jl. Raya Desa, Kecamatan, Kabupaten, Bali, Indonesia</p>
+                        </div>
+                        <div class="contact-item">
+                            <i>📞</i>
+                            <p>+62 361 123 4567</p>
+                        </div>
+                        <div class="contact-item">
+                            <i>✉️</i>
+                            <p>info@kampungjalakbali.com</p>
+                        </div>
+                    </div>
+                    <h3>Jam Operasional</h3>
+                    <p>Senin - Minggu: 08.00 - 17.00 WITA</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="nama">Nama</label>
+                            <input type="text" id="nama" name="nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subjek">Subjek</label>
+                            <input type="text" id="subjek" name="subjek" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pesan">Pesan</label>
+                            <textarea id="pesan" name="pesan" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Kampung Jalak Bali</h3>
+                    <p>Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Menu Cepat</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#tentang">Tentang</a></li>
+                        <li><a href="#wisata">Wisata</a></li>
+                        <li><a href="#galeri">Galeri</a></li>
+                        <li><a href="#kontak">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ikuti Kami</h3>
+                    <div class="social-links">
+                        <a href="#" title="Facebook">f</a>
+                        <a href="#" title="Instagram">ig</a>
+                        <a href="#" title="YouTube">yt</a>
+                        <a href="#" title="Twitter">t</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Kampung Jalak Bali. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+        
+        // Smooth scroll untuk navigasi
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Tutup menu mobile setelah klik
+                if (window.innerWidth <= 768) {
+                    document.querySelector('nav ul').classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
