@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php';
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | Kampung Jalak Bali</title>
+  <title><?php echo t('login_title'); ?> | Kampung Jalak Bali</title>
   </head>
   <body>
     <header>
@@ -58,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div><h1>Kampung Jalak Bali</h1></div>
         <nav>
           <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php#wisata">Wisata</a></li>
-            <li><a href="login.php">Login</a></li>
+            <li><a href="index.php"><?php echo t('home'); ?></a></li>
+            <li><a href="index.php#wisata"><?php echo t('tourism'); ?></a></li>
+            <li><a href="login.php"><?php echo t('login'); ?></a></li>
           </ul>
         </nav>
       </div>
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <section>
       <div>
         <div>
-          <h2>Masuk ke Akun Anda</h2>
+          <h2><?php echo t('login_title'); ?></h2>
 
           <?php if (!empty($error)): ?>
           <div style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px">
@@ -79,15 +80,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
           <form method="POST" action="">
             <div>
-              <label for="email">Email</label>
+              <label for="email"><?php echo t('email_address'); ?></label>
               <input type="email" id="email" name="email" placeholder="email@example.com" required />
             </div>
             <div>
-              <label for="password">Kata Sandi</label>
+              <label for="password"><?php echo t('password'); ?></label>
               <input type="password" id="password" name="password" placeholder="••••••" required />
             </div>
-            <button type="submit">Login</button>
-            <p>Belum punya akun? <a href="register.php">Daftar</a></p>
+            <button type="submit"><?php echo t('login'); ?></button>
+            <p><?php echo t('no_account'); ?> <a href="register.php"><?php echo t('register_here'); ?></a></p>
           </form>
         </div>
       </div>

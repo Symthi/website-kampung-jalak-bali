@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php';
 
 // Fungsi cek login
 function isLoggedIn() {

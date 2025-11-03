@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php';
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -95,8 +96,16 @@ if (isset($_GET['hapus'])) {
     exit();
 }
 
-// Ambil data user
-$query = "SELECT * FROM user ORDER BY tanggal_daftar DESC";
+// Ambil data user dengan pagination
+$per_page = 5;
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$offset = ($page - 1) * $per_page;
+
+// Hitung total
+$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM user");
+$total_user_all = mysqli_fetch_assoc($total_q)['cnt'];
+
+$query = "SELECT * FROM user ORDER BY tanggal_daftar DESC LIMIT $per_page OFFSET $offset";
 $result = mysqli_query($koneksi, $query);
 $user_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -113,7 +122,7 @@ if (isset($_GET['edit'])) {
 }
 
 // Hitung statistik
-$total_user = count($user_data);
+$total_user = $total_user_all;
 $total_admin = 0;
 $total_regular = 0;
 
@@ -127,7 +136,7 @@ foreach ($user_data as $user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola User | Kampung Jalak Bali</title>
+    <title><?php echo t('manage_users'); ?> | Kampung Jalak Bali</title>
     <style>
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
@@ -151,6 +160,9 @@ foreach ($user_data as $user) {
         .stat-card h3 { margin: 0 0 10px 0; font-size: 14px; color: #666; }
         .stat-card .number { font-size: 32px; font-weight: bold; margin: 0; }
         .current-user { background-color: #e7f3ff !important; }
+        .pagination { display: flex; gap: 8px; margin-top: 15px; }
+        .pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
+        .pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
     </style>
 </head>
 <body>
@@ -161,7 +173,7 @@ foreach ($user_data as $user) {
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="crud_user.php">Kelola User</a></li>
+                    <li><a href="crud_user.php"><?php echo t('manage_users'); ?></a></li>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
             </nav>
@@ -170,7 +182,7 @@ foreach ($user_data as $user) {
 
     <section>
         <div>
-            <h2>Kelola Data User</h2>
+            <h2><?php echo t('manage_users'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -202,7 +214,7 @@ foreach ($user_data as $user) {
 
             <!-- Form Tambah/Edit User -->
             <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? 'Edit' : 'Tambah'; ?> User</h3>
+                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('user'); ?></h3>
                 <form method="POST" action="">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_user']; ?>">
@@ -233,18 +245,18 @@ foreach ($user_data as $user) {
                     </div>
                     
                     <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
-                        <?php echo $edit_data ? 'Update' : 'Tambah'; ?> User
+                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('user'); ?>
                     </button>
                     
                     <?php if ($edit_data): ?>
-                        <a href="crud_user.php" class="btn btn-warning">Batal</a>
+                        <a href="crud_user.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
                     <?php endif; ?>
                 </form>
             </div>
 
             <!-- Daftar User -->
             <div>
-                <h3>Daftar User</h3>
+                <h3><?php echo t('user'); ?> <?php echo t('gallery_list'); /* reuse gallery_list to mean list */ ?></h3>
                 <table>
                     <thead>
                         <tr>
@@ -259,7 +271,7 @@ foreach ($user_data as $user) {
                     <tbody>
                         <?php foreach ($user_data as $index => $user): ?>
                         <tr class="<?php echo $user['id_user'] == $_SESSION['user_id'] ? 'current-user' : ''; ?>">
-                            <td><?php echo $index + 1; ?></td>
+                            <td><?php echo $offset + $index + 1; ?></td>
                             <td>
                                 <?php echo $user['nama']; ?>
                                 <?php if ($user['id_user'] == $_SESSION['user_id']): ?>
@@ -290,6 +302,19 @@ foreach ($user_data as $user) {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php 
+                $total_pages = (int)ceil($total_user_all / $per_page);
+                if ($total_pages > 1): ?>
+                <div class="pagination">
+                    <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+                        <?php if ($p == $page): ?>
+                            <span class="active"><?php echo $p; ?></span>
+                        <?php else: ?>
+                            <a href="?page=<?php echo $p; ?>"?><?php echo $p; ?></a>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

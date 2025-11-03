@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php';
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -36,7 +37,7 @@ $user_role = $_SESSION['role'];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard | Kampung Jalak Bali</title>
+  <title><?php echo t('dashboard'); ?> | Kampung Jalak Bali</title>
   </head>
   <body>
     <header>
@@ -44,11 +45,11 @@ $user_role = $_SESSION['role'];
         <div><h1>Kampung Jalak Bali</h1></div>
         <nav>
           <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php#wisata">Wisata</a></li>
-            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="index.php"><?php echo t('home'); ?></a></li>
+            <li><a href="index.php#wisata"><?php echo t('tourism'); ?></a></li>
+            <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
             <li>
-              <a href="logout.php">Logout (<?php echo $user_nama; ?>)</a>
+              <a href="logout.php"><?php echo t('logout'); ?> (<?php echo $user_nama; ?>)</a>
             </li>
           </ul>
         </nav>
@@ -58,40 +59,37 @@ $user_role = $_SESSION['role'];
     <section>
       <div>
         <h2>
-          Dashboard
-          <?php echo isAdmin() ? 'Admin' : 'User'; ?>
+          <?php echo isAdmin() ? t('admin_dashboard') : t('user_dashboard'); ?>
         </h2>
 
         <div>
           <h3>
-            Selamat datang,
-            <?php echo $user_nama; ?>!
+            <?php echo t('welcome'); ?>, <?php echo $user_nama; ?>!
           </h3>
           <p>
-            Anda login sebagai:
-            <?php echo $user_role; ?>
+            <?php echo t('role'); ?>: <?php echo $user_role; ?>
           </p>
         </div>
 
         <!-- Statistik -->
         <div>
-          <h3>Statistik</h3>
+          <h3><?php echo t('statistics'); ?></h3>
           <div>
             <div>
-              <h4>Total Wisata</h4>
+              <h4><?php echo t('total_tourism'); ?></h4>
               <p><?php echo $total_wisata; ?></p>
             </div>
             <div>
-              <h4>Total Komentar</h4>
+              <h4><?php echo t('total_comments'); ?></h4>
               <p><?php echo $total_komentar; ?></p>
             </div>
             <div>
-              <h4>Total Pesan</h4>
+              <h4><?php echo t('total_messages'); ?></h4>
               <p><?php echo $total_pesan; ?></p>
             </div>
             <?php if (isAdmin()): ?>
             <div>
-              <h4>Total User</h4>
+              <h4><?php echo t('total_users'); ?></h4>
               <p><?php echo $total_user; ?></p>
             </div>
             <?php endif; ?>
@@ -101,24 +99,26 @@ $user_role = $_SESSION['role'];
         <!-- Menu Admin -->
         <?php if (isAdmin()): ?>
         <div>
-          <h3>Menu Admin</h3>
+          <h3><?php echo t('admin_menu'); ?></h3>
           <ul>
-            <li><a href="crud_wisata.php">Kelola Wisata</a></li>
-            <li><a href="crud_komentar.php">Kelola Komentar</a></li>
-            <li><a href="crud_pesan.php">Kelola Pesan</a></li>
-            <li><a href="crud_galeri.php">Kelola Galeri</a></li>
-            <li><a href="crud_user.php">Kelola User</a></li>
+            <li><a href="crud_wisata.php"><?php echo t('manage_tourism'); ?></a></li>
+            <li><a href="crud_komentar.php"><?php echo t('manage_comments'); ?></a></li>
+            <li><a href="crud_pesan.php"><?php echo t('manage_messages'); ?></a></li>
+            <li><a href="crud_galeri.php"><?php echo t('manage_gallery'); ?></a></li>
+            <li><a href="crud_user.php"><?php echo t('manage_users'); ?></a></li>
+            <li><a href="crud_informasi.php"><?php echo t('manage_information'); ?></a></li>
+            <li><a href="crud_produk.php"><?php echo t('manage_products'); ?></a></li>
           </ul>
         </div>
         <?php endif; ?>
 
         <!-- Menu User -->
         <div>
-          <h3>Menu</h3>
+          <h3><?php echo t('user_menu'); ?></h3>
           <ul>
-            <li><a href="detail_wisata.php?id=1">Lihat Konservasi Jalak Bali</a></li>
-            <li><a href="detail_wisata.php?id=2">Lihat Budaya Lokal</a></li>
-            <li><a href="detail_wisata.php?id=3">Lihat Ekowisata</a></li>
+            <li><a href="detail_wisata.php?id=1"><?php echo t('view_details'); ?> - Konservasi Jalak Bali</a></li>
+            <li><a href="detail_wisata.php?id=2"><?php echo t('view_details'); ?> - Budaya Lokal</a></li>
+            <li><a href="detail_wisata.php?id=3"><?php echo t('view_details'); ?> - Ekowisata</a></li>
           </ul>
         </div>
       </div>

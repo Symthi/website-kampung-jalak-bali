@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php';
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -42,8 +43,13 @@ if (isset($_GET['baca'])) {
     exit();
 }
 
-// Ambil data pesan
-$query = "SELECT * FROM pesan ORDER BY tanggal DESC";
+// Ambil data pesan dengan pagination
+$per_page = 5;
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$offset = ($page - 1) * $per_page;
+$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM pesan");
+$total_pesan_all = mysqli_fetch_assoc($total_q)['cnt'];
+$query = "SELECT * FROM pesan ORDER BY tanggal DESC LIMIT $per_page OFFSET $offset";
 $result = mysqli_query($koneksi, $query);
 $pesan_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -62,23 +68,28 @@ foreach ($pesan_data as $pesan) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Pesan | Kampung Jalak Bali</title>
+    <title><?php echo t('manage_messages'); ?> | Kampung Jalak Bali</title>
 </head>
+<style>
+.pagination { display: flex; gap: 8px; margin-top: 15px; }
+.pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
+.pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
+</style>
 <body>
     <header>
         <h1>Kampung Jalak Bali</h1>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="crud_pesan.php">Kelola Pesan</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="index.php"><?php echo t('home'); ?></a></li>
+                <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
+                <li><a href="crud_pesan.php"><?php echo t('manage_messages'); ?></a></li>
+                <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
             </ul>
         </nav>
     </header>
 
     <section>
-        <h2>Kelola Pesan Pengunjung</h2>
+    <h2><?php echo t('manage_messages'); ?></h2>
 
         <?php if (isset($_SESSION['success_message'])): ?>
             <div style="background: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border: 1px solid #c3e6cb;">
@@ -94,18 +105,18 @@ foreach ($pesan_data as $pesan) {
 
         <!-- Statistik -->
         <div>
-            <h3>Statistik Pesan</h3>
+            <h3><?php echo t('statistics'); ?></h3>
             <div>
                 <div>
-                    <h4>Total Pesan</h4>
-                    <p><?php echo $total_pesan; ?></p>
+                    <h4><?php echo t('total_messages'); ?></h4>
+                    <p><?php echo $total_pesan_all; ?></p>
                 </div>
                 <div>
-                    <h4>Belum Dibaca</h4>
+                    <h4><?php echo t('unread'); ?></h4>
                     <p><?php echo $belum_dibaca; ?></p>
                 </div>
                 <div>
-                    <h4>Sudah Dibalas</h4>
+                    <h4><?php echo t('replied'); ?></h4>
                     <p><?php echo $sudah_dibalas; ?></p>
                 </div>
             </div>
@@ -113,10 +124,10 @@ foreach ($pesan_data as $pesan) {
 
         <!-- Daftar Pesan -->
         <div>
-            <h3>Daftar Pesan</h3>
+            <h3><?php echo t('contact_info'); ?></h3>
 
             <?php if (empty($pesan_data)): ?>
-                <p>Belum ada pesan.</p>
+                <p><?php echo t('no_data'); ?></p>
             <?php else: ?>
                 <table border="1">
                     <thead>
@@ -133,7 +144,7 @@ foreach ($pesan_data as $pesan) {
                     <tbody>
                         <?php foreach ($pesan_data as $index => $pesan): ?>
                         <tr>
-                            <td><?php echo $index + 1; ?></td>
+                            <td><?php echo $offset + $index + 1; ?></td>
                             <td>
                                 <strong><?php echo $pesan['nama']; ?></strong><br>
                                 <small><?php echo $pesan['email']; ?></small>
@@ -150,12 +161,25 @@ foreach ($pesan_data as $pesan) {
                             </td>
                             <td>
                                 <a href="crud_pesan.php?baca=<?php echo $pesan['id_pesan']; ?>">Baca</a>
-                                <a href="crud_pesan.php?hapus=<?php echo $pesan['id_pesan']; ?>" onclick="return confirm('Yakin hapus pesan ini?')">Hapus</a>
+                                <a href="crud_pesan.php?hapus=<?php echo $pesan['id_pesan']; ?>" onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')"><?php echo t('delete'); ?></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php 
+                $total_pages = (int)ceil($total_pesan_all / $per_page);
+                if ($total_pages > 1): ?>
+                <div class="pagination">
+                    <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+                        <?php if ($p == $page): ?>
+                            <span class="active"><?php echo $p; ?></span>
+                        <?php else: ?>
+                            <a href="?page=<?php echo $p; ?>"><?php echo $p; ?></a>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </section>

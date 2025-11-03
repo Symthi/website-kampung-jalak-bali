@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php';
+
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -30,12 +32,20 @@ if (isset($_GET['hapus'])) {
     exit();
 }
 
-// Ambil data komentar dengan join ke user dan wisata
+// Ambil data komentar dengan join ke user dan wisata + pagination
+$per_page = 5;
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$offset = ($page - 1) * $per_page;
+
+$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM komentar");
+$total_komentar_all = mysqli_fetch_assoc($total_q)['cnt'];
+
 $query = "SELECT k.*, u.nama as nama_user, u.email, w.judul as judul_wisata 
           FROM komentar k 
           JOIN user u ON k.id_user = u.id_user 
           JOIN wisata w ON k.id_wisata = w.id_wisata 
-          ORDER BY k.tanggal DESC";
+          ORDER BY k.tanggal DESC
+          LIMIT $per_page OFFSET $offset";
 $result = mysqli_query($koneksi, $query);
 $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -44,7 +54,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kelola Komentar | Kampung Jalak Bali</title>
+  <title><?php echo t('manage_comments'); ?> | Kampung Jalak Bali</title>
     <style>
       table {
         width: 100%;
@@ -89,6 +99,11 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         border: 1px solid #f5c6cb;
       }
     </style>
+    <style>
+      .pagination { display: flex; gap: 8px; margin-top: 15px; }
+      .pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
+      .pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
+    </style>
   </head>
   <body>
     <header>
@@ -96,10 +111,10 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div><h1>Kampung Jalak Bali</h1></div>
         <nav>
           <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="crud_komentar.php">Kelola Komentar</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="index.php"><?php echo t('home'); ?></a></li>
+            <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
+            <li><a href="crud_komentar.php"><?php echo t('manage_comments'); ?></a></li>
+            <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
           </ul>
         </nav>
       </div>
@@ -107,7 +122,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <section>
       <div>
-        <h2>Kelola Komentar Pengunjung</h2>
+  <h2><?php echo t('manage_comments'); ?></h2>
 
         <?php if (isset($_SESSION['success_message'])): ?>
         <div class="alert alert-success">
@@ -123,35 +138,35 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         <!-- Statistik -->
         <div>
-          <h3>Statistik Komentar</h3>
+          <h3><?php echo t('comment_statistics'); ?></h3>
           <p>
-            Total Komentar: <strong><?php echo count($komentar_data); ?></strong>
+            <?php echo t('total_comments'); ?>: <strong><?php echo $total_komentar_all; ?></strong>
           </p>
         </div>
 
         <!-- Daftar Komentar -->
         <div>
-          <h3>Daftar Semua Komentar</h3>
+          <h3><?php echo t('comments'); ?></h3>
 
           <?php if (empty($komentar_data)): ?>
-          <p>Belum ada komentar.</p>
+            <p><?php echo t('no_comments'); ?></p>
           <?php else: ?>
           <table>
             <thead>
               <tr>
-                <th>No</th>
-                <th>User</th>
-                <th>Wisata</th>
-                <th>Komentar</th>
-                <th>Tanggal</th>
-                <th>Aksi</th>
+                <th><?php echo t('no'); ?></th>
+                <th><?php echo t('user'); ?></th>
+                <th><?php echo t('tourism'); ?></th>
+                <th><?php echo t('comments'); ?></th>
+                <th><?php echo t('date'); ?></th>
+                <th><?php echo t('actions'); ?></th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($komentar_data as $index =>
               $komentar): ?>
               <tr>
-                <td><?php echo $index + 1; ?></td>
+                <td><?php echo $offset + $index + 1; ?></td>
                 <td>
                   <strong><?php echo $komentar['nama_user']; ?></strong><br />
                   <small><?php echo $komentar['email']; ?></small>
@@ -160,13 +175,26 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <td><?php echo $komentar['isi']; ?></td>
                 <td><?php echo date('d M Y H:i', strtotime($komentar['tanggal'])); ?></td>
                 <td>
-                  <a href="crud_komentar.php?hapus=<?php echo $komentar['id_komentar']; ?>" class="btn btn-danger" onclick="return confirm('Yakin hapus komentar ini?')"> Hapus </a>
-                  <a href="detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" class="btn"> Lihat Wisata </a>
+                  <a href="crud_komentar.php?hapus=<?php echo $komentar['id_komentar']; ?>" class="btn btn-danger" onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')"> <?php echo t('delete'); ?> </a>
+                  <a href="detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" class="btn"> <?php echo t('view_tour'); ?> </a>
                 </td>
               </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
+          <?php endif; ?>
+          <?php 
+          $total_pages = (int)ceil($total_komentar_all / $per_page);
+          if ($total_pages > 1): ?>
+          <div class="pagination">
+            <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+              <?php if ($p == $page): ?>
+                <span class="active"><?php echo $p; ?></span>
+              <?php else: ?>
+                <a href="?page=<?php echo $p; ?>"><?php echo $p; ?></a>
+              <?php endif; ?>
+            <?php endfor; ?>
+          </div>
           <?php endif; ?>
         </div>
       </div>
@@ -174,7 +202,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <footer>
       <div>
-        <p>&copy; 2025 Kampung Jalak Bali | Kelola Komentar</p>
+        <p>&copy; 2025 Kampung Jalak Bali | <?php echo t('manage_comments'); ?></p>
       </div>
     </footer>
   </body>

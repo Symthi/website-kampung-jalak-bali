@@ -11,7 +11,7 @@ if (!$koneksi) {
 }
 
 // Buat folder uploads jika belum ada
-$folders = ['uploads', 'uploads/wisata', 'uploads/galeri'];
+$folders = ['uploads', 'uploads/wisata', 'uploads/galeri', 'uploads/produk', 'uploads/informasi'];
 foreach ($folders as $folder) {
     if (!is_dir($folder)) {
         mkdir($folder, 0755, true);

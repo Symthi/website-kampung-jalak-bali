@@ -17,21 +17,22 @@ if (!isAdmin()) {
 // CRUD Operations
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['tambah'])) {
-        // Tambah wisata
-        $judul = $_POST['judul'];
+        // Tambah produk
+        $nama = $_POST['nama'];
         $deskripsi = $_POST['deskripsi'];
-        $durasi = $_POST['durasi'];
+        $harga = $_POST['harga'];
+        $stok = $_POST['stok'];
         $gambar = '';
         
         // Handle file upload
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-            $target_dir = "uploads/wisata/";
+            $target_dir = "uploads/produk/";
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
             
             $file_extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '_wisata.' . $file_extension;
+            $filename = uniqid() . '_produk.' . $file_extension;
             $target_file = $target_dir . $filename;
             
             // Validasi file
@@ -54,35 +55,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($_SESSION['error_message'])) {
-            $query = "INSERT INTO wisata (judul, deskripsi, gambar, durasi) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO produk (nama, deskripsi, harga, stok, gambar) VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ssss", $judul, $deskripsi, $gambar, $durasi);
-
+            mysqli_stmt_bind_param($stmt, "ssdis", $nama, $deskripsi, $harga, $stok, $gambar);
+            
             if (mysqli_stmt_execute($stmt)) {
-                $_SESSION['success_message'] = "Wisata berhasil ditambahkan!";
+                $_SESSION['success_message'] = "Produk berhasil ditambahkan!";
             } else {
-                $_SESSION['error_message'] = "Gagal menambahkan wisata!";
+                $_SESSION['error_message'] = "Gagal menambahkan produk!";
             }
         }
         
     } elseif (isset($_POST['edit'])) {
-        // Edit wisata
+        // Edit produk
         $id = $_POST['id'];
-        $judul = $_POST['judul'];
+        $nama = $_POST['nama'];
         $deskripsi = $_POST['deskripsi'];
-        $durasi = $_POST['durasi'];
-        $biaya = $_POST['biaya'];
-        $gambar = $_POST['gambar_lama'];
+        $harga = $_POST['harga'];
+        $stok = $_POST['stok'];
+        $gambar_lama = $_POST['gambar_lama'];
         
         // Handle file upload jika ada gambar baru
+        $gambar = $gambar_lama;
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-            $target_dir = "uploads/wisata/";
+            $target_dir = "uploads/produk/";
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
             
             $file_extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '_wisata.' . $file_extension;
+            $filename = uniqid() . '_produk.' . $file_extension;
             $target_file = $target_dir . $filename;
             
             // Validasi file
@@ -93,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($_FILES['gambar']['size'] <= $max_size) {
                     if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
                         // Hapus gambar lama jika ada
-                        if (!empty($gambar) && file_exists($gambar)) {
-                            unlink($gambar);
+                        if (!empty($gambar_lama) && file_exists($gambar_lama)) {
+                            unlink($gambar_lama);
                         }
                         $gambar = $target_file;
                     } else {
@@ -109,66 +111,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($_SESSION['error_message'])) {
-            $query = "UPDATE wisata SET judul=?, deskripsi=?, gambar=?, durasi=? WHERE id_wisata=?";
+            $query = "UPDATE produk SET nama=?, deskripsi=?, harga=?, stok=?, gambar=? WHERE id_produk=?";
             $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ssssi", $judul, $deskripsi, $gambar, $durasi, $id);
+            mysqli_stmt_bind_param($stmt, "ssdisi", $nama, $deskripsi, $harga, $stok, $gambar, $id);
             
             if (mysqli_stmt_execute($stmt)) {
-                $_SESSION['success_message'] = "Wisata berhasil diupdate!";
+                $_SESSION['success_message'] = "Produk berhasil diupdate!";
             } else {
-                $_SESSION['error_message'] = "Gagal mengupdate wisata!";
+                $_SESSION['error_message'] = "Gagal mengupdate produk!";
             }
         }
     }
 }
 
-// Hapus wisata
+// Hapus produk
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     
     // Ambil data gambar untuk dihapus dari server
-    $query_select = "SELECT gambar FROM wisata WHERE id_wisata = ?";
+    $query_select = "SELECT gambar FROM produk WHERE id_produk = ?";
     $stmt_select = mysqli_prepare($koneksi, $query_select);
     mysqli_stmt_bind_param($stmt_select, "i", $id);
     mysqli_stmt_execute($stmt_select);
     $result = mysqli_stmt_get_result($stmt_select);
-    $wisata = mysqli_fetch_assoc($result);
+    $produk = mysqli_fetch_assoc($result);
     
     // Hapus file gambar dari server
-    if ($wisata['gambar'] && file_exists($wisata['gambar'])) {
-        unlink($wisata['gambar']);
+    if ($produk['gambar'] && file_exists($produk['gambar'])) {
+        unlink($produk['gambar']);
     }
     
     // Hapus dari database
-    $query = "DELETE FROM wisata WHERE id_wisata=?";
+    $query = "DELETE FROM produk WHERE id_produk=?";
     $stmt = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['success_message'] = "Wisata berhasil dihapus!";
+        $_SESSION['success_message'] = "Produk berhasil dihapus!";
     } else {
-        $_SESSION['error_message'] = "Gagal menghapus wisata!";
+        $_SESSION['error_message'] = "Gagal menghapus produk!";
     }
     
-    header("Location: crud_wisata.php");
+    header("Location: crud_produk.php");
     exit();
 }
 
-// Ambil data wisata dengan pagination
+// Ambil data produk dengan pagination
 $per_page = 5;
 $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 $offset = ($page - 1) * $per_page;
-$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM wisata");
-$total_wisata_all = mysqli_fetch_assoc($total_q)['cnt'];
-$query = "SELECT * FROM wisata ORDER BY tanggal_ditambahkan DESC LIMIT $per_page OFFSET $offset";
+$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM produk");
+$total_produk_all = mysqli_fetch_assoc($total_q)['cnt'];
+$query = "SELECT * FROM produk ORDER BY tanggal_ditambahkan DESC LIMIT $per_page OFFSET $offset";
 $result = mysqli_query($koneksi, $query);
-$wisata_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$produk_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // Ambil data untuk edit
 $edit_data = null;
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $query = "SELECT * FROM wisata WHERE id_wisata=?";
+    $query = "SELECT * FROM produk WHERE id_produk=?";
     $stmt = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
@@ -181,7 +183,7 @@ if (isset($_GET['edit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_tourism'); ?> | Kampung Jalak Bali</title>
+    <title><?php echo t('manage_products'); ?> | Kampung Jalak Bali</title>
     <style>
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
@@ -210,10 +212,10 @@ if (isset($_GET['edit'])) {
             <div><h1>Kampung Jalak Bali</h1></div>
             <nav>
                 <ul>
-                    <li><a href="index.php"><?php echo t('home'); ?></a></li>
-                    <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
-                    <li><a href="crud_wisata.php"><?php echo t('manage_tourism'); ?></a></li>
-                    <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="dashboard.php">Dashboard</a></li>
+                    <li><a href="crud_produk.php"><?php echo t('manage_products'); ?></a></li>
+                    <li><a href="logout.php">Logout</a></li>
                 </ul>
             </nav>
         </div>
@@ -221,7 +223,7 @@ if (isset($_GET['edit'])) {
 
     <section>
         <div>
-            <h2><?php echo t('manage_tourism'); ?></h2>
+            <h2><?php echo t('manage_products'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -235,27 +237,37 @@ if (isset($_GET['edit'])) {
                 </div>
             <?php endif; ?>
 
-            <!-- Form Tambah/Edit Wisata -->
+            <!-- Form Tambah/Edit Produk -->
             <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('tourism'); ?></h3>
+                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('products'); ?></h3>
                 <form method="POST" action="" enctype="multipart/form-data">
                     <?php if ($edit_data): ?>
-                        <input type="hidden" name="id" value="<?php echo $edit_data['id_wisata']; ?>">
+                        <input type="hidden" name="id" value="<?php echo $edit_data['id_produk']; ?>">
                         <input type="hidden" name="gambar_lama" value="<?php echo $edit_data['gambar']; ?>">
                     <?php endif; ?>
                     
                     <div class="form-group">
-                        <label><?php echo t('title'); ?>:</label>
-                        <input type="text" name="judul" value="<?php echo $edit_data['judul'] ?? ''; ?>" required>
+                        <label>Nama Produk:</label>
+                        <input type="text" name="nama" value="<?php echo $edit_data['nama'] ?? ''; ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label><?php echo t('description_short'); ?>:</label>
+                        <label>Deskripsi:</label>
                         <textarea name="deskripsi" rows="5" required><?php echo $edit_data['deskripsi'] ?? ''; ?></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label><?php echo t('upload_image'); ?>:</label>
+                        <label>Harga (Rp):</label>
+                        <input type="number" name="harga" value="<?php echo $edit_data['harga'] ?? ''; ?>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Stok:</label>
+                        <input type="number" name="stok" value="<?php echo $edit_data['stok'] ?? ''; ?>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Gambar:</label>
                         <input type="file" name="gambar" accept="image/*" <?php echo !$edit_data ? 'required' : ''; ?>>
                         <small>Format: JPG, JPEG, PNG, GIF (Max: 2MB)</small>
                         
@@ -263,61 +275,58 @@ if (isset($_GET['edit'])) {
                             <div>
                                 <img src="<?php echo $edit_data['gambar']; ?>" class="gambar-preview" 
                                      onerror="this.style.display='none'">
-                                <p><?php echo t('upload_image'); ?> saat ini</p>
+                                <p>Gambar saat ini</p>
                             </div>
                         <?php endif; ?>
                     </div>
                     
-                    <div class="form-group">
-                        <label><?php echo t('duration'); ?>:</label>
-                        <input type="text" name="durasi" value="<?php echo $edit_data['durasi'] ?? ''; ?>" required>
-                    </div>
-                    
                     <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
-                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('tourism'); ?>
+                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('products'); ?>
                     </button>
                     
                     <?php if ($edit_data): ?>
-                        <a href="crud_wisata.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
+                        <a href="crud_produk.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
                     <?php endif; ?>
                 </form>
             </div>
 
-            <!-- Daftar Wisata -->
+            <!-- Daftar Produk -->
             <div>
-                <h3><?php echo t('tourism_title'); ?> / <?php echo t('gallery_list'); ?></h3>
+                <h3><?php echo t('products_title'); ?></h3>
                 <table>
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Gambar</th>
-                            <th>Judul</th>
-                            <th>Durasi</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
                             <th>Tanggal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($wisata_data as $index => $wisata): ?>
+                        <?php foreach ($produk_data as $index => $produk): ?>
                         <tr>
                             <td><?php echo $offset + $index + 1; ?></td>
                             <td>
-                                <?php if ($wisata['gambar']): ?>
-                                    <img src="<?php echo $wisata['gambar']; ?>" style="max-width: 80px; max-height: 60px; object-fit: cover;" 
-                                         onerror="this.src='https://source.unsplash.com/random/80x60/?bali'">
+                                <?php if ($produk['gambar']): ?>
+                                    <img src="<?php echo $produk['gambar']; ?>" style="max-width: 80px; max-height: 60px; object-fit: cover;" 
+                                         onerror="this.src='https://source.unsplash.com/random/80x60/?merchandise'">
                                 <?php else: ?>
-                                    <img src="https://source.unsplash.com/random/80x60/?bali" style="max-width: 80px; max-height: 60px; object-fit: cover;">
+                                    <img src="https://source.unsplash.com/random/80x60/?merchandise" style="max-width: 80px; max-height: 60px; object-fit: cover;">
                                 <?php endif; ?>
                             </td>
-                            <td><?php echo $wisata['judul']; ?></td>
-                            <td><?php echo $wisata['durasi']; ?></td>
-                            <td><?php echo date('d M Y', strtotime($wisata['tanggal_ditambahkan'])); ?></td>
+                            <td><?php echo $produk['nama']; ?></td>
+                            <td>Rp <?php echo number_format($produk['harga'], 0, ',', '.'); ?></td>
+                            <td><?php echo $produk['stok']; ?></td>
+                            <td><?php echo date('d M Y', strtotime($produk['tanggal_ditambahkan'])); ?></td>
                             <td>
-                                <a href="crud_wisata.php?edit=<?php echo $wisata['id_wisata']; ?>" class="btn btn-primary">Edit</a>
-                                <a href="crud_wisata.php?hapus=<?php echo $wisata['id_wisata']; ?>" 
+                                <a href="crud_produk.php?edit=<?php echo $produk['id_produk']; ?>" class="btn btn-primary">Edit</a>
+                                <a href="crud_produk.php?hapus=<?php echo $produk['id_produk']; ?>" 
                                    class="btn btn-danger" 
-                                   onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
-                                    <?php echo t('delete'); ?>
+                                   onclick="return confirm('Yakin hapus produk <?php echo $produk['nama']; ?>?')">
+                                    Hapus
                                 </a>
                             </td>
                         </tr>
@@ -325,7 +334,7 @@ if (isset($_GET['edit'])) {
                     </tbody>
                 </table>
                 <?php 
-                $total_pages = (int)ceil($total_wisata_all / $per_page);
+                $total_pages = (int)ceil($total_produk_all / $per_page);
                 if ($total_pages > 1): ?>
                 <div class="pagination">
                     <?php for ($p = 1; $p <= $total_pages; $p++): ?>
@@ -343,7 +352,7 @@ if (isset($_GET['edit'])) {
 
     <footer>
         <div>
-            <p>&copy; 2025 Kampung Jalak Bali | Kelola Wisata</p>
+            <p>&copy; 2025 Kampung Jalak Bali | Kelola Produk</p>
         </div>
     </footer>
 </body>

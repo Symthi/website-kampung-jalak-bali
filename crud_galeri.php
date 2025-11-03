@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'language.php'; 
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -169,8 +170,13 @@ if (isset($_GET['edit'])) {
     $edit_data = mysqli_fetch_assoc($result);
 }
 
-// Ambil data galeri
-$query = "SELECT * FROM galeri ORDER BY tanggal_upload DESC";
+// Ambil data galeri dengan pagination
+$per_page = 5;
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$offset = ($page - 1) * $per_page;
+$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM galeri");
+$total_galeri_all = mysqli_fetch_assoc($total_q)['cnt'];
+$query = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT $per_page OFFSET $offset";
 $result = mysqli_query($koneksi, $query);
 $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -179,7 +185,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Galeri | Kampung Jalak Bali</title>
+    <title><?php echo t('manage_gallery'); ?> | Kampung Jalak Bali</title>
     <style>
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
@@ -212,10 +218,10 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <div><h1>Kampung Jalak Bali</h1></div>
             <nav>
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="crud_galeri.php">Kelola Galeri</a></li>
-                    <li><a href="logout.php">Logout</a></li>
+                    <li><a href="index.php"><?php echo t('home'); ?></a></li>
+                    <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
+                    <li><a href="crud_galeri.php"><?php echo t('manage_gallery'); ?></a></li>
+                    <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
                 </ul>
             </nav>
         </div>
@@ -223,7 +229,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <section>
         <div>
-            <h2>Kelola Galeri Foto</h2>
+            <h2><?php echo t('manage_gallery'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -240,22 +246,22 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <!-- Statistik -->
             <div class="stats">
                 <div class="stat-card">
-                    <h3>Total Gambar</h3>
+                    <h3><?php echo t('total_images'); ?></h3>
                     <p class="number"><?php echo count($galeri_data); ?></p>
                 </div>
                 <div class="stat-card">
-                    <h3>Folder</h3>
+                    <h3><?php echo t('folder'); ?></h3>
                     <p class="number">uploads/galeri/</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Max Size</h3>
+                    <h3><?php echo t('max_size'); ?></h3>
                     <p class="number">2 MB</p>
                 </div>
             </div>
 
             <!-- Form Upload/Edit Gambar -->
             <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? 'Edit' : 'Tambah'; ?> Gambar Galeri</h3>
+                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('upload_image'); ?> <?php echo t('gallery_list') == 'Gallery List' ? '' : ''; ?></h3>
                 <form method="POST" action="" enctype="multipart/form-data">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_galeri']; ?>">
@@ -263,17 +269,17 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <?php endif; ?>
                     
                     <div class="form-group">
-                        <label>Judul Gambar:</label>
+                        <label><?php echo t('title'); ?>:</label>
                         <input type="text" name="judul" value="<?php echo $edit_data['judul'] ?? ''; ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label>Keterangan:</label>
+                        <label><?php echo t('description_short'); ?>:</label>
                         <textarea name="keterangan" rows="3"><?php echo $edit_data['keterangan'] ?? ''; ?></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label>Pilih Gambar:</label>
+                        <label><?php echo t('upload_image'); ?>:</label>
                         <input type="file" name="gambar" accept="image/*" <?php echo !$edit_data ? 'required' : ''; ?>>
                         <small>Format: JPG, JPEG, PNG, GIF (Max: 2MB)</small>
                         
@@ -287,22 +293,22 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </div>
                     
                     <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
-                        <?php echo $edit_data ? 'Update' : 'Upload'; ?> Gambar
+                        <?php echo $edit_data ? t('update') : t('upload'); ?> <?php echo t('upload_image'); ?>
                     </button>
                     
                     <?php if ($edit_data): ?>
-                        <a href="crud_galeri.php" class="btn btn-warning">Batal</a>
+                        <a href="crud_galeri.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
                     <?php endif; ?>
                 </form>
             </div>
 
             <!-- Grid Galeri -->
             <div>
-                <h3>Daftar Galeri (<?php echo count($galeri_data); ?> Gambar)</h3>
+                <h3><?php echo t('gallery_list'); ?> (<?php echo $total_galeri_all; ?> <?php echo t('upload_image'); ?>)</h3>
                 
                 <?php if (empty($galeri_data)): ?>
                     <p style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px;">
-                        Belum ada gambar di galeri. Silakan upload gambar pertama Anda.
+                        <?php echo t('no_gallery_images'); ?>
                     </p>
                 <?php else: ?>
                 
@@ -317,11 +323,11 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <p><?php echo $galeri['keterangan']; ?></p>
                         <small>Upload: <?php echo date('d M Y', strtotime($galeri['tanggal_upload'])); ?></small>
                         <div style="margin-top: 15px;">
-                            <a href="crud_galeri.php?edit=<?php echo $galeri['id_galeri']; ?>" class="btn btn-primary">Edit</a>
+                            <a href="crud_galeri.php?edit=<?php echo $galeri['id_galeri']; ?>" class="btn btn-primary"><?php echo t('edit'); ?></a>
                             <a href="crud_galeri.php?hapus=<?php echo $galeri['id_galeri']; ?>" 
                                class="btn btn-danger" 
-                               onclick="return confirm('Yakin hapus gambar <?php echo $galeri['judul']; ?>?')">
-                                Hapus
+                               onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
+                                <?php echo t('delete'); ?>
                             </a>
                         </div>
                     </div>
@@ -330,22 +336,22 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 
                 <!-- Tabel View (Alternatif) -->
                 <details style="margin-top: 30px;">
-                    <summary><strong>Table View</strong></summary>
+                    <summary><strong><?php echo t('gallery_list'); ?> - Table View</strong></summary>
                     <table>
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Gambar</th>
-                                <th>Judul</th>
-                                <th>Keterangan</th>
-                                <th>Tanggal Upload</th>
-                                <th>Aksi</th>
+                                <th><?php echo t('upload_image'); ?></th>
+                                <th><?php echo t('title'); ?></th>
+                                <th><?php echo t('description_short'); ?></th>
+                                <th><?php echo t('created_at'); ?></th>
+                                <th><?php echo t('actions'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($galeri_data as $index => $galeri): ?>
                             <tr>
-                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo $offset + $index + 1; ?></td>
                                 <td>
                                     <img src="<?php echo $galeri['gambar']; ?>" 
                                          alt="<?php echo $galeri['judul']; ?>"
@@ -356,11 +362,11 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <td><?php echo $galeri['keterangan']; ?></td>
                                 <td><?php echo date('d M Y H:i', strtotime($galeri['tanggal_upload'])); ?></td>
                                 <td>
-                                    <a href="crud_galeri.php?edit=<?php echo $galeri['id_galeri']; ?>" class="btn btn-primary">Edit</a>
+                                    <a href="crud_galeri.php?edit=<?php echo $galeri['id_galeri']; ?>" class="btn btn-primary"><?php echo t('edit'); ?></a>
                                     <a href="crud_galeri.php?hapus=<?php echo $galeri['id_galeri']; ?>" 
                                        class="btn btn-danger" 
-                                       onclick="return confirm('Yakin hapus gambar <?php echo $galeri['judul']; ?>?')">
-                                        Hapus
+                                       onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
+                                        <?php echo t('delete'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -368,6 +374,19 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </tbody>
                     </table>
                 </details>
+                <?php endif; ?>
+                <?php 
+                $total_pages = (int)ceil($total_galeri_all / $per_page);
+                if ($total_pages > 1): ?>
+                <div class="pagination" style="display:flex; gap:8px; margin-top:15px;">
+                    <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+                        <?php if ($p == $page): ?>
+                            <span class="active" style="padding:6px 10px; border:1px solid #ddd; border-radius:4px; background:#007bff; color:#fff; border-color:#007bff;"><?php echo $p; ?></span>
+                        <?php else: ?>
+                            <a href="?page=<?php echo $p; ?>" style="padding:6px 10px; border:1px solid #ddd; border-radius:4px; text-decoration:none; color:#333;"><?php echo $p; ?></a>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </div>
                 <?php endif; ?>
             </div>
 

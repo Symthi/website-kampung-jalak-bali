@@ -65,5 +65,26 @@ CREATE TABLE pesan (
   tanggal DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Tabel informasi
+CREATE TABLE informasi (
+    id_informasi INT PRIMARY KEY AUTO_INCREMENT,
+    judul VARCHAR(255) NOT NULL,
+    isi TEXT NOT NULL,
+    gambar VARCHAR(500),
+    kategori ENUM('berita', 'artikel', 'pengumuman', 'event') NOT NULL,
+    tanggal_dibuat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabel produk
+CREATE TABLE produk (
+    id_produk INT PRIMARY KEY AUTO_INCREMENT,
+    nama VARCHAR(255) NOT NULL,
+    deskripsi TEXT NOT NULL,
+    harga DECIMAL(10,2) NOT NULL,
+    stok INT NOT NULL,
+    gambar VARCHAR(500),
+    tanggal_ditambahkan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 DROP TABLE wisata;
 DROP TABLE komentar;
