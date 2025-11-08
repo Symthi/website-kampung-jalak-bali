@@ -1,17 +1,5 @@
 <?php
 
-// Set default language
-if (!isset($_SESSION['language'])) {
-    $_SESSION['language'] = 'id'; // Default bahasa Indonesia
-}
-
-// Switch language
-if (isset($_GET['lang'])) {
-    $_SESSION['language'] = ($_GET['lang'] == 'en') ? 'en' : 'id';
-    header("Location: " . $_SERVER['HTTP_REFERER']);
-    exit();
-}
-
 // Language strings
 $lang = array();
 
@@ -435,6 +423,12 @@ $lang['en'] = array(
 // Function to get language string
 function t($key) {
     global $lang;
+    
+    // Set default language if not set
+    if (!isset($_SESSION['language'])) {
+        $_SESSION['language'] = 'id';
+    }
+
     $language = $_SESSION['language'];
     
     if (isset($lang[$language][$key])) {

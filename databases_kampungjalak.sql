@@ -51,6 +51,7 @@ CREATE TABLE galeri (
   keterangan VARCHAR(255),
   tanggal_upload DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+ALTER TABLE galeri MODIFY keterangan TEXT;
 
 -- --------------------------------------------------------
 -- TABEL: pesan (form pesan dari halaman kontak)

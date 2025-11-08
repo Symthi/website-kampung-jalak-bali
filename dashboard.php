@@ -23,11 +23,16 @@ $query_wisata = "SELECT COUNT(*) as total FROM wisata";
 $query_komentar = "SELECT COUNT(*) as total FROM komentar";
 $query_pesan = "SELECT COUNT(*) as total FROM pesan";
 $query_user = "SELECT COUNT(*) as total FROM user";
+$query_produk = "SELECT COUNT(*) as total FROM produk";
+$query_informasi = "SELECT COUNT(*) as total FROM informasi";
+
 
 $total_wisata = mysqli_fetch_assoc(mysqli_query($koneksi, $query_wisata))['total'];
 $total_komentar = mysqli_fetch_assoc(mysqli_query($koneksi, $query_komentar))['total'];
 $total_pesan = mysqli_fetch_assoc(mysqli_query($koneksi, $query_pesan))['total'];
 $total_user = mysqli_fetch_assoc(mysqli_query($koneksi, $query_user))['total'];
+$total_produk = mysqli_fetch_assoc(mysqli_query($koneksi, $query_produk))['total'];
+$total_informasi = mysqli_fetch_assoc(mysqli_query($koneksi, $query_informasi))['total'];
 
 $user_nama = $_SESSION['nama'];
 $user_role = $_SESSION['role'];
@@ -46,8 +51,6 @@ $user_role = $_SESSION['role'];
         <nav>
           <ul>
             <li><a href="index.php"><?php echo t('home'); ?></a></li>
-            <li><a href="index.php#wisata"><?php echo t('tourism'); ?></a></li>
-            <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
             <li>
               <a href="logout.php"><?php echo t('logout'); ?> (<?php echo $user_nama; ?>)</a>
             </li>
@@ -92,6 +95,14 @@ $user_role = $_SESSION['role'];
               <h4><?php echo t('total_users'); ?></h4>
               <p><?php echo $total_user; ?></p>
             </div>
+            <div>
+              <h4><?php echo t('total_products'); ?></h4>
+              <p><?php echo $total_produk; ?></p>
+            </div>
+            <div>
+              <h4><?php echo t('total_information'); ?></h4>
+              <p><?php echo $total_informasi; ?></p>
+            </div>
             <?php endif; ?>
           </div>
         </div>
@@ -111,16 +122,6 @@ $user_role = $_SESSION['role'];
           </ul>
         </div>
         <?php endif; ?>
-
-        <!-- Menu User -->
-        <div>
-          <h3><?php echo t('user_menu'); ?></h3>
-          <ul>
-            <li><a href="detail_wisata.php?id=1"><?php echo t('view_details'); ?> - Konservasi Jalak Bali</a></li>
-            <li><a href="detail_wisata.php?id=2"><?php echo t('view_details'); ?> - Budaya Lokal</a></li>
-            <li><a href="detail_wisata.php?id=3"><?php echo t('view_details'); ?> - Ekowisata</a></li>
-          </ul>
-        </div>
       </div>
     </section>
 

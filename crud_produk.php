@@ -182,8 +182,8 @@ if (isset($_GET['edit'])) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_products'); ?> | Kampung Jalak Bali</title>
+       <title><?php echo t('manage_products'); ?> | Kampung Jalak Bali</title>
+
     <style>
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }

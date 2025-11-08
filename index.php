@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+// Switch language
+if (isset($_GET['lang'])) {
+    $_SESSION['language'] = ($_GET['lang'] == 'en') ? 'en' : 'id';
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit();
+}
+
 include 'koneksi.php';
 include 'language.php'; // Include language file
 
@@ -29,6 +37,7 @@ function isAdmin() {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kampung Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <!-- Language Switcher -->
@@ -41,7 +50,7 @@ function isAdmin() {
     <header>
       <div>
         <div>
-          <img src="uploads/Rancangan Logo.png" alt="Logo Kampung Jalak Bali" width="500" />
+          <img src="uploads/Rancangan Logo.png" alt="Logo Kampung Jalak Bali" width="100px"/>
           <h1>Kampung Jalak Bali</h1>
         </div>
         <nav>
@@ -49,9 +58,9 @@ function isAdmin() {
             <li><a href="#home"><?php echo t('home'); ?></a></li>
             <li><a href="#tentang"><?php echo t('about'); ?></a></li>
             <li><a href="#wisata"><?php echo t('tourism'); ?></a></li>
-            <li><a href="#informasi"><?php echo t('information'); ?></a></li>
+            <li><a href="informasi.php"><?php echo t('information'); ?></a></li>
             <li><a href="#galeri"><?php echo t('gallery'); ?></a></li>
-            <li><a href="#produk"><?php echo t('products'); ?></a></li>
+            <li><a href="produk.php"><?php echo t('products'); ?></a></li>
             <li><a href="#kontak"><?php echo t('contact'); ?></a></li>
             <?php if (isLoggedIn()): ?>
             <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
@@ -108,7 +117,7 @@ function isAdmin() {
                   <div class="vision-card">
                     <div class="card-header">
                       <div class="icon-wrapper">
-                        <i class="icon-target"></i>
+                        <i class="fas fa-bullseye"></i>
                       </div>
                       <h4 class="card-title"><?php echo t('vision'); ?></h4>
                     </div>
@@ -118,7 +127,7 @@ function isAdmin() {
                   <div class="mission-card">
                     <div class="card-header">
                       <div class="icon-wrapper">
-                        <i class="icon-checklist"></i>
+                        <i class="fas fa-tasks"></i>
                       </div>
                       <h4 class="card-title"><?php echo t('mission'); ?></h4>
                     </div>
@@ -215,13 +224,13 @@ function isAdmin() {
               <h3 class="card-title"><?php echo $wisata['judul']; ?></h3>
               <div class="card-meta">
                 <span class="meta-item">
-                  <i class="icon-clock"></i>
+                  <i class="fas fa-clock"></i>
                   <?php echo t('duration'); ?>: <?php echo $wisata['durasi']; ?>
                 </span>
               </div>
               <a href="detail_wisata.php?id=<?php echo $wisata['id_wisata']; ?>" class="card-button">
                 <?php echo t('view_details'); ?>
-                <i class="icon-arrow"></i>
+                <i class="fas fa-arrow-right"></i>
               </a>
             </div>
           </div>
@@ -238,85 +247,6 @@ function isAdmin() {
           <?php endfor; ?>
         </div>
         <?php endif; ?>
-      </div>
-    </section>
-
-    <!-- Informasi Section -->
-    <section id="informasi" class="informasi-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title"><?php echo t('information_title'); ?></h2>
-          <p class="section-subtitle"><?php echo t('information_subtitle'); ?></p>
-        </div>
-
-        <div class="informasi-grid">
-          <?php
-          $query_informasi = "SELECT * FROM informasi ORDER BY tanggal_dibuat DESC LIMIT 3";
-          $result_informasi = mysqli_query($koneksi, $query_informasi);
-          $informasi_data = mysqli_fetch_all($result_informasi, MYSQLI_ASSOC);
-          
-          foreach ($informasi_data as $informasi):
-          ?>
-          <div class="informasi-card">
-            <div class="card-content">
-              <span class="card-category"><?php echo t($informasi['kategori']); ?></span>
-              <h3 class="card-title"><?php echo $informasi['judul']; ?></h3>
-              <p class="card-excerpt"><?php echo substr(strip_tags($informasi['isi']), 0, 150) . '...'; ?></p>
-              <div class="card-meta">
-                <span class="meta-date"><?php echo date('d M Y', strtotime($informasi['tanggal_dibuat'])); ?></span>
-              </div>
-              <a href="informasi.php" class="card-button"><?php echo t('read_more'); ?></a>
-            </div>
-          </div>
-          <?php endforeach; ?>
-        </div>
-
-        <div class="informasi-actions">
-          <a href="informasi.php" class="informasi-button"><?php echo t('see_all'); ?> <?php echo t('information'); ?></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Produk Section -->
-    <section id="produk" class="produk-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title"><?php echo t('products_title'); ?></h2>
-          <p class="section-subtitle"><?php echo t('products_subtitle'); ?></p>
-        </div>
-
-        <div class="produk-grid">
-          <?php
-          $query_produk = "SELECT * FROM produk ORDER BY tanggal_ditambahkan DESC LIMIT 3";
-          $result_produk = mysqli_query($koneksi, $query_produk);
-          $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
-          
-          foreach ($produk_data as $produk):
-          ?>
-          <div class="produk-card">
-            <div class="card-image">
-              <img src="<?php echo $produk['gambar'] ?: 'https://source.unsplash.com/random/300x200/?merchandise'; ?>" alt="<?php echo $produk['nama']; ?>" />
-            </div>
-            <div class="card-content">
-              <h3 class="card-title"><?php echo $produk['nama']; ?></h3>
-              <p class="card-description"><?php echo $produk['deskripsi']; ?></p>
-              <div class="card-meta">
-                <span class="meta-price"><?php echo t('price'); ?>: Rp <?php echo number_format($produk['harga'], 0, ',', '.'); ?></span>
-                <span class="meta-stock"><?php echo t('stock'); ?>: <?php echo $produk['stok']; ?></span>
-              </div>
-              <button class="card-button">
-                <a href="<?php echo $whatsapp_url; ?>" target="_blank" class="card-button">
-                  📱 <?php echo t('book_now'); ?>
-                </a>
-              </button>
-            </div>
-          </div>
-          <?php endforeach; ?>
-        </div>
-
-        <div class="produk-actions">
-          <a href="produk.php" class="produk-button"><?php echo t('see_all'); ?> <?php echo t('products'); ?></a>
-        </div>
       </div>
     </section>
 
@@ -342,8 +272,13 @@ function isAdmin() {
               <div class="image-overlay">
                 <div class="overlay-content">
                   <h4 class="image-title"><?php echo $galeri['judul']; ?></h4>
-                  <button class="view-button" onclick="openModal('<?php echo $galeri['gambar']; ?>', '<?php echo $galeri['judul']; ?>')">
-                    <i class="icon-zoom"></i>
+                  <button class="view-button" onclick="openGalleryDetail({
+                      title: '<?php echo htmlspecialchars($galeri['judul'], ENT_QUOTES); ?>',
+                      src: '<?php echo htmlspecialchars($galeri['gambar'], ENT_QUOTES); ?>',
+                      desc: `<?php echo htmlspecialchars($galeri['keterangan'] ?? '', ENT_QUOTES); ?>`,
+                      date: '<?php echo htmlspecialchars(date('d M Y', strtotime($galeri['tanggal_upload'] ?? $galeri['tanggal'] ?? 'now')), ENT_QUOTES); ?>'
+                    })">
+                    <?php echo t('view_details'); ?>
                   </button>
                 </div>
               </div>
@@ -352,11 +287,64 @@ function isAdmin() {
           <?php endforeach; ?>
         </div>
 
-        <div class="gallery-actions">
-          <a href="galeri.php" class="gallery-button"><?php echo t('view_gallery'); ?></a>
+        <!-- Modal Detail Galeri -->
+        <div id="gallery-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:1000; align-items:center; justify-content:center; padding:20px;">
+          <div style="background:#fff; max-width:900px; width:100%; border-radius:8px; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid #eee;">
+              <h3 id="gm-title" style="margin:0; font-size:18px;"></h3>
+              <button onclick="closeGalleryDetail()" style="border:none; background:#eee; padding:6px 10px; border-radius:4px; cursor:pointer;">✕</button>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; padding:16px;">
+              <div>
+                <img id="gm-image" src="" alt="" style="width:100%; height:auto; border-radius:6px;" />
+              </div>
+              <div>
+                <div style="color:#777; font-size:12px; margin-bottom:6px;">
+                  <span><?php echo t('uploaded_on') ?: 'Diunggah pada'; ?> </span><span id="gm-date"></span>
+                </div>
+                <h4 style="margin:0 0 8px;">Deskripsi</h4>
+                <div id="gm-desc" style="white-space:pre-wrap; color:#444;"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <script>
+      function openGalleryDetail(data){
+        var m = document.getElementById('gallery-modal');
+        document.getElementById('gm-title').textContent = data.title || '';
+        var img = document.getElementById('gm-image');
+        img.src = data.src || '';
+        img.alt = data.title || '';
+        var descEl = document.getElementById('gm-desc');
+        var raw = (data.desc || '').trim();
+        // Render deskripsi sebagai HTML sederhana (sudah di-escape server-side) agar bisa ada pemformatan dasar
+        descEl.textContent = '';
+        if(raw){
+          descEl.innerHTML = raw;
+        } else {
+          descEl.textContent = '<?php echo t('no_description'); ?>';
+        }
+        document.getElementById('gm-date').textContent = data.date || '';
+        m.style.display = 'flex';
+      }
+      function closeGalleryDetail(){
+        var m = document.getElementById('gallery-modal');
+        m.style.display = 'none';
+      }
+      // Close on backdrop click
+      document.addEventListener('click', function(e){
+        var m = document.getElementById('gallery-modal');
+        if(!m || m.style.display==='none') return;
+        if(e.target === m) closeGalleryDetail();
+      });
+      // ESC to close
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape') closeGalleryDetail();
+      });
+    </script>
 
     <!-- Kontak Section -->
     <section id="kontak" class="contact-section">
@@ -373,7 +361,7 @@ function isAdmin() {
             <div class="contact-list">
               <div class="contact-item">
                 <div class="contact-icon">
-                  <i class="icon-location"></i>
+                  <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <div class="contact-content">
                   <h4 class="item-title"><?php echo t('address'); ?></h4>
@@ -383,7 +371,7 @@ function isAdmin() {
 
               <div class="contact-item">
                 <div class="contact-icon">
-                  <i class="icon-phone"></i>
+                  <i class="fas fa-phone"></i>
                 </div>
                 <div class="contact-content">
                   <h4 class="item-title"><?php echo t('phone'); ?></h4>
@@ -395,9 +383,9 @@ function isAdmin() {
             <div class="social-links">
               <h4 class="social-title"><?php echo t('follow_us'); ?></h4>
               <div class="social-icons">
-                <a href="https://instagram.com/kampoengjalakbali/" target="_blank" class="social-link"> <i class="icon-instagram"></i>@kampoengjalakbali </a>
-                <a href="#" class="social-link"> <i class="icon-facebook"></i>Kampoeng Jalak Bali </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kampoengjalakbali@gmail.com" class="social-link"> <i class="icon-email"></i>kampoengjalakbali@gmail.com </a>
+                <a href="https://instagram.com/kampoengjalakbali/" target="_blank" class="social-link"> <i class="fab fa-instagram"></i>@kampoengjalakbali </a>
+                <a href="#" class="social-link"> <i class="fab fa-facebook-f"></i>Kampoeng Jalak Bali </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kampoengjalakbali@gmail.com" class="social-link"> <i class="fas fa-envelope"></i>kampoengjalakbali@gmail.com </a>
               </div>
             </div>
           </div>
@@ -428,45 +416,25 @@ function isAdmin() {
 
               <button type="submit" class="form-button">
                 <?php echo t('send_message'); ?>
-                <i class="icon-send"></i>
+                <i class="fas fa-paper-plane"></i>
               </button>
             </form>
           </div>
         </div>
-      </div>
-    </section>
-    
-    <!-- Location Section -->
-    <section id="location" style="padding: 40px 0;">
-      <div>
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h2><?php echo t('location_title'); ?></h2>
-          <p><?php echo t('location_subtitle'); ?></p>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-          <div>
-            <h3>Kampung Jalak Bali</h3>
-            <p>Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali</p>
-            
-            <div>
-              <div><strong>Telepon:</strong> I Wayan Yudi Artana (083862519604)</div>
-              <div><strong>Email:</strong> kampoengjalakbali@gmail.com</div>
-              <div><strong>Instagram:</strong> @kampoengjalakbali</div>
-            </div>
-          </div>
-          
-          <div>
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.447676234625!2d115.09547427579436!3d-8.506537491489967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23ba60f56f36f%3A0x9ac1cda35155124c!2sDesa%20Tengkudak%2C%20Kec.%20Penebel%2C%20Kabupaten%20Tabanan%2C%20Bali!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-              width="100%" 
-              height="300" 
-              style="border:0; border-radius: 8px;" 
-              allowfullscreen="" 
-              loading="lazy" 
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
+
+        <!-- Map inside Contact Section -->
+        <div style="margin-top: 30px;">
+          <h3 style="text-align:center; margin-bottom:10px;"><?php echo t('location_title'); ?></h3>
+          <p style="text-align:center; margin-bottom:20px;"><?php echo t('location_subtitle'); ?></p>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.447676234625!2d115.09547427579436!3d-8.506537491489967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23ba60f56f36f%3A0x9ac1cda35155124c!2sDesa%20Tengkudak%2C%20Kec.%20Penebel%2C%20Kabupaten%20Tabanan%2C%20Bali!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+            width="100%" 
+            height="350" 
+            style="border:0; border-radius: 8px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
       </div>
     </section>
@@ -479,7 +447,7 @@ function isAdmin() {
         <div style="text-align: center; padding: 30px 0; border-bottom: 1px solid #ddd; margin-bottom: 30px;">
           <h3 style="margin-bottom: 20px;"><?php echo t('supporter_title'); ?></h3>
           <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px;">
-            <img src="uploads/supporter/fnpf-logo.png" alt="FNPF" width="100" 
+            <!-- <img src="uploads/supporter/fnpf-logo.png" alt="FNPF" width="100" 
                 onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=FNPF'">
             <img src="uploads/supporter/unud-logo.png" alt="Universitas Udayana" width="100"
                 onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Udayana'">
@@ -490,7 +458,7 @@ function isAdmin() {
             <img src="uploads/supporter/desa-adat.png" alt="Desa Adat" width="100"
                 onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Desa+Adat'">
             <img src="uploads/supporter/bali-government.png" alt="Pemprov Bali" width="100"
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Pemprov+Bali'">
+                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Pemprov+Bali'"> -->
           </div>
         </div>
 
@@ -508,9 +476,9 @@ function isAdmin() {
               <li><a href="#home" class="footer-link"><?php echo t('home'); ?></a></li>
               <li><a href="#tentang" class="footer-link"><?php echo t('about'); ?></a></li>
               <li><a href="#wisata" class="footer-link"><?php echo t('tourism'); ?></a></li>
-              <li><a href="#informasi" class="footer-link"><?php echo t('information'); ?></a></li>
+              <li><a href="informasi.php" class="footer-link"><?php echo t('information'); ?></a></li>
               <li><a href="#galeri" class="footer-link"><?php echo t('gallery'); ?></a></li>
-              <li><a href="#produk" class="footer-link"><?php echo t('products'); ?></a></li>
+              <li><a href="produk.php" class="footer-link"><?php echo t('products'); ?></a></li>
               <li><a href="#kontak" class="footer-link"><?php echo t('contact'); ?></a></li>
             </ul>
           </div>

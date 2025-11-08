@@ -60,8 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <nav>
           <ul>
             <li><a href="index.php"><?php echo t('home'); ?></a></li>
-            <li><a href="index.php#wisata"><?php echo t('tourism'); ?></a></li>
-            <li><a href="login.php"><?php echo t('login'); ?></a></li>
+            <li><a href="register.php"><?php echo t('register'); ?></a></li>
           </ul>
         </nav>
       </div>
