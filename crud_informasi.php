@@ -181,48 +181,22 @@ if (isset($_GET['edit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_information'); ?> | Kampung Jalak Bali</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 8px 16px; margin: 5px; text-decoration: none; border-radius: 4px; display: inline-block; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .alert { padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        .gambar-preview { max-width: 200px; max-height: 150px; margin: 10px 0; border-radius: 4px; }
-        .info-img { max-width: 80px; max-height: 60px; object-fit: cover; border-radius: 4px; }
-    </style>
-    <style>
-        .pagination { display: flex; gap: 8px; margin-top: 15px; }
-        .pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
-        .pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
-    </style>
+    <title><?php echo t('manage_information'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
-    <header>
-        <div>
-            <div><h1>Kampung Jalak Bali</h1></div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="crud_informasi.php"><?php echo t('manage_information'); ?></a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<body class="admin-page">
+    <?php
+    // gunakan header pusat agar konsisten
+    $current_page = 'admin';
+    include 'header.php';
+    ?>
 
-    <section>
-        <div>
-            <h2><?php echo t('manage_information'); ?></h2>
+    <section class="crud-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-info-circle"></i> <?php echo t('manage_information'); ?>
+            </h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -237,9 +211,12 @@ if (isset($_GET['edit'])) {
             <?php endif; ?>
 
             <!-- Form Tambah/Edit Informasi -->
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('information'); ?></h3>
-                <form method="POST" action="" enctype="multipart/form-data">
+            <div class="crud-panel">
+                <h3 class="panel-title">
+                    <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
+                    <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('information'); ?>
+                </h3>
+                <form method="POST" action="" enctype="multipart/form-data" class="crud-form">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_informasi']; ?>">
                         <input type="hidden" name="gambar_lama" value="<?php echo $edit_data['gambar']; ?>">
@@ -268,7 +245,7 @@ if (isset($_GET['edit'])) {
                         <?php if ($edit_data && $edit_data['gambar']): ?>
                             <div>
                                 <img src="<?php echo $edit_data['gambar']; ?>" class="gambar-preview" 
-                                     onerror="this.style.display='none'">
+                                     onerror="this.src='https://source.unsplash.com/random/200x150/?article'">
                                 <p>Gambar saat ini</p>
                             </div>
                         <?php endif; ?>
@@ -279,20 +256,28 @@ if (isset($_GET['edit'])) {
                         <textarea name="isi" rows="10" required><?php echo $edit_data['isi'] ?? ''; ?></textarea>
                     </div>
                     
-                    <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
-                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('information'); ?>
-                    </button>
-                    
-                    <?php if ($edit_data): ?>
-                        <a href="crud_informasi.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
-                    <?php endif; ?>
+                    <div class="form-group">
+                        <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
+                            <i class="fa <?php echo $edit_data ? 'fa-save' : 'fa-plus'; ?>"></i>
+                            <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('information'); ?>
+                        </button>
+                        
+                        <?php if ($edit_data): ?>
+                            <a href="crud_informasi.php" class="btn btn-warning">
+                                <i class="fa fa-times"></i>
+                                <?php echo t('cancel'); ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
                 </form>
             </div>
 
             <!-- Daftar Informasi -->
-            <div>
-                <h3><?php echo t('information_title'); ?></h3>
-                <table>
+            <div class="crud-list">
+                <h3 class="list-title">
+                    <i class="fa fa-list"></i> <?php echo t('information_title'); ?>
+                </h3>
+                <table class="crud-table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -312,18 +297,20 @@ if (isset($_GET['edit'])) {
                                     <img src="<?php echo $informasi['gambar']; ?>" class="info-img" 
                                          onerror="this.src='https://source.unsplash.com/random/80x60/?article'">
                                 <?php else: ?>
-                                    <span style="color: #666;">No Image</span>
+                                    <span class="muted-text">No Image</span>
                                 <?php endif; ?>
                             </td>
                             <td><strong><?php echo $informasi['judul']; ?></strong></td>
                             <td><?php echo ucfirst($informasi['kategori']); ?></td>
                             <td><?php echo date('d M Y', strtotime($informasi['tanggal_dibuat'])); ?></td>
                             <td>
-                                <a href="crud_informasi.php?edit=<?php echo $informasi['id_informasi']; ?>" class="btn btn-primary">Edit</a>
+                                <a href="crud_informasi.php?edit=<?php echo $informasi['id_informasi']; ?>" class="btn btn-primary">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
                                 <a href="crud_informasi.php?hapus=<?php echo $informasi['id_informasi']; ?>" 
                                    class="btn btn-danger" 
                                    onclick="return confirm('Yakin hapus informasi <?php echo $informasi['judul']; ?>?')">
-                                    Hapus
+                                    <i class="fa fa-trash"></i> Hapus
                                 </a>
                             </td>
                         </tr>
@@ -347,11 +334,21 @@ if (isset($_GET['edit'])) {
         </div>
     </section>
 
-    <footer>
-        <div>
-            <p>&copy; 2025 Kampung Jalak Bali | Kelola Informasi</p>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
+    
+    <script>
+        // Toggle mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('show');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php mysqli_close($koneksi); ?>

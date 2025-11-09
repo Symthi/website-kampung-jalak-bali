@@ -12,7 +12,7 @@ $lang['id'] = array(
     'information' => 'Informasi',
     'gallery' => 'Galeri',
     'products' => 'Produk',
-    'supporter' => 'Supporter',
+    'supporter' => 'Pendukung',
     'contact' => 'Kontak',
     'login' => 'Masuk',
     'logout' => 'Keluar',
@@ -25,14 +25,16 @@ $lang['id'] = array(
     'book_now' => 'Pesan Sekarang',
     
     // Hero Section
-    'hero_title' => 'Selamat Datang di Kampung Jalak Bali',
+    'hero_title' => 'Selamat Datang di Kampoeng Jalak Bali',
     'hero_description' => 'Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.',
     'explore_now' => 'Jelajahi Sekarang',
     
     // About Section
-    'about_title' => 'Tentang Kampung Jalak Bali',
+    'about_title' => 'Tentang Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.',
     'history' => 'Sejarah dan Latar Belakang',
+    'history_paragraph1' => 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.',
+    'history_paragraph2' => 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.',
     'vision' => 'Visi',
     'mission' => 'Misi',
     'vision_text' => 'Mewujudkan desa konservasi yang harmonis antara manusia, alam, dan budaya melalui pelestarian Jalak Bali sebagai warisan satwa endemik Pulau Bali.',
@@ -46,12 +48,12 @@ $lang['id'] = array(
     
     // Tourism Section
     'tourism_title' => 'Wisata Edukasi',
-    'tourism_subtitle' => 'Jelajahi pengalaman unik konservasi dan budaya di Kampung Jalak Bali',
+    'tourism_subtitle' => 'Jelajahi pengalaman unik konservasi dan budaya di Kampoeng Jalak Bali',
     'duration' => 'Durasi',
     
     // Information Section
     'information_title' => 'Informasi Terbaru',
-    'information_subtitle' => 'Update terbaru seputar Kampung Jalak Bali',
+    'information_subtitle' => 'Update terbaru seputar Kampoeng Jalak Bali',
     'news' => 'Berita',
     'article' => 'Artikel',
     'announcement' => 'Pengumuman',
@@ -59,7 +61,7 @@ $lang['id'] = array(
     
     // Gallery Section
     'gallery_title' => 'Galeri',
-    'gallery_subtitle' => 'Momen-momen indah di Kampung Jalak Bali',
+    'gallery_subtitle' => 'Momen-momen indah di Kampoeng Jalak Bali',
     'view_gallery' => 'Lihat Galeri',
     
     // Products Section
@@ -70,11 +72,11 @@ $lang['id'] = array(
     
     // Supporter Section
     'supporter_title' => 'Supporter & Donor',
-    'supporter_subtitle' => 'Organisasi dan mitra yang mendukung Kampung Jalak Bali',
+    'supporter_subtitle' => 'Organisasi dan mitra yang mendukung Kampoeng Jalak Bali',
     
     // Contact Section
     'contact_title' => 'Kontak Kami',
-    'contact_subtitle' => 'Hubungi kami untuk informasi lebih lanjut tentang Kampung Jalak Bali',
+    'contact_subtitle' => 'Hubungi kami untuk informasi lebih lanjut tentang Kampoeng Jalak Bali',
     'contact_info' => 'Informasi Kontak',
     'address' => 'Alamat',
     'phone' => 'Telepon',
@@ -86,7 +88,7 @@ $lang['id'] = array(
     
     // Location Section
     'location_title' => 'Lokasi Kami',
-    'location_subtitle' => 'Kunjungi Kampung Jalak Bali di Tabanan, Bali',
+    'location_subtitle' => 'Kunjungi Kampoeng Jalak Bali di Tabanan, Bali',
     
     // Footer
     'quick_links' => 'Menu Cepat',
@@ -100,14 +102,17 @@ $lang['id'] = array(
     'total_tourism' => 'Total Wisata',
     'total_comments' => 'Total Komentar',
     'total_messages' => 'Total Pesan',
-    'total_users' => 'Total User',
+    'total_users' => 'Total Pengguna',
+        'total_products' => 'Total Produk',
+        'my_messages' => 'Pesan Saya',
+        'member_since' => 'Bergabung Sejak',
     'admin_menu' => 'Menu Admin',
     'user_menu' => 'Menu',
     'manage_tourism' => 'Kelola Wisata',
     'manage_comments' => 'Kelola Komentar',
     'manage_messages' => 'Kelola Pesan',
     'manage_gallery' => 'Kelola Galeri',
-    'manage_users' => 'Kelola User',
+    'manage_users' => 'Kelola Pengguna',
     'manage_information' => 'Kelola Informasi',
     'manage_products' => 'Kelola Produk',
     
@@ -134,7 +139,7 @@ $lang['id'] = array(
     // Additional small UI keys
     'comment_statistics' => 'Statistik Komentar',
     'no' => 'No',
-    'user' => 'User',
+    'user' => 'Pengguna',
     'date' => 'Tanggal',
     'view_tour' => 'Lihat Wisata',
     // Common UI and CRUD
@@ -171,7 +176,7 @@ $lang['id'] = array(
     'error_occurred' => 'Terjadi kesalahan, silakan coba lagi',
 
     'management_structure' => 'Struktur Kepengurusan',
-    'management_structure_subtitle' => 'Susunan pengurus dan peran mereka di Kampung Jalak Bali',
+    'management_structure_subtitle' => 'Susunan pengurus dan peran mereka di Kampoeng Jalak Bali',
     'board_of_directors' => 'Pengurus',
     'committee' => 'Panitia',
     'chairperson' => 'Ketua',
@@ -209,6 +214,9 @@ $lang['id'] = array(
     'unread' => 'Belum Dibaca',
     'replied' => 'Sudah Dibalas',
     'read' => 'Baca'
+    ,
+    'uploaded_on' => 'Diunggah pada',
+    'no_description' => 'Tidak ada deskripsi.'
 );
 
 // English
@@ -233,14 +241,16 @@ $lang['en'] = array(
     'book_now' => 'Book Now',
     
     // Hero Section
-    'hero_title' => 'Welcome to Kampung Jalak Bali',
+    'hero_title' => 'Welcome to Kampoeng Jalak Bali',
     'hero_description' => 'A stunning educational tourism destination in the Island of Gods, offering unique experiences about Bali Starling conservation and local culture.',
     'explore_now' => 'Explore Now',
     
     // About Section
-    'about_title' => 'About Kampung Jalak Bali',
+    'about_title' => 'About Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali is an ex-situ conservation center for the Bali Starling, a protected endemic species, located in Banjar Tingkihkerep, Tengkudak Village, Tabanan, Bali.',
     'history' => 'History and Background',
+    'history_paragraph1' => 'The conservation program began in April 2024 by the Friends of Nature, People and Forests (FNPF) foundation, releasing 60 Bali Starlings. The Tengkudak Village location was selected after habitat studies by academics from Udayana University and is strongly supported by the local community culture.',
+    'history_paragraph2' => 'The Tingkihkerep customary community has long protected wildlife through traditional regulations (Awig-Awig and Perarem) that prohibit hunting, grounded in the belief of the presence of the "Pelingsih Wewalungan" as a guardian spirit. This makes Kampoeng Jalak Bali a successful example of community-based conservation and was officially inaugurated by the Regent of Tabanan in June 2024.',
     'vision' => 'Vision',
     'mission' => 'Mission',
     'vision_text' => 'To realize a conservation village that harmonizes humans, nature, and culture through the preservation of Bali Starling as the endemic wildlife heritage of Bali Island.',
@@ -254,12 +264,12 @@ $lang['en'] = array(
     
     // Tourism Section
     'tourism_title' => 'Educational Tourism',
-    'tourism_subtitle' => 'Explore unique conservation and cultural experiences at Kampung Jalak Bali',
+    'tourism_subtitle' => 'Explore unique conservation and cultural experiences at Kampoeng Jalak Bali',
     'duration' => 'Duration',
     
     // Information Section
     'information_title' => 'Latest Information',
-    'information_subtitle' => 'Latest updates about Kampung Jalak Bali',
+    'information_subtitle' => 'Latest updates about Kampoeng Jalak Bali',
     'news' => 'News',
     'article' => 'Article',
     'announcement' => 'Announcement',
@@ -267,7 +277,7 @@ $lang['en'] = array(
     
     // Gallery Section
     'gallery_title' => 'Gallery',
-    'gallery_subtitle' => 'Beautiful moments at Kampung Jalak Bali',
+    'gallery_subtitle' => 'Beautiful moments at Kampoeng Jalak Bali',
     'view_gallery' => 'View Gallery',
     
     // Products Section
@@ -278,11 +288,11 @@ $lang['en'] = array(
     
     // Supporter Section
     'supporter_title' => 'Supporter & Donor',
-    'supporter_subtitle' => 'Organizations and partners supporting Kampung Jalak Bali',
+    'supporter_subtitle' => 'Organizations and partners supporting Kampoeng Jalak Bali',
     
     // Contact Section
     'contact_title' => 'Contact Us',
-    'contact_subtitle' => 'Contact us for more information about Kampung Jalak Bali',
+    'contact_subtitle' => 'Contact us for more information about Kampoeng Jalak Bali',
     'contact_info' => 'Contact Information',
     'address' => 'Address',
     'phone' => 'Phone',
@@ -294,7 +304,7 @@ $lang['en'] = array(
     
     // Location Section
     'location_title' => 'Our Location',
-    'location_subtitle' => 'Visit Kampung Jalak Bali in Tabanan, Bali',
+    'location_subtitle' => 'Visit Kampoeng Jalak Bali in Tabanan, Bali',
     
     // Footer
     'quick_links' => 'Quick Links',
@@ -309,6 +319,9 @@ $lang['en'] = array(
     'total_comments' => 'Total Comments',
     'total_messages' => 'Total Messages',
     'total_users' => 'Total Users',
+        'total_products' => 'Total Products',
+        'my_messages' => 'My Messages',
+        'member_since' => 'Member Since',
     'admin_menu' => 'Admin Menu',
     'user_menu' => 'Menu',
     'manage_tourism' => 'Manage Tourism',
@@ -380,7 +393,7 @@ $lang['en'] = array(
 
     // Management / organizational
     'management_structure' => 'Organizational Structure',
-    'management_structure_subtitle' => 'Composition of management and their roles at Kampung Jalak Bali',
+    'management_structure_subtitle' => 'Composition of management and their roles at Kampoeng Jalak Bali',
     'board_of_directors' => 'Board',
     'committee' => 'Committee',
     'chairperson' => 'Chairperson',
@@ -418,6 +431,9 @@ $lang['en'] = array(
     'unread' => 'Unread',
     'replied' => 'Replied',
     'read' => 'Read'
+    ,
+    'uploaded_on' => 'Uploaded on',
+    'no_description' => 'No description.'
 );
 
 // Function to get language string

@@ -51,78 +51,25 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><?php echo t('manage_comments'); ?> | Kampung Jalak Bali</title>
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-      }
-      th,
-      td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .btn {
-        padding: 8px 16px;
-        margin: 5px;
-        text-decoration: none;
-        border-radius: 4px;
-      }
-      .btn-danger {
-        background: #dc3545;
-        color: white;
-      }
-      .btn-danger:hover {
-        background: #c82333;
-      }
-      .alert {
-        padding: 15px;
-        margin: 20px 0;
-        border-radius: 4px;
-      }
-      .alert-success {
-        background: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
-      .alert-error {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
-    </style>
-    <style>
-      .pagination { display: flex; gap: 8px; margin-top: 15px; }
-      .pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
-      .pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div>
-        <div><h1>Kampung Jalak Bali</h1></div>
-        <nav>
-          <ul>
-            <li><a href="index.php"><?php echo t('home'); ?></a></li>
-            <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
-            <li><a href="crud_komentar.php"><?php echo t('manage_comments'); ?></a></li>
-            <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo t('manage_comments'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="admin-page">
+  <?php
+  // gunakan header pusat agar konsisten
+  $current_page = 'admin';
+  include 'header.php';
+  ?>
 
-    <section>
-      <div>
-  <h2><?php echo t('manage_comments'); ?></h2>
+    <section class="crud-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-comments"></i> <?php echo t('manage_comments'); ?>
+            </h2>
 
         <?php if (isset($_SESSION['success_message'])): ?>
         <div class="alert alert-success">
@@ -137,29 +84,37 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <?php endif; ?>
 
         <!-- Statistik -->
-        <div>
-          <h3><?php echo t('comment_statistics'); ?></h3>
-          <p>
-            <?php echo t('total_comments'); ?>: <strong><?php echo $total_komentar_all; ?></strong>
-          </p>
+        <div class="crud-panel">
+            <h3 class="panel-title">
+                <i class="fa fa-chart-bar"></i> <?php echo t('comment_statistics'); ?>
+            </h3>
+            <div class="dashboard-stats">
+                <div class="dashboard-card">
+                    <i class="fa fa-comments"></i>
+                    <div class="stat-title"><?php echo t('total_comments'); ?></div>
+                    <div class="stat-number"><?php echo $total_komentar_all; ?></div>
+                </div>
+            </div>
         </div>
 
         <!-- Daftar Komentar -->
-        <div>
-          <h3><?php echo t('comments'); ?></h3>
+        <div class="crud-list">
+            <h3 class="list-title">
+                <i class="fa fa-list"></i> <?php echo t('comments'); ?>
+            </h3>
 
           <?php if (empty($komentar_data)): ?>
             <p><?php echo t('no_comments'); ?></p>
           <?php else: ?>
-          <table>
+          <table class="crud-table">
             <thead>
               <tr>
-                <th><?php echo t('no'); ?></th>
-                <th><?php echo t('user'); ?></th>
-                <th><?php echo t('tourism'); ?></th>
+                <th width="50"><?php echo t('no'); ?></th>
+                <th width="200"><?php echo t('user'); ?></th>
+                <th width="200"><?php echo t('tourism'); ?></th>
                 <th><?php echo t('comments'); ?></th>
-                <th><?php echo t('date'); ?></th>
-                <th><?php echo t('actions'); ?></th>
+                <th width="150"><?php echo t('date'); ?></th>
+                <th width="150"><?php echo t('actions'); ?></th>
               </tr>
             </thead>
             <tbody>
@@ -175,8 +130,15 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <td><?php echo $komentar['isi']; ?></td>
                 <td><?php echo date('d M Y H:i', strtotime($komentar['tanggal'])); ?></td>
                 <td>
-                  <a href="crud_komentar.php?hapus=<?php echo $komentar['id_komentar']; ?>" class="btn btn-danger" onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')"> <?php echo t('delete'); ?> </a>
-                  <a href="detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" class="btn"> <?php echo t('view_tour'); ?> </a>
+                  <a href="crud_komentar.php?hapus=<?php echo $komentar['id_komentar']; ?>" 
+                     class="btn btn-danger" 
+                     onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
+                    <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
+                  </a>
+                  <a href="detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" 
+                     class="btn btn-primary">
+                    <i class="fa fa-eye"></i> <?php echo t('view_tour'); ?>
+                  </a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -200,11 +162,21 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
       </div>
     </section>
 
-    <footer>
-      <div>
-        <p>&copy; 2025 Kampung Jalak Bali | <?php echo t('manage_comments'); ?></p>
-      </div>
-    </footer>
-  </body>
+    <?php include 'footer.php'; ?>
+    
+    <script>
+        // Toggle mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('show');
+                });
+            }
+        });
+    </script>
+</body>
 </html>
 <?php mysqli_close($koneksi); ?>

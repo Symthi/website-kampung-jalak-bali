@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_bind_param($stmt, "ssss", $nama, $email, $subjek, $pesan);
     
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['success_message'] = "Pesan Anda berhasil dikirim! Kami akan membalas segera.";
+        $_SESSION['success_message'] = "Pesan Anda berhasil dikirim!";
     } else {
         $_SESSION['error_message'] = "Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.";
     }

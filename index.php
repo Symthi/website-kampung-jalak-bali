@@ -36,45 +36,16 @@ function isAdmin() {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kampung Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
-    <link rel="stylesheet" href="style.css">
+    <title>Kampoeng Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
-    <!-- Language Switcher -->
-    <div style="text-align: right; padding: 10px; background: #f8f9fa;">
-      <a href="?lang=id" style="margin-right: 10px;">🇮🇩 Indonesia</a>
-      <a href="?lang=en">🇬🇧 English</a>
-    </div>
-
-    <!-- Header -->
-    <header>
-      <div>
-        <div>
-          <img src="uploads/Rancangan Logo.png" alt="Logo Kampung Jalak Bali" width="100px"/>
-          <h1>Kampung Jalak Bali</h1>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="#home"><?php echo t('home'); ?></a></li>
-            <li><a href="#tentang"><?php echo t('about'); ?></a></li>
-            <li><a href="#wisata"><?php echo t('tourism'); ?></a></li>
-            <li><a href="informasi.php"><?php echo t('information'); ?></a></li>
-            <li><a href="#galeri"><?php echo t('gallery'); ?></a></li>
-            <li><a href="produk.php"><?php echo t('products'); ?></a></li>
-            <li><a href="#kontak"><?php echo t('contact'); ?></a></li>
-            <?php if (isLoggedIn()): ?>
-            <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
-            <li>
-              <a href="logout.php"><?php echo t('logout'); ?> (<?php echo $_SESSION['nama']; ?>)</a>
-            </li>
-            <?php else: ?>
-            <li><a href="login.php"><?php echo t('login'); ?></a></li>
-            <?php endif; ?>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
+    <?php 
+    $current_page = 'home';
+    include 'header.php';
+    ?>
     <!-- Hero Section -->
     <section id="home" class="hero-section">
       <div class="hero-container">
@@ -94,26 +65,25 @@ function isAdmin() {
         </div>
 
         <div class="about-content">
-          <div class="content-main">
-            <div class="text-content">
-              <p class="lead-text">
-                <?php echo t('about_description'); ?>
-              </p>
+          <!-- Deskripsi dan Sejarah -->
+          <div class="text-content">
+            <p class="lead-text">
+              <?php echo t('about_description'); ?>
+            </p>
+            <div class="history-section">
+              <h3 class="content-title"><?php echo t('history'); ?></h3>
+              <p><?php echo t('history_paragraph1'); ?></p>
+              <p><?php echo t('history_paragraph2'); ?></p>
+            </div>
+          </div>
 
-              <div class="content-section">
-                <h3 class="content-title"><?php echo t('history'); ?></h3>
-                <p>
-                  Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi
-                  Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.
-                </p>
-                <p>
-                  Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung
-                  satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.
-                </p>
-              </div>
-
-              <div class="content-section">
-                <div class="vision-mission-grid">
+          <!-- Cards Section -->
+          <div class="cards-section">
+            <!-- Vision & Mission Card -->
+            <div class="vision-mission-card">
+              <h3 class="content-title">Visi & Misi</h3>
+              <div class="vision-mission-slider">
+                <div class="slider-content" id="visionMissionSlider">
                   <div class="vision-card">
                     <div class="card-header">
                       <div class="icon-wrapper">
@@ -141,67 +111,119 @@ function isAdmin() {
                     </ul>
                   </div>
                 </div>
+                <div class="slider-nav">
+                  <button class="slider-btn active" onclick="showVisionMission(0)">Visi</button>
+                  <button class="slider-btn" onclick="showVisionMission(1)">Misi</button>
+                </div>
               </div>
             </div>
 
-            <!-- Structure Section tetap sama karena konten spesifik -->
-            <div class="structure-section">
+            <!-- Structure Card -->
+            <div class="structure-card">
               <h3 class="content-title"><?php echo t('management_structure'); ?></h3>
-              <div class="structure-grid">
-                <!-- ... struktur tetap ... -->
-                 <div class="structure-card">
-                  <h5 class="structure-title">PEMBINA</h5>
-                  <ul class="structure-list">
-                    <li>I KETUT SUARTANCA <span>(Perbekel Desa Tengkudak)</span></li>
-                    <li>Drh. I MADE SUGIARTA <span>(FNPF)</span></li>
-                  </ul>
-                </div>
+              <div class="structure-slider">
+                <div class="structure-slide" id="structureSlider">
+                  <div class="structure-item">
+                    <h5 class="structure-title">PEMBINA</h5>
+                    <ul class="structure-list">
+                      <li>I KETUT SUARTANCA <span>(Perbekel Desa Tengkudak)</span></li>
+                      <li>Drh. I MADE SUGIARTA <span>(FNPF)</span></li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">PENANGGUNGJAWAB</h5>
-                  <ul class="structure-list">
-                    <li>DESA ADAT TINGKIHKEREP</li>
-                  </ul>
-                </div>
+                  <div class="structure-item">
+                    <h5 class="structure-title">PENANGGUNGJAWAB</h5>
+                    <ul class="structure-list">
+                      <li>DESA ADAT TINGKIHKEREP</li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">KETUA</h5>
-                  <ul class="structure-list">
-                    <li>I NYOMAN OKA TRIADI <span>(Bandes Adat Tingkihkerep)</span></li>
-                  </ul>
-                </div>
+                  <div class="structure-item">
+                    <h5 class="structure-title">KETUA</h5>
+                    <ul class="structure-list">
+                      <li>I NYOMAN OKA TRIADI <span>(Bandes Adat Tingkihkerep)</span></li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">SEKRETARIS</h5>
-                  <ul class="structure-list">
-                    <li>I MADE SUKARATA</li>
-                  </ul>
-                </div>
+                  <div class="structure-item">
+                    <h5 class="structure-title">SEKRETARIS & BENDAHARA</h5>
+                    <ul class="structure-list">
+                      <li>I MADE SUKARATA <span>(Sekretaris)</span></li>
+                      <li>NI PUTU DESY ANGGRAENI <span>(Bendahara)</span></li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">BENDAHARA</h5>
-                  <ul class="structure-list">
-                    <li>NI PUTU DESY ANGGRAENI</li>
-                  </ul>
+                  <div class="structure-item">
+                    <h5 class="structure-title">ANGGOTA</h5>
+                    <ul class="structure-list">
+                      <li>I WAYAN EDDYAS PRIHANTARA <span>(Pemandu)</span></li>
+                      <li>I KETUT MERTAJAYA <span>(Pemandu)</span></li>
+                      <li>I WAYAN SUDARMA <span>(Pemandu)</span></li>
+                      <li>I WAYAN YUDI ARTANA <span>(Pengamat)</span></li>
+                      <li>NI WAYAN SUIKI</li>
+                    </ul>
+                  </div>
                 </div>
-
-                <div class="structure-card full-width">
-                  <h5 class="structure-title">ANGGOTA</h5>
-                  <ul class="structure-list">
-                    <li>I WAYAN EDDYAS PRIHANTARA <span>(Pemandu)</span></li>
-                    <li>I KETUT MERTAJAYA <span>(Pemandu)</span></li>
-                    <li>I WAYAN SUDARMA <span>(Pemandu)</span></li>
-                    <li>I WAYAN YUDI ARTANA <span>(Pengamat)</span></li>
-                    <li>NI WAYAN SUIKI</li>
-                  </ul>
-                </div>
+                <div class="structure-dots" id="structureDots"></div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="content-image">
-            <img src="https://source.unsplash.com/random/600x400/?bali,village" alt="Kampung Jalak Bali" class="featured-image" />
+    <script>
+              // Vision Mission Slider
+              function showVisionMission(index) {
+                const slider = document.getElementById('visionMissionSlider');
+                slider.style.transform = `translateX(-${index * 100}%)`;
+                
+                const buttons = document.querySelectorAll('.slider-btn');
+                buttons.forEach((btn, i) => {
+                  if (i === index) {
+                    btn.style.background = 'var(--dark-green)';
+                    btn.style.color = 'var(--white)';
+                  } else {
+                    btn.style.background = 'var(--tan)';
+                    btn.style.color = 'var(--brown)';
+                  }
+                });
+              }
+
+              // Structure Slider
+              const structureSlider = document.getElementById('structureSlider');
+              const structureCards = structureSlider.children;
+              const dotsContainer = document.getElementById('structureDots');
+              let currentSlide = 0;
+
+              // Create dots
+              for (let i = 0; i < structureCards.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => showStructureSlide(i);
+                dotsContainer.appendChild(dot);
+              }
+
+              function showStructureSlide(index) {
+                currentSlide = index;
+                structureSlider.style.transform = `translateX(-${index * 100}%)`;
+                
+                // Update dots
+                document.querySelectorAll('.dot').forEach((dot, i) => {
+                  dot.classList.toggle('active', i === index);
+                });
+              }
+
+              // Auto slide for structure
+              setInterval(() => {
+                currentSlide = (currentSlide + 1) % structureCards.length;
+                showStructureSlide(currentSlide);
+              }, 5000);
+            </script>
           </div>
+
+
         </div>
       </div>
     </section>
@@ -218,8 +240,8 @@ function isAdmin() {
           <?php foreach ($wisata_data as $wisata): ?>
           <div class="wisata-card">
             <div class="card-image">
-              <img src="<?php echo $wisata['gambar'] ?: 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wisata-image" />
-            </div>
+                <img src="<?php echo $wisata['gambar'] ?: 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wj-wisata-img" />
+              </div>
             <div class="card-content">
               <h3 class="card-title"><?php echo $wisata['judul']; ?></h3>
               <div class="card-meta">
@@ -237,12 +259,12 @@ function isAdmin() {
           <?php endforeach; ?>
         </div>
         <?php $total_pages_w = (int)ceil($total_wisata_home / $per_page_wisata); if ($total_pages_w > 1): ?>
-        <div style="display:flex; gap:8px; justify-content:center; margin-top:15px;">
+        <div class="pagination">
           <?php for ($p=1; $p<=$total_pages_w; $p++): ?>
             <?php if ($p == $page_wisata): ?>
-              <span style="padding:6px 10px; border:1px solid #ddd; border-radius:4px; background:#007bff; color:#fff;">&nbsp;<?php echo $p; ?>&nbsp;</span>
+              <span class="active"><?php echo $p; ?></span>
             <?php else: ?>
-              <a href="?p_w=<?php echo $p; ?>#wisata" style="padding:6px 10px; border:1px solid #ddd; border-radius:4px; text-decoration:none; color:#333;">&nbsp;<?php echo $p; ?>&nbsp;</a>
+              <a href="?p_w=<?php echo $p; ?>#wisata"><?php echo $p; ?></a>
             <?php endif; ?>
           <?php endfor; ?>
         </div>
@@ -260,7 +282,17 @@ function isAdmin() {
 
         <div class="gallery-grid">
           <?php
-          $query_galeri = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT 6";
+          // Pagination untuk galeri
+          $per_page_galeri = 5;
+          $page_galeri = isset($_GET['p_g']) ? max(1, (int)$_GET['p_g']) : 1;
+          $offset_galeri = ($page_galeri - 1) * $per_page_galeri;
+          
+          // Hitung total data galeri
+          $total_galeri_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM galeri");
+          $total_galeri = mysqli_fetch_assoc($total_galeri_q)['cnt'];
+          
+          // Query dengan pagination
+          $query_galeri = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT $per_page_galeri OFFSET $offset_galeri";
           $result_galeri = mysqli_query($koneksi, $query_galeri);
           $galeri_data = mysqli_fetch_all($result_galeri, MYSQLI_ASSOC);
           
@@ -287,23 +319,39 @@ function isAdmin() {
           <?php endforeach; ?>
         </div>
 
+        <?php 
+        // Tampilkan pagination untuk galeri jika ada lebih dari 1 halaman
+        $total_pages_g = (int)ceil($total_galeri / $per_page_galeri);
+        if ($total_pages_g > 1):
+        ?>
+        <div class="pagination">
+          <?php for ($p=1; $p<=$total_pages_g; $p++): ?>
+            <?php if ($p == $page_galeri): ?>
+              <span class="active"><?php echo $p; ?></span>
+            <?php else: ?>
+              <a href="?p_g=<?php echo $p; ?>#galeri"><?php echo $p; ?></a>
+            <?php endif; ?>
+          <?php endfor; ?>
+        </div>
+        <?php endif; ?>
+
         <!-- Modal Detail Galeri -->
-        <div id="gallery-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:1000; align-items:center; justify-content:center; padding:20px;">
-          <div style="background:#fff; max-width:900px; width:100%; border-radius:8px; overflow:hidden;">
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid #eee;">
-              <h3 id="gm-title" style="margin:0; font-size:18px;"></h3>
-              <button onclick="closeGalleryDetail()" style="border:none; background:#eee; padding:6px 10px; border-radius:4px; cursor:pointer;">✕</button>
+        <div id="gallery-modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 id="gm-title" class="modal-title"></h3>
+              <button onclick="closeGalleryDetail()" class="modal-close">✕</button>
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; padding:16px;">
+            <div class="modal-grid">
               <div>
-                <img id="gm-image" src="" alt="" style="width:100%; height:auto; border-radius:6px;" />
+                <img id="gm-image" src="" alt="" />
               </div>
               <div>
-                <div style="color:#777; font-size:12px; margin-bottom:6px;">
+                <div class="muted-text">
                   <span><?php echo t('uploaded_on') ?: 'Diunggah pada'; ?> </span><span id="gm-date"></span>
                 </div>
-                <h4 style="margin:0 0 8px;">Deskripsi</h4>
-                <div id="gm-desc" style="white-space:pre-wrap; color:#444;"></div>
+                <h4>Deskripsi</h4>
+                <div id="gm-desc" class="modal-desc"></div>
               </div>
             </div>
           </div>
@@ -423,14 +471,12 @@ function isAdmin() {
         </div>
 
         <!-- Map inside Contact Section -->
-        <div style="margin-top: 30px;">
-          <h3 style="text-align:center; margin-bottom:10px;"><?php echo t('location_title'); ?></h3>
-          <p style="text-align:center; margin-bottom:20px;"><?php echo t('location_subtitle'); ?></p>
+        <div class="map-wrapper">
+          <h3 class="center"><?php echo t('location_title'); ?></h3>
+          <p class="center"><?php echo t('location_subtitle'); ?></p>
           <iframe 
+            class="map-iframe"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.447676234625!2d115.09547427579436!3d-8.506537491489967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23ba60f56f36f%3A0x9ac1cda35155124c!2sDesa%20Tengkudak%2C%20Kec.%20Penebel%2C%20Kabupaten%20Tabanan%2C%20Bali!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-            width="100%" 
-            height="350" 
-            style="border:0; border-radius: 8px;" 
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
@@ -439,67 +485,7 @@ function isAdmin() {
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        
-        <!-- Supporter Logos Section -->
-        <div style="text-align: center; padding: 30px 0; border-bottom: 1px solid #ddd; margin-bottom: 30px;">
-          <h3 style="margin-bottom: 20px;"><?php echo t('supporter_title'); ?></h3>
-          <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px;">
-            <!-- <img src="uploads/supporter/fnpf-logo.png" alt="FNPF" width="100" 
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=FNPF'">
-            <img src="uploads/supporter/unud-logo.png" alt="Universitas Udayana" width="100"
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Udayana'">
-            <img src="uploads/supporter/pemkab-tabanan.png" alt="Pemkab Tabanan" width="100"
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Tabanan'">
-            <img src="uploads/supporter/desa-tengkudak.png" alt="Desa Tengkudak" width="100"
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Tengkudak'">
-            <img src="uploads/supporter/desa-adat.png" alt="Desa Adat" width="100"
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Desa+Adat'">
-            <img src="uploads/supporter/bali-government.png" alt="Pemprov Bali" width="100"
-                onerror="this.src='https://via.placeholder.com/100x60/1a6b3b/ffffff?text=Pemprov+Bali'"> -->
-          </div>
-        </div>
-
-        <div class="footer-content">
-          <!-- Brand Section -->
-          <div class="footer-section">
-            <h3 class="footer-title">Kampung Jalak Bali</h3>
-            <p class="footer-description"><?php echo t('hero_description'); ?></p>
-          </div>
-
-          <!-- Quick Links -->
-          <div class="footer-section">
-            <h3 class="footer-title"><?php echo t('quick_links'); ?></h3>
-            <ul class="footer-links">
-              <li><a href="#home" class="footer-link"><?php echo t('home'); ?></a></li>
-              <li><a href="#tentang" class="footer-link"><?php echo t('about'); ?></a></li>
-              <li><a href="#wisata" class="footer-link"><?php echo t('tourism'); ?></a></li>
-              <li><a href="informasi.php" class="footer-link"><?php echo t('information'); ?></a></li>
-              <li><a href="#galeri" class="footer-link"><?php echo t('gallery'); ?></a></li>
-              <li><a href="produk.php" class="footer-link"><?php echo t('products'); ?></a></li>
-              <li><a href="#kontak" class="footer-link"><?php echo t('contact'); ?></a></li>
-            </ul>
-          </div>
-
-          <!-- Contact Info -->
-          <div class="footer-section">
-            <h3 class="footer-title"><?php echo t('contact'); ?></h3>
-            <div class="footer-contact">
-              <p>📞 083862519604</p>
-              <p>📧 kampoengjalakbali@gmail.com</p>
-              <p>📷 @kampoengjalakbali</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="footer-bottom">
-          <p class="copyright">&copy; 2025 Kampung Jalak Bali. <?php echo t('rights_reserved'); ?></p>
-        </div>
-      </div>
-    </footer>
+    <?php include 'footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
