@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
 
 
 // Fungsi cek login dan admin
@@ -11,7 +14,7 @@ function isAdmin() {
 
 // Cek apakah user adalah admin
 if (!isAdmin()) {
-    header("Location: login.php");
+    header("Location: {$base}/auth/login.php");
     exit();
 }
 
@@ -55,14 +58,14 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_comments'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="admin-page">
   <?php
   // gunakan header pusat agar konsisten
   $current_page = 'admin';
-  include 'header.php';
+  include __DIR__ . '/../../includes/header.php';
   ?>
 
     <section class="crud-section">
@@ -135,7 +138,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                      onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
                     <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
                   </a>
-                  <a href="detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" 
+                  <a href="<?php echo $base; ?>/detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" 
                      class="btn btn-primary">
                     <i class="fa fa-eye"></i> <?php echo t('view_tour'); ?>
                   </a>
@@ -162,7 +165,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
       </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/../../includes/footer.php'; ?>
     
     <script>
         // Toggle mobile menu

@@ -1,7 +1,17 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/config/koneksi.php';
+include __DIR__ . '/config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+
+function public_url($path) {
+    global $base;
+    if (empty($path)) return '';
+    if (preg_match('#^https?://#i', $path) || strpos($path, '/') === 0) return $path;
+    return $base . '/' . ltrim($path, '/');
+}
 
 // Security
 define('ALLOWED', true);
@@ -35,12 +45,12 @@ $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <title><?php echo t('products_title'); ?> | Kampoeng Jalak Bali</title>
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-<?php include 'header.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
     <section class="content-section">
       <div class="container">
@@ -65,7 +75,7 @@ $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
             ?>
             <div class="produk-card">
               <div class="produk-image">
-                <img src="<?php echo $produk['gambar'] ?: 'https://source.unsplash.com/random/300x200/?merchandise'; ?>" 
+                <img src="<?php echo $produk['gambar'] ? public_url($produk['gambar']) : 'https://source.unsplash.com/random/300x200/?merchandise'; ?>" 
                      alt="<?php echo $produk['nama']; ?>">
               </div>
               <div class="produk-content">
@@ -109,7 +119,7 @@ $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
       </div>
     </section>
 
-<?php include 'footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

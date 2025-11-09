@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php'; 
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php'; 
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -10,7 +13,7 @@ function isAdmin() {
 
 // Cek apakah user adalah admin
 if (!isAdmin()) {
-    header("Location: login.php");
+    header("Location: {$base}/auth/login.php");
     exit();
 }
 
@@ -22,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tambah'])) {
     // Handle file upload
     $gambar = '';
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-        $target_dir = "uploads/galeri/";
-        if (!is_dir($target_dir)) {
-            mkdir($target_dir, 0755, true);
-        }
+            $public_dir = 'uploads/galeri/';
+            $target_dir = __DIR__ . '/../../' . $public_dir;
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true);
+            }
         
         $file_extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '_galeri.' . $file_extension;
@@ -35,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tambah'])) {
         $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
         $max_size = 2 * 1024 * 1024; // 2MB
         
-        if (in_array(strtolower($file_extension), $allowed_types)) {
-            if ($_FILES['gambar']['size'] <= $max_size) {
-                if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
-                    $gambar = $target_file;
-                } else {
-                    $_SESSION['error_message'] = "Gagal mengupload gambar.";
-                }
+            if (in_array(strtolower($file_extension), $allowed_types)) {
+                if ($_FILES['gambar']['size'] <= $max_size) {
+                    if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
+                        $gambar = $public_dir . $filename; // store public relative path
+                    } else {
+                        $_SESSION['error_message'] = "Gagal mengupload gambar.";
+                    }
             } else {
                 $_SESSION['error_message'] = "Ukuran gambar terlalu besar. Maksimal 2MB.";
             }
@@ -78,27 +82,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit'])) {
     // Handle file upload jika ada gambar baru
     $gambar = $gambar_lama;
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-        $target_dir = "uploads/galeri/";
+        // use same public_dir/target_dir pattern as the add flow
+        $public_dir = 'uploads/galeri/';
+        $target_dir = __DIR__ . '/../../' . $public_dir;
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0755, true);
         }
-        
+
         $file_extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '_galeri.' . $file_extension;
         $target_file = $target_dir . $filename;
-        
+
         // Validasi file
         $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
         $max_size = 2 * 1024 * 1024; // 2MB
-        
+
         if (in_array(strtolower($file_extension), $allowed_types)) {
             if ($_FILES['gambar']['size'] <= $max_size) {
                 if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
-                    // Hapus gambar lama jika ada
-                    if (!empty($gambar_lama) && file_exists($gambar_lama)) {
-                        unlink($gambar_lama);
+                    // Hapus gambar lama jika ada (filesystem path)
+                    if (!empty($gambar_lama)) {
+                        $old_path = __DIR__ . '/../../' . $gambar_lama;
+                        if (file_exists($old_path)) {
+                            @unlink($old_path);
+                        }
                     }
-                    $gambar = $target_file;
+                    // store public relative path
+                    $gambar = $public_dir . $filename;
                 } else {
                     $_SESSION['error_message'] = "Gagal mengupload gambar.";
                 }
@@ -138,9 +148,12 @@ if (isset($_GET['hapus'])) {
     $result = mysqli_stmt_get_result($stmt_select);
     $galeri = mysqli_fetch_assoc($result);
     
-    // Hapus file gambar dari server
-    if ($galeri['gambar'] && file_exists($galeri['gambar'])) {
-        unlink($galeri['gambar']);
+    // Hapus file gambar dari server (filesystem path)
+    if (!empty($galeri['gambar'])) {
+        $galeri_path = __DIR__ . '/../../' . $galeri['gambar'];
+        if (file_exists($galeri_path)) {
+            @unlink($galeri_path);
+        }
     }
     
     // Hapus dari database
@@ -186,14 +199,14 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_gallery'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="admin-page">
     <?php
     // gunakan header pusat agar konsisten
     $current_page = 'admin';
-    include 'header.php';
+    include __DIR__ . '/../../includes/header.php';
     ?>
 
     <section class="crud-section">
@@ -305,7 +318,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <div class="grid">
                     <?php foreach ($galeri_data as $galeri): ?>
                     <div class="grid-item">
-                        <img src="<?php echo $galeri['gambar']; ?>" 
+                        <img src="<?php echo $base . '/' . $galeri['gambar']; ?>" 
                              alt="<?php echo $galeri['judul']; ?>"
                              onerror="this.src='https://source.unsplash.com/random/300x200/?bali'">
                         <h4><?php echo $galeri['judul']; ?></h4>
@@ -344,7 +357,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <tr>
                                 <td><?php echo $offset + $index + 1; ?></td>
                                 <td>
-                                    <img src="<?php echo $galeri['gambar']; ?>" 
+                                    <img src="<?php echo $base . '/' . $galeri['gambar']; ?>" 
                                          alt="<?php echo $galeri['judul']; ?>"
                                          class="gallery-img"
                                          onerror="this.src='https://source.unsplash.com/random/100x100/?bali'">
@@ -397,7 +410,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
 
     <script>
         // Preview gambar sebelum upload

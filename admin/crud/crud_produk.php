@@ -1,7 +1,13 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
+
+// Include paths for header and footer
+
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -10,7 +16,7 @@ function isAdmin() {
 
 // Cek apakah user adalah admin
 if (!isAdmin()) {
-    header("Location: login.php");
+    header("Location: {$base}/auth/login.php");
     exit();
 }
 
@@ -26,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Handle file upload
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-            $target_dir = "uploads/produk/";
+            $public_dir = 'uploads/produk/';
+            $target_dir = __DIR__ . '/../../' . $public_dir;
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
@@ -42,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (in_array(strtolower($file_extension), $allowed_types)) {
                 if ($_FILES['gambar']['size'] <= $max_size) {
                     if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
-                        $gambar = $target_file;
+                        $gambar = $public_dir . $filename; // store public relative path in DB
                     } else {
                         $_SESSION['error_message'] = "Gagal mengupload gambar.";
                     }
@@ -78,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Handle file upload jika ada gambar baru
         $gambar = $gambar_lama;
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-            $target_dir = "uploads/produk/";
+            $public_dir = 'uploads/produk/';
+            $target_dir = __DIR__ . '/../../' . $public_dir;
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
@@ -95,10 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($_FILES['gambar']['size'] <= $max_size) {
                     if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
                         // Hapus gambar lama jika ada
-                        if (!empty($gambar_lama) && file_exists($gambar_lama)) {
-                            unlink($gambar_lama);
+                        if (!empty($gambar_lama) && file_exists(__DIR__ . '/../../' . $gambar_lama)) {
+                            unlink(__DIR__ . '/../../' . $gambar_lama);
                         }
-                        $gambar = $target_file;
+                        $gambar = $public_dir . $filename; // store public relative path
                     } else {
                         $_SESSION['error_message'] = "Gagal mengupload gambar.";
                     }
@@ -184,15 +192,11 @@ if (isset($_GET['edit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_products'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="admin-page">
-    <?php
-    // gunakan header pusat agar konsisten
-    $current_page = 'admin';
-    include 'header.php';
-    ?>
+    <?php $current_page = 'admin'; include __DIR__ . '/../../includes/header.php'; ?>
 
     <section class="crud-section">
         <div class="container">
@@ -323,7 +327,7 @@ if (isset($_GET['edit'])) {
                             <td><?php echo $offset + $index + 1; ?></td>
                             <td>
                                 <?php if ($produk['gambar']): ?>
-                                    <img src="<?php echo $produk['gambar']; ?>" class="thumb-img" 
+                                    <img src="<?php echo $base . '/' . $produk['gambar']; ?>" class="thumb-img" 
                                          onerror="this.src='https://source.unsplash.com/random/80x60/?merchandise'">
                                 <?php else: ?>
                                     <img src="https://source.unsplash.com/random/80x60/?merchandise" class="thumb-img">
@@ -364,7 +368,7 @@ if (isset($_GET['edit'])) {
         </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
     
         <script>
             // Toggle mobile menu

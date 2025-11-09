@@ -1,5 +1,9 @@
 <?php
 // footer.php - Konsisten untuk semua halaman
+// ensure $base is available when footer included
+if (!isset($base)) {
+  $base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
+}
 ?>
 <footer class="footer">
   <div class="container">
@@ -11,10 +15,10 @@
       <div class="footer-section">
         <h3>Menu</h3>
         <ul class="footer-links">
-          <li><a class="footer-link" href="index.php">Beranda</a></li>
-          <li><a class="footer-link" href="informasi.php">Informasi</a></li>
-          <li><a class="footer-link" href="galeri.php">Galeri</a></li>
-          <li><a class="footer-link" href="produk.php">Produk</a></li>
+          <li><a class="footer-link" href="<?php echo $base; ?>/index.php">Beranda</a></li>
+          <li><a class="footer-link" href="<?php echo $base; ?>/informasi.php">Informasi</a></li>
+          <li><a class="footer-link" href="<?php echo $base; ?>/galeri.php">Galeri</a></li>
+          <li><a class="footer-link" href="<?php echo $base; ?>/produk.php">Produk</a></li>
         </ul>
       </div>
       <div class="footer-section">

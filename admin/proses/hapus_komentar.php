@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -14,7 +17,7 @@ function isAdmin() {
 
 // Cek apakah user sudah login
 if (!isLoggedIn()) {
-    header("Location: login.php");
+    header("Location: {$base}/auth/login.php");
     exit();
 }
 
@@ -43,6 +46,6 @@ if ($komentar_id) {
     }
 }
 
-header("Location: detail_wisata.php?id=" . $wisata_id);
+header("Location: {$base}/detail_wisata.php?id=" . $wisata_id);
 exit();
 ?>

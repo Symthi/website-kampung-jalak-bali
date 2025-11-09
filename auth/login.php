@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../config/koneksi.php';
+include __DIR__ . '/../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -10,8 +13,8 @@ function isLoggedIn() {
 
 // Jika sudah login, redirect ke dashboard
 if (isLoggedIn()) {
-    header("Location: dashboard.php");
-    exit();
+  header("Location: {$base}/admin/dashboard.php");
+  exit();
 }
 
 // Proses login
@@ -35,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['role'] = $user['role'];
-            
-            header("Location: dashboard.php");
+
+            header("Location: {$base}/admin/dashboard.php");
             exit();
         } else {
             $error = "Password salah!";
@@ -52,10 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?php echo t('login_title'); ?> | Kampoeng Jalak Bali</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
   </head>
   <body>
-    <?php include 'header.php'; ?>
+    <?php include __DIR__ . '/../includes/header.php'; ?>
 
     <section class="auth-section">
       <div class="auth-card">
@@ -73,12 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <button type="submit"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></button>
         </form>
         <div class="auth-link">
-          <?php echo t('no_account'); ?> <a href="register.php"><?php echo t('register_here'); ?></a>
+          <?php echo t('no_account'); ?> <a href="<?php echo $base; ?>/auth/register.php"><?php echo t('register_here'); ?></a>
         </div>
       </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/../includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

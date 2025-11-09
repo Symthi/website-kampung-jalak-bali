@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -10,28 +13,29 @@ function isAdmin() {
 
 // Cek apakah user adalah admin
 if (!isAdmin()) {
-    header("Location: login.php");
+    header("Location: {$base}/auth/login.php");
     exit();
 }
 
 // CRUD Operations
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['tambah'])) {
-        // Tambah informasi
+        // Tambah wisata
         $judul = $_POST['judul'];
-        $isi = $_POST['isi'];
-        $kategori = $_POST['kategori'];
+        $deskripsi = $_POST['deskripsi'];
+        $durasi = $_POST['durasi'];
         $gambar = '';
         
         // Handle file upload
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-            $target_dir = "uploads/informasi/";
+            $public_dir = 'uploads/wisata/';
+            $target_dir = __DIR__ . '/../../' . $public_dir;
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
             
             $file_extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '_informasi.' . $file_extension;
+            $filename = uniqid() . '_wisata.' . $file_extension;
             $target_file = $target_dir . $filename;
             
             // Validasi file
@@ -41,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (in_array(strtolower($file_extension), $allowed_types)) {
                 if ($_FILES['gambar']['size'] <= $max_size) {
                     if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
-                        $gambar = $target_file;
+                        $gambar = $public_dir . $filename; // store public relative path
                     } else {
                         $_SESSION['error_message'] = "Gagal mengupload gambar.";
                     }
@@ -54,49 +58,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($_SESSION['error_message'])) {
-            $query = "INSERT INTO informasi (judul, isi, kategori, gambar) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO wisata (judul, deskripsi, gambar, durasi) VALUES (?, ?, ?, ?)";
             $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ssss", $judul, $isi, $kategori, $gambar);
-            
+            mysqli_stmt_bind_param($stmt, "ssss", $judul, $deskripsi, $gambar, $durasi);
+
             if (mysqli_stmt_execute($stmt)) {
-                $_SESSION['success_message'] = "Informasi berhasil ditambahkan!";
+                $_SESSION['success_message'] = "Wisata berhasil ditambahkan!";
             } else {
-                $_SESSION['error_message'] = "Gagal menambahkan informasi!";
+                $_SESSION['error_message'] = "Gagal menambahkan wisata!";
             }
         }
         
     } elseif (isset($_POST['edit'])) {
-        // Edit informasi
+        // Edit wisata
         $id = $_POST['id'];
         $judul = $_POST['judul'];
-        $isi = $_POST['isi'];
-        $kategori = $_POST['kategori'];
-        $gambar_lama = $_POST['gambar_lama'];
+        $deskripsi = $_POST['deskripsi'];
+        $durasi = $_POST['durasi'];
+        $gambar = $_POST['gambar_lama'];
         
         // Handle file upload jika ada gambar baru
-        $gambar = $gambar_lama;
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
-            $target_dir = "uploads/informasi/";
+            // Align with add flow: write to uploads/wisata/ and store public relative path
+            $public_dir = 'uploads/wisata/';
+            $target_dir = __DIR__ . '/../../' . $public_dir;
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
-            
+
             $file_extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '_informasi.' . $file_extension;
+            $filename = uniqid() . '_wisata.' . $file_extension;
             $target_file = $target_dir . $filename;
-            
+
             // Validasi file
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
             $max_size = 2 * 1024 * 1024; // 2MB
-            
+
             if (in_array(strtolower($file_extension), $allowed_types)) {
                 if ($_FILES['gambar']['size'] <= $max_size) {
                     if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
-                        // Hapus gambar lama jika ada
-                        if (!empty($gambar_lama) && file_exists($gambar_lama)) {
-                            unlink($gambar_lama);
+                        // Hapus gambar lama jika ada (filesystem path)
+                        if (!empty($gambar)) {
+                            $old_path = __DIR__ . '/../../' . $gambar;
+                            if (file_exists($old_path)) {
+                                @unlink($old_path);
+                            }
                         }
-                        $gambar = $target_file;
+                        $gambar = $public_dir . $filename;
                     } else {
                         $_SESSION['error_message'] = "Gagal mengupload gambar.";
                     }
@@ -109,66 +117,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($_SESSION['error_message'])) {
-            $query = "UPDATE informasi SET judul=?, isi=?, kategori=?, gambar=? WHERE id_informasi=?";
+            $query = "UPDATE wisata SET judul=?, deskripsi=?, gambar=?, durasi=? WHERE id_wisata=?";
             $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ssssi", $judul, $isi, $kategori, $gambar, $id);
+            mysqli_stmt_bind_param($stmt, "ssssi", $judul, $deskripsi, $gambar, $durasi, $id);
             
             if (mysqli_stmt_execute($stmt)) {
-                $_SESSION['success_message'] = "Informasi berhasil diupdate!";
+                $_SESSION['success_message'] = "Wisata berhasil diupdate!";
             } else {
-                $_SESSION['error_message'] = "Gagal mengupdate informasi!";
+                $_SESSION['error_message'] = "Gagal mengupdate wisata!";
             }
         }
     }
 }
 
-// Hapus informasi
+// Hapus wisata
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     
     // Ambil data gambar untuk dihapus dari server
-    $query_select = "SELECT gambar FROM informasi WHERE id_informasi = ?";
+    $query_select = "SELECT gambar FROM wisata WHERE id_wisata = ?";
     $stmt_select = mysqli_prepare($koneksi, $query_select);
     mysqli_stmt_bind_param($stmt_select, "i", $id);
     mysqli_stmt_execute($stmt_select);
     $result = mysqli_stmt_get_result($stmt_select);
-    $informasi = mysqli_fetch_assoc($result);
+    $wisata = mysqli_fetch_assoc($result);
     
-    // Hapus file gambar dari server
-    if ($informasi['gambar'] && file_exists($informasi['gambar'])) {
-        unlink($informasi['gambar']);
+    // Hapus file gambar dari server (filesystem path)
+    if (!empty($wisata['gambar'])) {
+        $wisata_path = __DIR__ . '/../../' . $wisata['gambar'];
+        if (file_exists($wisata_path)) {
+            @unlink($wisata_path);
+        }
     }
     
     // Hapus dari database
-    $query = "DELETE FROM informasi WHERE id_informasi=?";
+    $query = "DELETE FROM wisata WHERE id_wisata=?";
     $stmt = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['success_message'] = "Informasi berhasil dihapus!";
+        $_SESSION['success_message'] = "Wisata berhasil dihapus!";
     } else {
-        $_SESSION['error_message'] = "Gagal menghapus informasi!";
+        $_SESSION['error_message'] = "Gagal menghapus wisata!";
     }
     
-    header("Location: crud_informasi.php");
+    header("Location: crud_wisata.php");
     exit();
 }
 
-// Ambil data informasi dengan pagination
+// Ambil data wisata dengan pagination
 $per_page = 5;
 $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 $offset = ($page - 1) * $per_page;
-$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM informasi");
-$total_informasi_all = mysqli_fetch_assoc($total_q)['cnt'];
-$query = "SELECT * FROM informasi ORDER BY tanggal_dibuat DESC LIMIT $per_page OFFSET $offset";
+$total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM wisata");
+$total_wisata_all = mysqli_fetch_assoc($total_q)['cnt'];
+$query = "SELECT * FROM wisata ORDER BY tanggal_ditambahkan DESC LIMIT $per_page OFFSET $offset";
 $result = mysqli_query($koneksi, $query);
-$informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$wisata_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // Ambil data untuk edit
 $edit_data = null;
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $query = "SELECT * FROM informasi WHERE id_informasi=?";
+    $query = "SELECT * FROM wisata WHERE id_wisata=?";
     $stmt = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
@@ -181,22 +192,19 @@ if (isset($_GET['edit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_information'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title><?php echo t('manage_tourism'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="admin-page">
     <?php
     // gunakan header pusat agar konsisten
     $current_page = 'admin';
-    include 'header.php';
+    include __DIR__ . '/../../includes/header.php';
     ?>
-
     <section class="crud-section">
         <div class="container">
-            <h2 class="section-title">
-                <i class="fa fa-info-circle"></i> <?php echo t('manage_information'); ?>
-            </h2>
+            <h2 class="section-title"><i class="fa fa-map-marked-alt"></i> <?php echo t('manage_tourism'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -210,15 +218,15 @@ if (isset($_GET['edit'])) {
                 </div>
             <?php endif; ?>
 
-            <!-- Form Tambah/Edit Informasi -->
+            <!-- Form Tambah/Edit Wisata -->
             <div class="crud-panel">
                 <h3 class="panel-title">
                     <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
-                    <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('information'); ?>
+                    <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('tourism'); ?>
                 </h3>
                 <form method="POST" action="" enctype="multipart/form-data" class="crud-form">
                     <?php if ($edit_data): ?>
-                        <input type="hidden" name="id" value="<?php echo $edit_data['id_informasi']; ?>">
+                        <input type="hidden" name="id" value="<?php echo $edit_data['id_wisata']; ?>">
                         <input type="hidden" name="gambar_lama" value="<?php echo $edit_data['gambar']; ?>">
                     <?php endif; ?>
                     
@@ -228,89 +236,79 @@ if (isset($_GET['edit'])) {
                     </div>
                     
                     <div class="form-group">
-                        <label>Kategori:</label>
-                        <select name="kategori" required>
-                            <option value="berita" <?php echo ($edit_data['kategori'] ?? '') === 'berita' ? 'selected' : ''; ?>>Berita</option>
-                            <option value="artikel" <?php echo ($edit_data['kategori'] ?? '') === 'artikel' ? 'selected' : ''; ?>>Artikel</option>
-                            <option value="pengumuman" <?php echo ($edit_data['kategori'] ?? '') === 'pengumuman' ? 'selected' : ''; ?>>Pengumuman</option>
-                            <option value="event" <?php echo ($edit_data['kategori'] ?? '') === 'event' ? 'selected' : ''; ?>>Event</option>
-                        </select>
+                        <label><?php echo t('description_short'); ?>:</label>
+                        <textarea name="deskripsi" rows="5" required><?php echo $edit_data['deskripsi'] ?? ''; ?></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label>Gambar (Optional):</label>
-                        <input type="file" name="gambar" accept="image/*">
-                        <small>Format: JPG, JPEG, PNG, GIF (Max: 2MB) - Opsional</small>
+                        <label><?php echo t('upload_image'); ?>:</label>
+                        <input type="file" name="gambar" accept="image/*" <?php echo !$edit_data ? 'required' : ''; ?>>
+                        <small>Format: JPG, JPEG, PNG, GIF (Max: 2MB)</small>
                         
                         <?php if ($edit_data && $edit_data['gambar']): ?>
                             <div>
                                 <img src="<?php echo $edit_data['gambar']; ?>" class="gambar-preview" 
-                                     onerror="this.src='https://source.unsplash.com/random/200x150/?article'">
-                                <p>Gambar saat ini</p>
+                                     onerror="this.src='https://source.unsplash.com/random/200x150/?bali'">
+                                <p><?php echo t('upload_image'); ?> saat ini</p>
                             </div>
                         <?php endif; ?>
                     </div>
                     
                     <div class="form-group">
-                        <label>Isi:</label>
-                        <textarea name="isi" rows="10" required><?php echo $edit_data['isi'] ?? ''; ?></textarea>
+                        <label><?php echo t('duration'); ?>:</label>
+                        <input type="text" name="durasi" value="<?php echo $edit_data['durasi'] ?? ''; ?>" required>
                     </div>
                     
-                    <div class="form-group">
-                        <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
-                            <i class="fa <?php echo $edit_data ? 'fa-save' : 'fa-plus'; ?>"></i>
-                            <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('information'); ?>
-                        </button>
-                        
-                        <?php if ($edit_data): ?>
-                            <a href="crud_informasi.php" class="btn btn-warning">
-                                <i class="fa fa-times"></i>
-                                <?php echo t('cancel'); ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
+                    <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
+                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('tourism'); ?>
+                    </button>
+                    
+                    <?php if ($edit_data): ?>
+                        <a href="crud_wisata.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
+                    <?php endif; ?>
                 </form>
             </div>
 
-            <!-- Daftar Informasi -->
+            <!-- Daftar Wisata -->
             <div class="crud-list">
                 <h3 class="list-title">
-                    <i class="fa fa-list"></i> <?php echo t('information_title'); ?>
+                    <i class="fa fa-list"></i>
+                    <?php echo t('tourism_title'); ?> / <?php echo t('gallery_list'); ?>
                 </h3>
                 <table class="crud-table">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Gambar</th>
-                            <th><?php echo t('title'); ?></th>
-                            <th>Kategori</th>
+                            <th>Judul</th>
+                            <th>Durasi</th>
                             <th>Tanggal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($informasi_data as $index => $informasi): ?>
+                        <?php foreach ($wisata_data as $index => $wisata): ?>
                         <tr>
                             <td><?php echo $offset + $index + 1; ?></td>
                             <td>
-                                <?php if ($informasi['gambar']): ?>
-                                    <img src="<?php echo $informasi['gambar']; ?>" class="info-img" 
-                                         onerror="this.src='https://source.unsplash.com/random/80x60/?article'">
+                                <?php if ($wisata['gambar']): ?>
+                                    <img src="<?php echo $base . '/' . $wisata['gambar']; ?>" class="thumb-img" 
+                                         onerror="this.src='https://source.unsplash.com/random/80x60/?bali'">
                                 <?php else: ?>
-                                    <span class="muted-text">No Image</span>
+                                    <img src="https://source.unsplash.com/random/80x60/?bali" class="thumb-img">
                                 <?php endif; ?>
                             </td>
-                            <td><strong><?php echo $informasi['judul']; ?></strong></td>
-                            <td><?php echo ucfirst($informasi['kategori']); ?></td>
-                            <td><?php echo date('d M Y', strtotime($informasi['tanggal_dibuat'])); ?></td>
+                            <td><?php echo $wisata['judul']; ?></td>
+                            <td><?php echo $wisata['durasi']; ?></td>
+                            <td><?php echo date('d M Y', strtotime($wisata['tanggal_ditambahkan'])); ?></td>
                             <td>
-                                <a href="crud_informasi.php?edit=<?php echo $informasi['id_informasi']; ?>" class="btn btn-primary">
+                                <a href="crud_wisata.php?edit=<?php echo $wisata['id_wisata']; ?>" class="btn btn-primary">
                                     <i class="fa fa-edit"></i> Edit
                                 </a>
-                                <a href="crud_informasi.php?hapus=<?php echo $informasi['id_informasi']; ?>" 
+                                <a href="crud_wisata.php?hapus=<?php echo $wisata['id_wisata']; ?>" 
                                    class="btn btn-danger" 
-                                   onclick="return confirm('Yakin hapus informasi <?php echo $informasi['judul']; ?>?')">
-                                    <i class="fa fa-trash"></i> Hapus
+                                   onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
+                                    <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
                                 </a>
                             </td>
                         </tr>
@@ -318,7 +316,7 @@ if (isset($_GET['edit'])) {
                     </tbody>
                 </table>
                 <?php 
-                $total_pages = (int)ceil($total_informasi_all / $per_page);
+                $total_pages = (int)ceil($total_wisata_all / $per_page);
                 if ($total_pages > 1): ?>
                 <div class="pagination">
                     <?php for ($p = 1; $p <= $total_pages; $p++): ?>
@@ -334,7 +332,7 @@ if (isset($_GET['edit'])) {
         </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
     
     <script>
         // Toggle mobile menu

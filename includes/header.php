@@ -1,8 +1,11 @@
 <?php
-// header.php - Konsisten untuk semua halaman
-// Pastikan session aktif dan bahasa tersedia untuk seluruh halaman
 if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
+}
+
+// ensure $base is available (site root) when header is included from pages
+if (!isset($base)) {
+  $base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
 }
 
 // Tangani pergantian bahasa jika parameter lang ada
@@ -15,7 +18,7 @@ if (isset($_GET['lang'])) {
 }
 
 // Sertakan file bahasa sekali saja
-include_once __DIR__ . '/language.php';
+include_once __DIR__ . '/../config/language.php';
 ?>
 <header class="header">
   <div class="header-container container">
@@ -26,19 +29,19 @@ include_once __DIR__ . '/language.php';
     </label>
     <!--logo-->
     <div class="logo-title">
-      <a href="index.php">
-        <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
+      <a href="<?php echo $base; ?>/index.php">
+        <img src="<?php echo $base; ?>/uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
         <h1>KJB</h1>
       </a>
     </div>
     <nav class="navbar">
       <ul>
-        <li><a href="index.php#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
-        <li><a href="index.php#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
-        <li><a href="index.php#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
-        <li><a href="index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
-        <li><a href="informasi.php"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
-        <li><a href="produk.php"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
+  <li><a href="<?php echo $base; ?>/index.php#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
+  <li><a href="<?php echo $base; ?>/index.php#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
+  <li><a href="<?php echo $base; ?>/index.php#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
+  <li><a href="<?php echo $base; ?>/index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
+  <li><a href="<?php echo $base; ?>/informasi.php"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
+  <li><a href="<?php echo $base; ?>/produk.php"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
         <?php
         // Determine logged-in state: prefer site function if exists, otherwise use session fallback
         $loggedIn = false;
@@ -53,10 +56,10 @@ include_once __DIR__ . '/language.php';
         }
 
         if ($loggedIn): ?>
-              <li><a href="dashboard.php"><i class="fa fa-tachometer-alt icon"></i> <?php echo t('dashboard'); ?></a></li>
-              <li><a href="logout.php"><i class="fa fa-sign-out-alt icon"></i> <?php echo t('logout'); ?></a></li>
+              <li><a href="<?php echo $base; ?>/admin/dashboard.php"><i class="fa fa-tachometer-alt icon"></i> <?php echo t('dashboard'); ?></a></li>
+              <li><a href="<?php echo $base; ?>/auth/logout.php"><i class="fa fa-sign-out-alt icon"></i> <?php echo t('logout'); ?></a></li>
             <?php else: ?>
-              <li><a href="login.php"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></a></li>
+              <li><a href="<?php echo $base; ?>/auth/login.php"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></a></li>
             <?php endif; ?>
       </ul>
     </nav>

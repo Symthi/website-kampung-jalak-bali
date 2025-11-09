@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../config/koneksi.php';
+include __DIR__ . '/../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -14,8 +17,8 @@ function isAdmin() {
 
 // Cek apakah user sudah login
 if (!isLoggedIn()) {
-    header("Location: login.php");
-    exit();
+  header("Location: {$base}/auth/login.php");
+  exit();
 }
 
 // Ambil statistik
@@ -76,28 +79,28 @@ if (isAdmin()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('dashboard'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <?php 
-    $current_page = 'dashboard';
-    include 'header.php';
-    ?>
+  <?php 
+  $current_page = 'dashboard';
+  include __DIR__ . '/../includes/header.php';
+  ?>
 
     <section class="dashboard-section">
       <div class="admin-dashboard container">
         <?php if (isAdmin()): ?>
         <aside class="admin-sidebar" aria-label="Admin menu">
           <div class="sidebar-title"><i class="fa fa-cogs"></i> <?php echo t('admin_menu'); ?></div>
-          <ul>
-            <li><a href="crud_wisata.php"><i class="fa fa-map-marked-alt"></i> <?php echo t('manage_tourism'); ?></a></li>
-            <li><a href="crud_informasi.php"><i class="fa fa-info-circle"></i> <?php echo t('manage_information'); ?></a></li>
-            <li><a href="crud_komentar.php"><i class="fa fa-comments"></i> <?php echo t('manage_comments'); ?></a></li>
-            <li><a href="crud_produk.php"><i class="fa fa-box"></i> <?php echo t('manage_products'); ?></a></li>
-            <li><a href="crud_pesan.php"><i class="fa fa-envelope"></i> <?php echo t('manage_messages'); ?></a></li>
-            <li><a href="crud_galeri.php"><i class="fa fa-images"></i> <?php echo t('manage_gallery'); ?></a></li>
-            <li><a href="crud_user.php"><i class="fa fa-users"></i> <?php echo t('manage_users'); ?></a></li>
+            <ul>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_wisata.php"><i class="fa fa-map-marked-alt"></i> <?php echo t('manage_tourism'); ?></a></li>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_informasi.php"><i class="fa fa-info-circle"></i> <?php echo t('manage_information'); ?></a></li>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_komentar.php"><i class="fa fa-comments"></i> <?php echo t('manage_comments'); ?></a></li>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_produk.php"><i class="fa fa-box"></i> <?php echo t('manage_products'); ?></a></li>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_pesan.php"><i class="fa fa-envelope"></i> <?php echo t('manage_messages'); ?></a></li>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_galeri.php"><i class="fa fa-images"></i> <?php echo t('manage_gallery'); ?></a></li>
+            <li><a href="<?php echo $base; ?>/admin/crud/crud_user.php"><i class="fa fa-users"></i> <?php echo t('manage_users'); ?></a></li>
           </ul>
         </aside>
         <?php endif; ?>
@@ -169,7 +172,7 @@ if (isAdmin()) {
       </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/../includes/footer.php'; ?>
     
     <script>
         // Toggle mobile menu

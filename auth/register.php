@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../config/koneksi.php';
+include __DIR__ . '/../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
 
 $error = '';
 
@@ -36,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = 'user';
 
-                header("Location: dashboard.php");
+        header("Location: {$base}/admin/dashboard.php");
                 exit();
             } else {
                 $error = "Gagal membuat akun! Silakan coba lagi.";
@@ -54,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-    <?php include 'header.php'; ?>
+  <?php include __DIR__ . '/../includes/header.php'; ?>
 
     <section class="auth-section">
       <div class="auth-card">
@@ -84,12 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <div class="auth-link">
-          <?php echo t('have_account'); ?> <a href="login.php"><?php echo t('login_here'); ?></a>
+          <?php echo t('have_account'); ?> <a href="<?php echo $base; ?>/auth/login.php"><?php echo t('login_here'); ?></a>
         </div>
       </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/../includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

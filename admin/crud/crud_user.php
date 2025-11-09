@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -137,23 +140,19 @@ foreach ($user_data as $user) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_users'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body class="admin-page">
-    <?php
-    // gunakan header pusat agar konsisten
-    $current_page = 'admin';
-    include 'header.php';
-    ?>
+    <?php $current_page = 'admin'; include __DIR__ . '/../../includes/header.php'; ?>
 
     <section class="crud-section">
         <div class="container">
             <div class="page-header">
                 <h2><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></h2>
                 <nav class="breadcrumb">
-                    <a href="dashboard.php">Dashboard</a> /
+                    <a href="<?php echo $base; ?>/admin/dashboard.php">Dashboard</a> /
                     <span><?php echo t('manage_users'); ?></span>
                 </nav>
             </div>
@@ -329,7 +328,7 @@ foreach ($user_data as $user) {
         </div>
     </section>
     
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
 
     <script>
         $(document).ready(function() {

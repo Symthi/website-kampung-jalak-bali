@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../config/koneksi.php';
+include __DIR__ . '/../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = mysqli_real_escape_string($koneksi, $_POST['nama'] ?? '');
@@ -12,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validasi
     if (empty($nama) || empty($email) || empty($subjek) || empty($pesan)) {
         $_SESSION['error_message'] = "Semua field harus diisi!";
-        header("Location: index.php#kontak");
+        header("Location: {$base}/index.php#kontak");
         exit();
     }
     
@@ -27,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['error_message'] = "Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.";
     }
     
-    header("Location: index.php#kontak");
+    header("Location: {$base}/index.php#kontak");
     exit();
 } else {
-    header("Location: index.php");
+    header("Location: {$base}/index.php");
     exit();
 }
 ?>

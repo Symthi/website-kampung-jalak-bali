@@ -3,13 +3,24 @@ session_start();
 
 // Switch language
 if (isset($_GET['lang'])) {
-    $_SESSION['language'] = ($_GET['lang'] == 'en') ? 'en' : 'id';
-    header("Location: " . $_SERVER['HTTP_REFERER']);
-    exit();
+  $_SESSION['language'] = ($_GET['lang'] == 'en') ? 'en' : 'id';
+  header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/'));
+  exit();
 }
 
-include 'koneksi.php';
-include 'language.php'; // Include language file
+include __DIR__ . '/config/koneksi.php';
+include __DIR__ . '/config/language.php'; // Include language file
+
+// compute base URL (site root) dynamically, e.g. /uas
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+
+// helper to produce public URLs for uploaded files
+function public_url($path) {
+  global $base;
+  if (empty($path)) return '';
+  if (preg_match('#^https?://#i', $path) || strpos($path, '/') === 0) return $path;
+  return $base . '/' . ltrim($path, '/');
+}
 
 // Ambil data wisata dari database dengan pagination (section wisata)
 $per_page_wisata = 5;
@@ -37,15 +48,14 @@ function isAdmin() {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kampoeng Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
-    <?php 
-    $current_page = 'home';
-    include 'header.php';
-    ?>
+  <?php 
+  $current_page = 'home';
+  include __DIR__ . '/includes/header.php';
+  ?>
     <!-- Hero Section -->
     <section id="home" class="hero-section">
       <div class="hero-container">
@@ -240,7 +250,7 @@ function isAdmin() {
           <?php foreach ($wisata_data as $wisata): ?>
           <div class="wisata-card">
             <div class="card-image">
-                <img src="<?php echo $wisata['gambar'] ?: 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wj-wisata-img" />
+                <img src="<?php echo $wisata['gambar'] ? public_url($wisata['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wj-wisata-img" />
               </div>
             <div class="card-content">
               <h3 class="card-title"><?php echo $wisata['judul']; ?></h3>
@@ -300,13 +310,13 @@ function isAdmin() {
           ?>
           <div class="gallery-item">
             <div class="image-container">
-              <img src="<?php echo $galeri['gambar'] ?: 'https://source.unsplash.com/random/600x400/?bali'; ?>" alt="<?php echo $galeri['judul']; ?>" class="gallery-image" />
+              <img src="<?php echo $galeri['gambar'] ? public_url($galeri['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" alt="<?php echo $galeri['judul']; ?>" class="gallery-image" />
               <div class="image-overlay">
                 <div class="overlay-content">
                   <h4 class="image-title"><?php echo $galeri['judul']; ?></h4>
                   <button class="view-button" onclick="openGalleryDetail({
                       title: '<?php echo htmlspecialchars($galeri['judul'], ENT_QUOTES); ?>',
-                      src: '<?php echo htmlspecialchars($galeri['gambar'], ENT_QUOTES); ?>',
+                      src: '<?php echo htmlspecialchars($galeri['gambar'] ? public_url($galeri['gambar']) : '', ENT_QUOTES); ?>',
                       desc: `<?php echo htmlspecialchars($galeri['keterangan'] ?? '', ENT_QUOTES); ?>`,
                       date: '<?php echo htmlspecialchars(date('d M Y', strtotime($galeri['tanggal_upload'] ?? $galeri['tanggal'] ?? 'now')), ENT_QUOTES); ?>'
                     })">
@@ -441,7 +451,7 @@ function isAdmin() {
           <!-- Form Kontak -->
           <div class="contact-form">
             <h3 class="contact-title"><?php echo t('send_message'); ?></h3>
-            <form method="POST" action="proses_kontak.php" class="form">
+            <form method="POST" action="<?php echo $base; ?>/processes/proses_kontak.php" class="form">
               <div class="form-group">
                 <label for="nama" class="form-label"><?php echo t('full_name'); ?></label>
                 <input type="text" id="nama" name="nama" class="form-input" required />
@@ -485,7 +495,7 @@ function isAdmin() {
       </div>
     </section>
 
-    <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
