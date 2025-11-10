@@ -160,7 +160,7 @@ include __DIR__ . '/includes/header.php'; ?>
               <div class="login-prompt">
                 <i class="fas fa-lock"></i>
                 <p><?php echo t('login_to_comment'); ?></p>
-                <a href="login.php" class="btn btn-primary">
+                <a href="auth/login.php" class="btn btn-primary">
                   <i class="fas fa-sign-in-alt"></i> <?php echo t('login'); ?>
                 </a>
               </div>
