@@ -17,7 +17,6 @@ if (!isset($base)) {
         <ul class="footer-links">
           <li><a class="footer-link" href="<?php echo $base; ?>/index.php">Beranda</a></li>
           <li><a class="footer-link" href="<?php echo $base; ?>/informasi.php">Informasi</a></li>
-          <li><a class="footer-link" href="<?php echo $base; ?>/galeri.php">Galeri</a></li>
           <li><a class="footer-link" href="<?php echo $base; ?>/produk.php">Produk</a></li>
         </ul>
       </div>

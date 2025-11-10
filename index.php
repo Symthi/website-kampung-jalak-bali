@@ -251,6 +251,10 @@ function isAdmin() {
           <div class="wisata-card">
             <div class="card-image">
                 <img src="<?php echo $wisata['gambar'] ? public_url($wisata['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wj-wisata-img" />
+                <div class="location-badge">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <?php echo $wisata['lokasi'] ?? 'Bali'; ?>
+                </div>
               </div>
             <div class="card-content">
               <h3 class="card-title"><?php echo $wisata['judul']; ?></h3>
