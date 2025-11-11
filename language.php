@@ -25,12 +25,12 @@ $lang['id'] = array(
     'book_now' => 'Pesan Sekarang',
     
     // Hero Section
-    'hero_title' => 'Selamat Datang di Kampung Jalak Bali',
+    'hero_title' => 'Selamat Datang di Kampoeng Jalak Bali',
     'hero_description' => 'Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.',
     'explore_now' => 'Jelajahi Sekarang',
     
     // About Section
-    'about_title' => 'Tentang Kampung Jalak Bali',
+    'about_title' => 'Tentang Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.',
     'history' => 'Sejarah dan Latar Belakang',
     'vision' => 'Visi',
@@ -46,12 +46,12 @@ $lang['id'] = array(
     
     // Tourism Section
     'tourism_title' => 'Wisata Edukasi',
-    'tourism_subtitle' => 'Jelajahi pengalaman unik konservasi dan budaya di Kampung Jalak Bali',
+    'tourism_subtitle' => 'Jelajahi pengalaman unik konservasi dan budaya di Kampoeng Jalak Bali',
     'duration' => 'Durasi',
     
     // Information Section
     'information_title' => 'Informasi Terbaru',
-    'information_subtitle' => 'Update terbaru seputar Kampung Jalak Bali',
+    'information_subtitle' => 'Update terbaru seputar Kampoeng Jalak Bali',
     'news' => 'Berita',
     'article' => 'Artikel',
     'announcement' => 'Pengumuman',
@@ -59,7 +59,7 @@ $lang['id'] = array(
     
     // Gallery Section
     'gallery_title' => 'Galeri',
-    'gallery_subtitle' => 'Momen-momen indah di Kampung Jalak Bali',
+    'gallery_subtitle' => 'Momen-momen indah di Kampoeng Jalak Bali',
     'view_gallery' => 'Lihat Galeri',
     
     // Products Section
@@ -70,11 +70,11 @@ $lang['id'] = array(
     
     // Supporter Section
     'supporter_title' => 'Supporter & Donor',
-    'supporter_subtitle' => 'Organisasi dan mitra yang mendukung Kampung Jalak Bali',
+    'supporter_subtitle' => 'Organisasi dan mitra yang mendukung Kampoeng Jalak Bali',
     
     // Contact Section
     'contact_title' => 'Kontak Kami',
-    'contact_subtitle' => 'Hubungi kami untuk informasi lebih lanjut tentang Kampung Jalak Bali',
+    'contact_subtitle' => 'Hubungi kami untuk informasi lebih lanjut tentang Kampoeng Jalak Bali',
     'contact_info' => 'Informasi Kontak',
     'address' => 'Alamat',
     'phone' => 'Telepon',
@@ -86,7 +86,7 @@ $lang['id'] = array(
     
     // Location Section
     'location_title' => 'Lokasi Kami',
-    'location_subtitle' => 'Kunjungi Kampung Jalak Bali di Tabanan, Bali',
+    'location_subtitle' => 'Kunjungi Kampoeng Jalak Bali di Tabanan, Bali',
     
     // Footer
     'quick_links' => 'Menu Cepat',
@@ -171,7 +171,7 @@ $lang['id'] = array(
     'error_occurred' => 'Terjadi kesalahan, silakan coba lagi',
 
     'management_structure' => 'Struktur Kepengurusan',
-    'management_structure_subtitle' => 'Susunan pengurus dan peran mereka di Kampung Jalak Bali',
+    'management_structure_subtitle' => 'Susunan pengurus dan peran mereka di Kampoeng Jalak Bali',
     'board_of_directors' => 'Pengurus',
     'committee' => 'Panitia',
     'chairperson' => 'Ketua',
@@ -233,12 +233,12 @@ $lang['en'] = array(
     'book_now' => 'Book Now',
     
     // Hero Section
-    'hero_title' => 'Welcome to Kampung Jalak Bali',
+    'hero_title' => 'Welcome to Kampoeng Jalak Bali',
     'hero_description' => 'A stunning educational tourism destination in the Island of Gods, offering unique experiences about Bali Starling conservation and local culture.',
     'explore_now' => 'Explore Now',
     
     // About Section
-    'about_title' => 'About Kampung Jalak Bali',
+    'about_title' => 'About Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali is an ex-situ conservation center for the Bali Starling, a protected endemic species, located in Banjar Tingkihkerep, Tengkudak Village, Tabanan, Bali.',
     'history' => 'History and Background',
     'vision' => 'Vision',
@@ -254,12 +254,12 @@ $lang['en'] = array(
     
     // Tourism Section
     'tourism_title' => 'Educational Tourism',
-    'tourism_subtitle' => 'Explore unique conservation and cultural experiences at Kampung Jalak Bali',
+    'tourism_subtitle' => 'Explore unique conservation and cultural experiences at Kampoeng Jalak Bali',
     'duration' => 'Duration',
     
     // Information Section
     'information_title' => 'Latest Information',
-    'information_subtitle' => 'Latest updates about Kampung Jalak Bali',
+    'information_subtitle' => 'Latest updates about Kampoeng Jalak Bali',
     'news' => 'News',
     'article' => 'Article',
     'announcement' => 'Announcement',
@@ -267,7 +267,7 @@ $lang['en'] = array(
     
     // Gallery Section
     'gallery_title' => 'Gallery',
-    'gallery_subtitle' => 'Beautiful moments at Kampung Jalak Bali',
+    'gallery_subtitle' => 'Beautiful moments at Kampoeng Jalak Bali',
     'view_gallery' => 'View Gallery',
     
     // Products Section
@@ -278,11 +278,11 @@ $lang['en'] = array(
     
     // Supporter Section
     'supporter_title' => 'Supporter & Donor',
-    'supporter_subtitle' => 'Organizations and partners supporting Kampung Jalak Bali',
+    'supporter_subtitle' => 'Organizations and partners supporting Kampoeng Jalak Bali',
     
     // Contact Section
     'contact_title' => 'Contact Us',
-    'contact_subtitle' => 'Contact us for more information about Kampung Jalak Bali',
+    'contact_subtitle' => 'Contact us for more information about Kampoeng Jalak Bali',
     'contact_info' => 'Contact Information',
     'address' => 'Address',
     'phone' => 'Phone',
@@ -294,7 +294,7 @@ $lang['en'] = array(
     
     // Location Section
     'location_title' => 'Our Location',
-    'location_subtitle' => 'Visit Kampung Jalak Bali in Tabanan, Bali',
+    'location_subtitle' => 'Visit Kampoeng Jalak Bali in Tabanan, Bali',
     
     // Footer
     'quick_links' => 'Quick Links',
@@ -380,7 +380,7 @@ $lang['en'] = array(
 
     // Management / organizational
     'management_structure' => 'Organizational Structure',
-    'management_structure_subtitle' => 'Composition of management and their roles at Kampung Jalak Bali',
+    'management_structure_subtitle' => 'Composition of management and their roles at Kampoeng Jalak Bali',
     'board_of_directors' => 'Board',
     'committee' => 'Committee',
     'chairperson' => 'Chairperson',

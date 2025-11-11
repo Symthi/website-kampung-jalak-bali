@@ -51,53 +51,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><?php echo t('login_title'); ?> | Kampung Jalak Bali</title>
+  <title><?php echo t('login_title'); ?> | Kampoeng Jalak Bali</title>
+  <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <header>
-      <div>
-        <div><h1>Kampung Jalak Bali</h1></div>
-        <nav>
-          <ul>
-            <li><a href="index.php"><?php echo t('home'); ?></a></li>
-            <li><a href="register.php"><?php echo t('register'); ?></a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <?php include 'header.php'; ?>
 
-    <section>
-      <div>
-        <div>
-          <h2><?php echo t('login_title'); ?></h2>
-
-          <?php if (!empty($error)): ?>
-          <div style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px">
-            <?php echo $error; ?>
-          </div>
-          <?php endif; ?>
-
-          <form method="POST" action="">
-            <div>
-              <label for="email"><?php echo t('email_address'); ?></label>
-              <input type="email" id="email" name="email" placeholder="email@example.com" required />
-            </div>
-            <div>
-              <label for="password"><?php echo t('password'); ?></label>
-              <input type="password" id="password" name="password" placeholder="••••••" required />
-            </div>
-            <button type="submit"><?php echo t('login'); ?></button>
-            <p><?php echo t('no_account'); ?> <a href="register.php"><?php echo t('register_here'); ?></a></p>
-          </form>
+    <section class="auth-section">
+      <div class="auth-card">
+        <h2><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login_title'); ?></h2>
+        <?php if (!empty($error)): ?>
+        <div class="alert-error">
+          <?php echo $error; ?>
+        </div>
+        <?php endif; ?>
+        <form method="POST" action="">
+          <label for="email"><i class="fa fa-envelope icon"></i> <?php echo t('email_address'); ?></label>
+          <input type="email" id="email" name="email" placeholder="email@example.com" required />
+          <label for="password"><i class="fa fa-lock icon"></i> <?php echo t('password'); ?></label>
+          <input type="password" id="password" name="password" placeholder="••••••" required />
+          <button type="submit"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></button>
+        </form>
+        <div class="auth-link">
+          <?php echo t('no_account'); ?> <a href="register.php"><?php echo t('register_here'); ?></a>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div>
-        <p>&copy; 2025 Kampung Jalak Bali</p>
-      </div>
-    </footer>
+    <?php include 'footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

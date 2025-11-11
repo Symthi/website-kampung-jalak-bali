@@ -68,77 +68,95 @@ foreach ($pesan_data as $pesan) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_messages'); ?> | Kampung Jalak Bali</title>
+    <title><?php echo t('manage_messages'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<style>
-.pagination { display: flex; gap: 8px; margin-top: 15px; }
-.pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
-.pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
-</style>
 <body>
-    <header>
-        <h1>Kampung Jalak Bali</h1>
-        <nav>
-            <ul>
-                <li><a href="index.php"><?php echo t('home'); ?></a></li>
-                <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
-                <li><a href="crud_pesan.php"><?php echo t('manage_messages'); ?></a></li>
-                <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
-            </ul>
-        </nav>
+    <header class="dashboard-header">
+        <div class="header-container">
+            <!--logo-->
+            <div class="logo-title">
+            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
+            <h1>Kampoeng Jalak Bali</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
+                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <section>
-    <h2><?php echo t('manage_messages'); ?></h2>
+    <section class="crud-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-envelope"></i> <?php echo t('manage_messages'); ?>
+            </h2>
 
-        <?php if (isset($_SESSION['success_message'])): ?>
-            <div style="background: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border: 1px solid #c3e6cb;">
-                <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
-            </div>
-        <?php endif; ?>
+            <?php if (isset($_SESSION['success_message'])): ?>
+                <div class="alert alert-success">
+                    <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
+                </div>
+            <?php endif; ?>
 
         <?php if (isset($_SESSION['error_message'])): ?>
-            <div style="background: #f8d7da; color: #721c24; padding: 10px; margin: 10px 0; border: 1px solid #f5c6cb;">
+            <div class="alert-error">
                 <?php echo $_SESSION['error_message']; unset($_SESSION['error_message']); ?>
             </div>
         <?php endif; ?>
 
         <!-- Statistik -->
-        <div>
-            <h3><?php echo t('statistics'); ?></h3>
-            <div>
-                <div>
-                    <h4><?php echo t('total_messages'); ?></h4>
-                    <p><?php echo $total_pesan_all; ?></p>
+        <div class="crud-panel">
+            <h3 class="panel-title">
+                <i class="fa fa-chart-bar"></i> <?php echo t('statistics'); ?>
+            </h3>
+            <div class="dashboard-stats">
+                <div class="dashboard-card">
+                    <i class="fa fa-envelope-open"></i>
+                    <div class="stat-title"><?php echo t('total_messages'); ?></div>
+                    <div class="stat-number"><?php echo $total_pesan_all; ?></div>
                 </div>
-                <div>
-                    <h4><?php echo t('unread'); ?></h4>
-                    <p><?php echo $belum_dibaca; ?></p>
+                <div class="dashboard-card">
+                    <i class="fa fa-envelope"></i>
+                    <div class="stat-title"><?php echo t('unread'); ?></div>
+                    <div class="stat-number"><?php echo $belum_dibaca; ?></div>
                 </div>
-                <div>
-                    <h4><?php echo t('replied'); ?></h4>
-                    <p><?php echo $sudah_dibalas; ?></p>
+                <div class="dashboard-card">
+                    <i class="fa fa-reply-all"></i>
+                    <div class="stat-title"><?php echo t('replied'); ?></div>
+                    <div class="stat-number"><?php echo $sudah_dibalas; ?></div>
                 </div>
             </div>
         </div>
 
         <!-- Daftar Pesan -->
-        <div>
-            <h3><?php echo t('contact_info'); ?></h3>
+        <div class="crud-list">
+            <h3 class="list-title">
+                <i class="fa fa-list"></i> <?php echo t('contact_info'); ?>
+            </h3>
 
             <?php if (empty($pesan_data)): ?>
                 <p><?php echo t('no_data'); ?></p>
             <?php else: ?>
-                <table border="1">
+                <table class="crud-table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Pengirim</th>
-                            <th>Subjek</th>
+                            <th width="50">No</th>
+                            <th width="200">Pengirim</th>
+                            <th width="150">Subjek</th>
                             <th>Pesan</th>
-                            <th>Tanggal</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th width="120">Tanggal</th>
+                            <th width="100">Status</th>
+                            <th width="120">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -154,14 +172,20 @@ foreach ($pesan_data as $pesan) {
                             <td><?php echo date('d M Y H:i', strtotime($pesan['tanggal'])); ?></td>
                             <td>
                                 <?php if (!$pesan['dibaca']): ?>
-                                    <span style="background: #ffc107; color: black; padding: 4px 8px; border-radius: 12px;">Baru</span>
+                                    <span class="status-badge status-active">Baru</span>
                                 <?php else: ?>
-                                    <span style="background: #6c757d; color: white; padding: 4px 8px; border-radius: 12px;">Sudah Dibaca</span>
+                                    <span class="status-badge status-inactive">Sudah Dibaca</span>
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="crud_pesan.php?baca=<?php echo $pesan['id_pesan']; ?>">Baca</a>
-                                <a href="crud_pesan.php?hapus=<?php echo $pesan['id_pesan']; ?>" onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')"><?php echo t('delete'); ?></a>
+                                <a href="crud_pesan.php?baca=<?php echo $pesan['id_pesan']; ?>" class="btn btn-primary">
+                                    <i class="fa fa-eye"></i> Baca
+                                </a>
+                                <a href="crud_pesan.php?hapus=<?php echo $pesan['id_pesan']; ?>" 
+                                   class="btn btn-danger" 
+                                   onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
+                                    <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
+                                </a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -184,9 +208,21 @@ foreach ($pesan_data as $pesan) {
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2025 Kampung Jalak Bali | Kelola Pesan</p>
-    </footer>
+    <?php include 'footer.php'; ?>
+    
+    <script>
+        // Toggle mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('show');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php mysqli_close($koneksi); ?>

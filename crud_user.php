@@ -136,52 +136,45 @@ foreach ($user_data as $user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_users'); ?> | Kampung Jalak Bali</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 8px 16px; margin: 5px; text-decoration: none; border-radius: 4px; display: inline-block; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .alert { padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; }
-        .badge-success { background: #28a745; color: white; }
-        .badge-primary { background: #007bff; color: white; }
-        .badge-secondary { background: #6c757d; color: white; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-        .stat-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
-        .stat-card h3 { margin: 0 0 10px 0; font-size: 14px; color: #666; }
-        .stat-card .number { font-size: 32px; font-weight: bold; margin: 0; }
-        .current-user { background-color: #e7f3ff !important; }
-        .pagination { display: flex; gap: 8px; margin-top: 15px; }
-        .pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
-        .pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
-    </style>
+    <title><?php echo t('manage_users'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <header>
-        <div>
-            <div><h1>Kampung Jalak Bali</h1></div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="crud_user.php"><?php echo t('manage_users'); ?></a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                </ul>
-            </nav>
+    <header class="dashboard-header">
+        <div class="header-container">
+            <!--logo-->
+            <div class="logo-title">
+            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
+            <h1>Kampoeng Jalak Bali</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
+                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <section>
-        <div>
+    <section class="dashboard-content">
+        <div class="content-container">
+            <div class="page-header">
+                <h2><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></h2>
+                <nav class="breadcrumb">
+                    <a href="dashboard.php">Dashboard</a> /
+                    <span><?php echo t('manage_users'); ?></span>
+                </nav>
+            </div>
+
             <h2><?php echo t('manage_users'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
@@ -198,65 +191,94 @@ foreach ($user_data as $user) {
 
             <!-- Statistik -->
             <div class="stats">
-                <div class="stat-card">
-                    <h3>Total User</h3>
-                    <p class="number"><?php echo $total_user; ?></p>
+                <div class="stat-card bg-primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total User</h3>
+                        <p class="number"><?php echo $total_user; ?></p>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <h3>Admin</h3>
-                    <p class="number"><?php echo $total_admin; ?></p>
+                <div class="stat-card bg-success">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Admin</h3>
+                        <p class="number"><?php echo $total_admin; ?></p>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <h3>User Regular</h3>
-                    <p class="number"><?php echo $total_regular; ?></p>
+                <div class="stat-card bg-info">
+                    <div class="stat-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>User Regular</h3>
+                        <p class="number"><?php echo $total_regular; ?></p>
+                    </div>
                 </div>
             </div>
 
             <!-- Form Tambah/Edit User -->
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('user'); ?></h3>
+            <div class="panel form-panel">
+                <div class="panel-header">
+                    <h3>
+                        <i class="fas <?php echo $edit_data ? 'fa-user-edit' : 'fa-user-plus'; ?>"></i>
+                        <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('user'); ?>
+                    </h3>
+                </div>
                 <form method="POST" action="">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_user']; ?>">
                     <?php endif; ?>
                     
                     <div class="form-group">
-                        <label>Nama Lengkap:</label>
+                        <label><i class="fas fa-user"></i> Nama Lengkap:</label>
                         <input type="text" name="nama" value="<?php echo $edit_data['nama'] ?? ''; ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label>Email:</label>
+                        <label><i class="fas fa-envelope"></i> Email:</label>
                         <input type="email" name="email" value="<?php echo $edit_data['email'] ?? ''; ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label>Password:</label>
+                        <label><i class="fas fa-lock"></i> Password:</label>
                         <input type="password" name="password" <?php echo $edit_data ? 'placeholder="Kosongkan jika tidak ingin mengubah"' : 'required'; ?>>
-                        <small><?php echo $edit_data ? 'Kosongkan password jika tidak ingin mengubah' : ''; ?></small>
+                        <small class="form-text"><?php echo $edit_data ? 'Kosongkan password jika tidak ingin mengubah' : 'Password minimal 6 karakter'; ?></small>
                     </div>
                     
                     <div class="form-group">
-                        <label>Role:</label>
+                        <label><i class="fas fa-user-tag"></i> Role:</label>
                         <select name="role" required>
                             <option value="user" <?php echo ($edit_data['role'] ?? '') === 'user' ? 'selected' : ''; ?>>User</option>
                             <option value="admin" <?php echo ($edit_data['role'] ?? '') === 'admin' ? 'selected' : ''; ?>>Admin</option>
                         </select>
                     </div>
                     
-                    <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
-                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('user'); ?>
+                    <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary btn-icon">
+                        <i class="fas <?php echo $edit_data ? 'fa-save' : 'fa-plus'; ?>"></i>
+                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('user'); ?> 
                     </button>
                     
                     <?php if ($edit_data): ?>
-                        <a href="crud_user.php" class="btn btn-warning"><?php echo t('cancel'); ?></a>
+                        <a href="crud_user.php" class="btn btn-warning btn-icon">
+                            <i class="fas fa-times"></i>
+                            <?php echo t('cancel'); ?>
+                        </a>
                     <?php endif; ?>
                 </form>
             </div>
 
-            <!-- Daftar User -->
-            <div>
-                <h3><?php echo t('user'); ?> <?php echo t('gallery_list'); /* reuse gallery_list to mean list */ ?></h3>
+            <!-- Table User -->
+            <div class="panel table-panel">
+                <div class="panel-header">
+                    <h3>
+                        <i class="fas fa-list"></i>
+                        <?php echo t('user'); ?> <?php echo t('gallery_list'); ?>
+                    </h3>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -281,27 +303,34 @@ foreach ($user_data as $user) {
                             <td><?php echo $user['email']; ?></td>
                             <td>
                                 <span class="badge <?php echo $user['role'] === 'admin' ? 'badge-success' : 'badge-secondary'; ?>">
+                                    <i class="fas <?php echo $user['role'] === 'admin' ? 'fa-user-shield' : 'fa-user'; ?>"></i>
                                     <?php echo ucfirst($user['role']); ?>
                                 </span>
                             </td>
                             <td><?php echo date('d M Y', strtotime($user['tanggal_daftar'])); ?></td>
                             <td>
-                                <a href="crud_user.php?edit=<?php echo $user['id_user']; ?>" class="btn btn-primary">Edit</a>
+                                <a href="crud_user.php?edit=<?php echo $user['id_user']; ?>" class="btn btn-primary btn-icon btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
                                 
                                 <?php if ($user['id_user'] != $_SESSION['user_id']): ?>
-                                <a href="crud_user.php?hapus=<?php echo $user['id_user']; ?>" 
-                                   class="btn btn-danger" 
-                                   onclick="return confirm('Yakin hapus user <?php echo $user['nama']; ?>?')">
-                                    Hapus
-                                </a>
+                                    <a href="crud_user.php?hapus=<?php echo $user['id_user']; ?>" 
+                                       class="btn btn-danger btn-icon btn-sm" 
+                                       onclick="return confirm('Yakin hapus user <?php echo $user['nama']; ?>?')">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </a>
                                 <?php else: ?>
-                                <span class="btn btn-secondary" style="opacity: 0.5;">Hapus</span>
+                                    <span class="btn btn-secondary btn-icon btn-sm disabled">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </span>
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
+                <!-- Pagination -->
                 <?php 
                 $total_pages = (int)ceil($total_user_all / $per_page);
                 if ($total_pages > 1): ?>
@@ -310,7 +339,7 @@ foreach ($user_data as $user) {
                         <?php if ($p == $page): ?>
                             <span class="active"><?php echo $p; ?></span>
                         <?php else: ?>
-                            <a href="?page=<?php echo $p; ?>"?><?php echo $p; ?></a>
+                            <a href="?page=<?php echo $p; ?>"><?php echo $p; ?></a>
                         <?php endif; ?>
                     <?php endfor; ?>
                 </div>
@@ -318,12 +347,28 @@ foreach ($user_data as $user) {
             </div>
         </div>
     </section>
-
-    <footer>
-        <div>
-            <p>&copy; 2025 Kampung Jalak Bali | Kelola User</p>
+    
+    <footer class="dashboard-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Kampoeng Jalak Bali | <i class="fas fa-users"></i> Kelola User</p>
         </div>
     </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Toggle mobile menu
+            $('.menu-toggle').click(function() {
+                $('.nav-container').toggleClass('active');
+            });
+
+            // Close menu on window resize
+            $(window).resize(function() {
+                if ($(window).width() > 768) {
+                    $('.nav-container').removeClass('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 <?php mysqli_close($koneksi); ?>

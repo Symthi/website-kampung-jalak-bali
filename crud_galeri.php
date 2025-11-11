@@ -185,51 +185,39 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_gallery'); ?> | Kampung Jalak Bali</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 8px 16px; margin: 5px; text-decoration: none; border-radius: 4px; display: inline-block; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .btn-success { background: #28a745; color: white; }
-        .alert { padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .gallery-img { max-width: 150px; max-height: 100px; object-fit: cover; border-radius: 4px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
-        .grid-item { border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; background: white; }
-        .grid-item img { max-width: 100%; height: 180px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
-        .gambar-preview { max-width: 200px; max-height: 150px; margin: 10px 0; border-radius: 4px; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
-        .stat-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
-        .stat-card h3 { margin: 0 0 5px 0; font-size: 14px; color: #666; }
-        .stat-card .number { font-size: 24px; font-weight: bold; margin: 0; color: #1a6b3b; }
-    </style>
+    <title><?php echo t('manage_gallery'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div>
-            <div><h1>Kampung Jalak Bali</h1></div>
-            <nav>
-                <ul>
-                    <li><a href="index.php"><?php echo t('home'); ?></a></li>
-                    <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
-                    <li><a href="crud_galeri.php"><?php echo t('manage_gallery'); ?></a></li>
-                    <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
-                </ul>
-            </nav>
+    <header class="dashboard-header">
+        <div class="header-container">
+            <!--logo-->
+            <div class="logo-title">
+            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
+            <h1>Kampoeng Jalak Bali</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
+                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <section>
-        <div>
-            <h2><?php echo t('manage_gallery'); ?></h2>
+    <section class="crud-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-images"></i> <?php echo t('manage_gallery'); ?>
+            </h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -244,24 +232,35 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <?php endif; ?>
 
             <!-- Statistik -->
-            <div class="stats">
-                <div class="stat-card">
-                    <h3><?php echo t('total_images'); ?></h3>
-                    <p class="number"><?php echo count($galeri_data); ?></p>
-                </div>
-                <div class="stat-card">
-                    <h3><?php echo t('folder'); ?></h3>
-                    <p class="number">uploads/galeri/</p>
-                </div>
-                <div class="stat-card">
-                    <h3><?php echo t('max_size'); ?></h3>
-                    <p class="number">2 MB</p>
+            <div class="crud-panel">
+                <h3 class="panel-title">
+                    <i class="fa fa-chart-bar"></i> <?php echo t('statistics'); ?>
+                </h3>
+                <div class="dashboard-stats">
+                    <div class="dashboard-card">
+                        <i class="fa fa-images"></i>
+                        <div class="stat-title"><?php echo t('total_images'); ?></div>
+                        <div class="stat-number"><?php echo count($galeri_data); ?></div>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fa fa-folder"></i>
+                        <div class="stat-title"><?php echo t('folder'); ?></div>
+                        <div class="stat-number">uploads/galeri/</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fa fa-file-archive"></i>
+                        <div class="stat-title"><?php echo t('max_size'); ?></div>
+                        <div class="stat-number">2 MB</div>
+                    </div>
                 </div>
             </div>
 
             <!-- Form Upload/Edit Gambar -->
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('upload_image'); ?> <?php echo t('gallery_list') == 'Gallery List' ? '' : ''; ?></h3>
+            <div class="crud-panel">
+                <h3 class="panel-title">
+                    <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
+                    <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('upload_image'); ?> <?php echo t('gallery_list') == 'Gallery List' ? '' : ''; ?>
+                </h3>
                 <form method="POST" action="" enctype="multipart/form-data">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_galeri']; ?>">
@@ -303,11 +302,14 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </div>
 
             <!-- Grid Galeri -->
-            <div>
-                <h3><?php echo t('gallery_list'); ?> (<?php echo $total_galeri_all; ?> <?php echo t('upload_image'); ?>)</h3>
+            <div class="crud-list">
+                <h3 class="list-title">
+                    <i class="fa fa-list"></i> <?php echo t('gallery_list'); ?> 
+                    <span class="badge"><?php echo $total_galeri_all; ?> <?php echo t('upload_image'); ?></span>
+                </h3>
                 
                 <?php if (empty($galeri_data)): ?>
-                    <p style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px;">
+                    <p class="panel center">
                         <?php echo t('no_gallery_images'); ?>
                     </p>
                 <?php else: ?>
@@ -322,12 +324,14 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <h4><?php echo $galeri['judul']; ?></h4>
                         <p><?php echo $galeri['keterangan']; ?></p>
                         <small>Upload: <?php echo date('d M Y', strtotime($galeri['tanggal_upload'])); ?></small>
-                        <div style="margin-top: 15px;">
-                            <a href="crud_galeri.php?edit=<?php echo $galeri['id_galeri']; ?>" class="btn btn-primary"><?php echo t('edit'); ?></a>
+                        <div class="mt-15">
+                            <a href="crud_galeri.php?edit=<?php echo $galeri['id_galeri']; ?>" class="btn btn-primary">
+                                <i class="fa fa-edit"></i> <?php echo t('edit'); ?>
+                            </a>
                             <a href="crud_galeri.php?hapus=<?php echo $galeri['id_galeri']; ?>" 
                                class="btn btn-danger" 
                                onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
-                                <?php echo t('delete'); ?>
+                                <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
                             </a>
                         </div>
                     </div>
@@ -335,7 +339,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </div>
                 
                 <!-- Tabel View (Alternatif) -->
-                <details style="margin-top: 30px;">
+                <details class="mt-30">
                     <summary><strong><?php echo t('gallery_list'); ?> - Table View</strong></summary>
                     <table>
                         <thead>
@@ -378,12 +382,12 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <?php 
                 $total_pages = (int)ceil($total_galeri_all / $per_page);
                 if ($total_pages > 1): ?>
-                <div class="pagination" style="display:flex; gap:8px; margin-top:15px;">
+                <div class="pagination">
                     <?php for ($p = 1; $p <= $total_pages; $p++): ?>
                         <?php if ($p == $page): ?>
-                            <span class="active" style="padding:6px 10px; border:1px solid #ddd; border-radius:4px; background:#007bff; color:#fff; border-color:#007bff;"><?php echo $p; ?></span>
+                            <span class="active"><?php echo $p; ?></span>
                         <?php else: ?>
-                            <a href="?page=<?php echo $p; ?>" style="padding:6px 10px; border:1px solid #ddd; border-radius:4px; text-decoration:none; color:#333;"><?php echo $p; ?></a>
+                            <a href="?page=<?php echo $p; ?>"><?php echo $p; ?></a>
                         <?php endif; ?>
                     <?php endfor; ?>
                 </div>
@@ -391,24 +395,22 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </div>
 
             <!-- Quick Actions -->
-            <div style="margin-top: 30px; padding: 20px; background: #e7f3ff; border-radius: 8px;">
-                <h3>Tips Upload Gambar</h3>
-                <ul>
-                    <li>Gunakan gambar dengan resolusi minimal 800x600 pixel</li>
-                    <li>Format yang didukung: JPG, PNG, GIF</li>
-                    <li>Ukuran maksimal file: 2MB</li>
-                    <li>Nama file akan di-generate otomatis</li>
-                    <li>Gambar akan di-compress otomatis untuk optimasi</li>
+            <div class="crud-panel mt-30">
+                <h3 class="panel-title">
+                    <i class="fa fa-lightbulb"></i> Tips Upload Gambar
+                </h3>
+                <ul class="tips-list">
+                    <li><i class="fa fa-check"></i> Gunakan gambar dengan resolusi minimal 800x600 pixel</li>
+                    <li><i class="fa fa-check"></i> Format yang didukung: JPG, PNG, GIF</li>
+                    <li><i class="fa fa-check"></i> Ukuran maksimal file: 2MB</li>
+                    <li><i class="fa fa-check"></i> Nama file akan di-generate otomatis</li>
+                    <li><i class="fa fa-check"></i> Gambar akan di-compress otomatis untuk optimasi</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div>
-            <p>&copy; 2025 Kampung Jalak Bali | Kelola Galeri</p>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
 
     <script>
         // Preview gambar sebelum upload
@@ -430,8 +432,6 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             const preview = document.createElement('img');
                             preview.src = e.target.result;
                             preview.className = 'gambar-preview';
-                            preview.style.display = 'block';
-                            preview.style.margin = '10px 0';
                             
                             // Sisipkan setelah input file
                             fileInput.parentNode.appendChild(preview);

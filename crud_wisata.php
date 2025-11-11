@@ -181,47 +181,36 @@ if (isset($_GET['edit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('manage_tourism'); ?> | Kampung Jalak Bali</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 8px 16px; margin: 5px; text-decoration: none; border-radius: 4px; display: inline-block; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .alert { padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        .gambar-preview { max-width: 200px; max-height: 150px; margin: 10px 0; }
-    </style>
-    <style>
-        .pagination { display: flex; gap: 8px; margin-top: 15px; }
-        .pagination a, .pagination span { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
-        .pagination .active { background: #007bff; color: #fff; border-color: #007bff; }
-    </style>
+    <title><?php echo t('manage_tourism'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div>
-            <div><h1>Kampung Jalak Bali</h1></div>
-            <nav>
-                <ul>
-                    <li><a href="index.php"><?php echo t('home'); ?></a></li>
-                    <li><a href="dashboard.php"><?php echo t('dashboard'); ?></a></li>
-                    <li><a href="crud_wisata.php"><?php echo t('manage_tourism'); ?></a></li>
-                    <li><a href="logout.php"><?php echo t('logout'); ?></a></li>
-                </ul>
-            </nav>
+    <header class="dashboard-header">
+        <div class="header-container">
+            <!--logo-->
+            <div class="logo-title">
+            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
+            <h1>Kampoeng Jalak Bali</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
+                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-
-    <section>
-        <div>
-            <h2><?php echo t('manage_tourism'); ?></h2>
+    <section class="crud-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fa fa-map-marked-alt"></i> <?php echo t('manage_tourism'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
                 <div class="alert alert-success">
@@ -236,9 +225,12 @@ if (isset($_GET['edit'])) {
             <?php endif; ?>
 
             <!-- Form Tambah/Edit Wisata -->
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3><?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('tourism'); ?></h3>
-                <form method="POST" action="" enctype="multipart/form-data">
+            <div class="crud-panel">
+                <h3 class="panel-title">
+                    <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
+                    <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('tourism'); ?>
+                </h3>
+                <form method="POST" action="" enctype="multipart/form-data" class="crud-form">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_wisata']; ?>">
                         <input type="hidden" name="gambar_lama" value="<?php echo $edit_data['gambar']; ?>">
@@ -262,7 +254,7 @@ if (isset($_GET['edit'])) {
                         <?php if ($edit_data && $edit_data['gambar']): ?>
                             <div>
                                 <img src="<?php echo $edit_data['gambar']; ?>" class="gambar-preview" 
-                                     onerror="this.style.display='none'">
+                                     onerror="this.src='https://source.unsplash.com/random/200x150/?bali'">
                                 <p><?php echo t('upload_image'); ?> saat ini</p>
                             </div>
                         <?php endif; ?>
@@ -284,9 +276,12 @@ if (isset($_GET['edit'])) {
             </div>
 
             <!-- Daftar Wisata -->
-            <div>
-                <h3><?php echo t('tourism_title'); ?> / <?php echo t('gallery_list'); ?></h3>
-                <table>
+            <div class="crud-list">
+                <h3 class="list-title">
+                    <i class="fa fa-list"></i>
+                    <?php echo t('tourism_title'); ?> / <?php echo t('gallery_list'); ?>
+                </h3>
+                <table class="crud-table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -303,21 +298,23 @@ if (isset($_GET['edit'])) {
                             <td><?php echo $offset + $index + 1; ?></td>
                             <td>
                                 <?php if ($wisata['gambar']): ?>
-                                    <img src="<?php echo $wisata['gambar']; ?>" style="max-width: 80px; max-height: 60px; object-fit: cover;" 
+                                    <img src="<?php echo $wisata['gambar']; ?>" class="thumb-img" 
                                          onerror="this.src='https://source.unsplash.com/random/80x60/?bali'">
                                 <?php else: ?>
-                                    <img src="https://source.unsplash.com/random/80x60/?bali" style="max-width: 80px; max-height: 60px; object-fit: cover;">
+                                    <img src="https://source.unsplash.com/random/80x60/?bali" class="thumb-img">
                                 <?php endif; ?>
                             </td>
                             <td><?php echo $wisata['judul']; ?></td>
                             <td><?php echo $wisata['durasi']; ?></td>
                             <td><?php echo date('d M Y', strtotime($wisata['tanggal_ditambahkan'])); ?></td>
                             <td>
-                                <a href="crud_wisata.php?edit=<?php echo $wisata['id_wisata']; ?>" class="btn btn-primary">Edit</a>
+                                <a href="crud_wisata.php?edit=<?php echo $wisata['id_wisata']; ?>" class="btn btn-primary">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
                                 <a href="crud_wisata.php?hapus=<?php echo $wisata['id_wisata']; ?>" 
                                    class="btn btn-danger" 
                                    onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
-                                    <?php echo t('delete'); ?>
+                                    <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
                                 </a>
                             </td>
                         </tr>
@@ -341,11 +338,21 @@ if (isset($_GET['edit'])) {
         </div>
     </section>
 
-    <footer>
-        <div>
-            <p>&copy; 2025 Kampung Jalak Bali | Kelola Wisata</p>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
+    
+    <script>
+        // Toggle mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('show');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php mysqli_close($koneksi); ?>

@@ -3,120 +3,93 @@ session_start();
 include 'koneksi.php';
 include 'language.php';
 
-// Fungsi cek login
-function isLoggedIn() {
-    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
-}
-
-// Jika sudah login, redirect ke dashboard
-if (isLoggedIn()) {
-    header("Location: dashboard.php");
-    exit();
-}
-
-// Proses registrasi
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = $_POST['nama'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
-    
-    // Validasi
-    if (empty($nama) || empty($email) || empty($password)) {
-        $error = "Semua field harus diisi!";
-    } elseif (strlen($password) < 6) {
-        $error = "Password minimal 6 karakter!";
-    } else {
+
+    if ($nama && $email && $password) {
         // Cek apakah email sudah terdaftar
-        $query_check = "SELECT id_user FROM user WHERE email = ?";
+        $query_check = "SELECT * FROM user WHERE email = ?";
         $stmt_check = mysqli_prepare($koneksi, $query_check);
         mysqli_stmt_bind_param($stmt_check, "s", $email);
         mysqli_stmt_execute($stmt_check);
         $result_check = mysqli_stmt_get_result($stmt_check);
 
-        if (mysqli_num_rows($result_check) > 0) { 
-          $error = "Email sudah terdaftar!"; 
-        } else { 
-          // Hash password 
-          $hashed_password = password_hash($password, PASSWORD_DEFAULT); 
-          // Simpan ke database 
-          $query = "INSERT INTO user (nama, email, password, role) VALUES (?, ?, ?, 'user')"; 
-          $stmt = mysqli_prepare($koneksi, $query); 
-          mysqli_stmt_bind_param($stmt, "sss", $nama, $email, $hashed_password); 
-          if (mysqli_stmt_execute($stmt)) { 
-            $user_id = mysqli_insert_id($koneksi); 
-            // Auto login setelah registrasi 
-            $_SESSION['user_id'] = $user_id; 
-            $_SESSION['nama'] = $nama; 
-            $_SESSION['email'] = $email; 
-            $_SESSION['role'] = 'user'; 
+        if (mysqli_num_rows($result_check) > 0) {
+            $error = "Email sudah terdaftar!";
+        } else {
+            // Hash password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            header("Location: dashboard.php"); 
-            exit(); 
-          } else { 
-            $error = "Gagal membuat akun! Silakan coba lagi."; 
-          } 
-        } 
-      } 
-  } 
-  ?> 
+            // Simpan ke database
+            $query = "INSERT INTO user (nama, email, password, role) VALUES (?, ?, ?, 'user')";
+            $stmt = mysqli_prepare($koneksi, $query);
+            mysqli_stmt_bind_param($stmt, "sss", $nama, $email, $hashed_password);
+
+            if (mysqli_stmt_execute($stmt)) {
+                // Auto login
+                $_SESSION['user_id'] = mysqli_insert_id($koneksi);
+                $_SESSION['nama'] = $nama;
+                $_SESSION['email'] = $email;
+                $_SESSION['role'] = 'user';
+
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $error = "Gagal membuat akun! Silakan coba lagi.";
+            }
+        }
+    } else {
+        $error = "Semua field wajib diisi!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><?php echo t('register_title'); ?> | Kampung Jalak Bali</title>
+    <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-    <header>
-      <div>
-        <div><h1>Kampung Jalak Bali</h1></div>
-        <nav>
-          <ul>
-            <li><a href="index.php"><?php echo t('home'); ?></a></li>
-            <li><a href="login.php"><?php echo t('login'); ?></a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <?php include 'header.php'; ?>
 
-    <section>
-      <div>
-        <div>
-          <h2><?php echo t('register_title'); ?></h2>
+    <section class="auth-section">
+      <div class="auth-card">
+        <h2><i class="fa fa-user-plus icon"></i> <?php echo t('register_title'); ?></h2>
 
-          <?php if (!empty($error)): ?>
-          <div style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px">
-            <?php echo $error; ?>
-          </div>
-          <?php endif; ?>
+        <?php if (!empty($error)): ?>
+        <div class="alert-error">
+          <?php echo $error; ?>
+        </div>
+        <?php endif; ?>
 
-          <form method="POST" action="">
-            <div>
-              <label for="nama"><?php echo t('full_name'); ?></label>
-              <input type="text" id="nama" name="nama" placeholder="Nama Anda" required />
-            </div>
-            <div>
-              <label for="email"><?php echo t('email_address'); ?></label>
-              <input type="email" id="email" name="email" placeholder="email@example.com" required />
-            </div>
-            <div>
-              <label for="password"><?php echo t('password'); ?></label>
-              <input type="password" id="password" name="password" placeholder="Minimal 6 karakter" required />
-              <small><?php echo t('password_min_length'); ?></small>
-            </div>
-            <button type="submit"><?php echo t('register'); ?></button>
-            <p><?php echo t('have_account'); ?> <a href="login.php"><?php echo t('login_here'); ?></a></p>
-          </form>
+        <form method="POST" action="">
+          <label for="nama"><i class="fa fa-user icon"></i> <?php echo t('name'); ?></label>
+          <input type="text" id="nama" name="nama" required />
+
+          <label for="email"><i class="fa fa-envelope icon"></i> <?php echo t('email_address'); ?></label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="password"><i class="fa fa-lock icon"></i> <?php echo t('password'); ?></label>
+          <input type="password" id="password" name="password" required />
+
+          <button type="submit"><i class="fa fa-user-plus icon"></i> <?php echo t('register'); ?></button>
+        </form>
+
+        <div class="auth-link">
+          <?php echo t('have_account'); ?> <a href="login.php"><?php echo t('login_here'); ?></a>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div>
-        <p>&copy; 2025 Kampung Jalak Bali</p>
-      </div>
-    </footer>
+    <?php include 'footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
