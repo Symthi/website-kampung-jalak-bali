@@ -302,7 +302,7 @@ if (isset($_GET['edit'])) {
             <div class="crud-list">
                 <h3 class="list-title">
                     <i class="fa fa-list"></i>
-                    <?php echo t('tourism_title'); ?> / <?php echo t('gallery_list'); ?>
+                    <?php echo t('tourism_title'); ?>
                 </h3>
                 <table class="crud-table">
                     <thead>
