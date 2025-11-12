@@ -193,34 +193,6 @@ if (isset($_GET['edit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_tourism'); ?> | Kampoeng Jalak Bali</title>
-<<<<<<< HEAD:crud_wisata.php
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    <header class="dashboard-header">
-        <div class="header-container">
-            <!--logo-->
-            <div class="logo-title">
-            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
-            <h1>Kampoeng Jalak Bali</h1>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
-                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-=======
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -230,7 +202,6 @@ if (isset($_GET['edit'])) {
     $current_page = 'admin';
     include __DIR__ . '/../../includes/header.php';
     ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_wisata.php
     <section class="crud-section">
         <div class="container">
             <h2 class="section-title"><i class="fa fa-map-marked-alt"></i> <?php echo t('manage_tourism'); ?></h2>
@@ -321,11 +292,7 @@ if (isset($_GET['edit'])) {
                             <td><?php echo $offset + $index + 1; ?></td>
                             <td>
                                 <?php if ($wisata['gambar']): ?>
-<<<<<<< HEAD:crud_wisata.php
-                                    <img src="<?php echo $wisata['gambar']; ?>" class="thumb-img" 
-=======
                                     <img src="<?php echo $base . '/' . $wisata['gambar']; ?>" class="thumb-img" 
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_wisata.php
                                          onerror="this.src='https://source.unsplash.com/random/80x60/?bali'">
                                 <?php else: ?>
                                     <img src="https://source.unsplash.com/random/80x60/?bali" class="thumb-img">
@@ -365,11 +332,7 @@ if (isset($_GET['edit'])) {
         </div>
     </section>
 
-<<<<<<< HEAD:crud_wisata.php
-    <?php include 'footer.php'; ?>
-=======
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_wisata.php
     
     <script>
         // Toggle mobile menu

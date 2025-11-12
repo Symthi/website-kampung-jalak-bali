@@ -48,16 +48,6 @@ function isAdmin() {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kampoeng Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  </head>
-  <body>
-    <?php 
-    $current_page = 'home';
-    include 'header.php';
-    ?>
-=======
   <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
@@ -66,7 +56,6 @@ function isAdmin() {
   $current_page = 'home';
   include __DIR__ . '/includes/header.php';
   ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
     <!-- Hero Section -->
     <section id="home" class="hero-section">
       <div class="hero-container">
@@ -98,22 +87,6 @@ function isAdmin() {
             </div>
           </div>
 
-<<<<<<< HEAD
-              <div class="content-section"> <br>
-                <h3 class="content-title"><?php echo t('history'); ?></h3>
-                <p>
-                  Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi
-                  Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.
-                </p>
-                <p>
-                  Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung
-                  satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.
-                </p>
-              </div>
-
-              <div class="content-section">
-                <div class="vision-mission-grid">
-=======
           <!-- Cards Section -->
           <div class="cards-section">
             <!-- Vision & Mission Card -->
@@ -121,7 +94,6 @@ function isAdmin() {
               <h3 class="content-title">Visi & Misi</h3>
               <div class="vision-mission-slider">
                 <div class="slider-content" id="visionMissionSlider">
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
                   <div class="vision-card">
                     <div class="card-header">
                       <div class="icon-wrapper">
@@ -210,10 +182,6 @@ function isAdmin() {
       </div>
     </section>
 
-<<<<<<< HEAD
-          <div class="content-image">
-            <img src="https://source.unsplash.com/random/600x400/?bali,village" alt="Kampoeng Jalak Bali" class="featured-image" />
-=======
     <script>
               // Vision Mission Slider
               function showVisionMission(index) {
@@ -263,7 +231,6 @@ function isAdmin() {
                 showStructureSlide(currentSlide);
               }, 5000);
             </script>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
           </div>
 
 
@@ -532,51 +499,7 @@ function isAdmin() {
       </div>
     </section>
 
-<<<<<<< HEAD
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">        
-        <div class="footer-content">
-          <!-- Brand Section -->
-          <div class="footer-section">
-            <h3 class="footer-title">Kampoeng Jalak Bali</h3>
-            <p class="footer-description"><?php echo t('hero_description'); ?></p>
-          </div>
-
-          <!-- Quick Links -->
-          <div class="footer-section">
-            <h3 class="footer-title"><?php echo t('quick_links'); ?></h3>
-            <ul class="footer-links">
-              <li><a href="#home" class="footer-link"><?php echo t('home'); ?></a></li>
-              <li><a href="#tentang" class="footer-link"><?php echo t('about'); ?></a></li>
-              <li><a href="#wisata" class="footer-link"><?php echo t('tourism'); ?></a></li>
-              <li><a href="informasi.php" class="footer-link"><?php echo t('information'); ?></a></li>
-              <li><a href="#galeri" class="footer-link"><?php echo t('gallery'); ?></a></li>
-              <li><a href="produk.php" class="footer-link"><?php echo t('products'); ?></a></li>
-              <li><a href="#kontak" class="footer-link"><?php echo t('contact'); ?></a></li>
-            </ul>
-          </div>
-
-          <!-- Contact Info -->
-          <div class="footer-section">
-            <h3 class="footer-title"><?php echo t('contact'); ?></h3>
-            <div class="footer-contact">
-              <p>📞 083862519604</p>
-              <p>📧 kampoengjalakbali@gmail.com</p>
-              <p>📷 @kampoengjalakbali</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="footer-bottom">
-          <p class="copyright">&copy; 2025 Kampoeng Jalak Bali. <?php echo t('rights_reserved'); ?></p>
-        </div>
-      </div>
-    </footer>
-=======
   <?php include __DIR__ . '/includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

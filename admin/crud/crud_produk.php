@@ -192,40 +192,11 @@ if (isset($_GET['edit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_products'); ?> | Kampoeng Jalak Bali</title>
-<<<<<<< HEAD:crud_produk.php
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    <header class="dashboard-header">
-        <div class="header-container">
-            <!--logo-->
-            <div class="logo-title">
-            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
-            <h1>Kampoeng Jalak Bali</h1>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
-                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-=======
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="admin-page">
     <?php $current_page = 'admin'; include __DIR__ . '/../../includes/header.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_produk.php
 
     <section class="crud-section">
         <div class="container">
@@ -356,11 +327,7 @@ if (isset($_GET['edit'])) {
                             <td><?php echo $offset + $index + 1; ?></td>
                             <td>
                                 <?php if ($produk['gambar']): ?>
-<<<<<<< HEAD:crud_produk.php
-                                    <img src="<?php echo $produk['gambar']; ?>" class="thumb-img" 
-=======
                                     <img src="<?php echo $base . '/' . $produk['gambar']; ?>" class="thumb-img" 
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_produk.php
                                          onerror="this.src='https://source.unsplash.com/random/80x60/?merchandise'">
                                 <?php else: ?>
                                     <img src="https://source.unsplash.com/random/80x60/?merchandise" class="thumb-img">
@@ -401,16 +368,7 @@ if (isset($_GET['edit'])) {
         </div>
     </section>
 
-<<<<<<< HEAD:crud_produk.php
-    <footer>
-        <div>
-            <p>&copy; 2025 Kampung Jalak Bali | Kelola Produk</p>
-        </div>
-    </footer>
-        <?php include 'footer.php'; ?>
-=======
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_produk.php
     
         <script>
             // Toggle mobile menu

@@ -58,34 +58,6 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_comments'); ?> | Kampoeng Jalak Bali</title>
-<<<<<<< HEAD:crud_komentar.php
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    <header class="dashboard-header">
-        <div class="header-container">
-            <!--logo-->
-            <div class="logo-title">
-            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
-            <h1>Kampoeng Jalak Bali</h1>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
-                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-=======
   <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -95,7 +67,6 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
   $current_page = 'admin';
   include __DIR__ . '/../../includes/header.php';
   ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_komentar.php
 
     <section class="crud-section">
         <div class="container">
@@ -167,11 +138,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                      onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
                     <i class="fa fa-trash"></i> <?php echo t('delete'); ?>
                   </a>
-<<<<<<< HEAD:crud_komentar.php
-                  <a href="detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" 
-=======
                   <a href="<?php echo $base; ?>/detail_wisata.php?id=<?php echo $komentar['id_wisata']; ?>" 
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_komentar.php
                      class="btn btn-primary">
                     <i class="fa fa-eye"></i> <?php echo t('view_tour'); ?>
                   </a>
@@ -198,11 +165,7 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
       </div>
     </section>
 
-<<<<<<< HEAD:crud_komentar.php
-    <?php include 'footer.php'; ?>
-=======
   <?php include __DIR__ . '/../../includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_komentar.php
     
     <script>
         // Toggle mobile menu

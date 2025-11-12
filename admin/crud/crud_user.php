@@ -140,46 +140,6 @@ foreach ($user_data as $user) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_users'); ?> | Kampoeng Jalak Bali</title>
-<<<<<<< HEAD:crud_user.php
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-    <header class="dashboard-header">
-        <div class="header-container">
-            <!--logo-->
-            <div class="logo-title">
-            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
-            <h1>Kampoeng Jalak Bali</h1>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
-                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <section class="dashboard-content">
-        <div class="content-container">
-            <div class="page-header">
-                <h2><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></h2>
-                <nav class="breadcrumb">
-                    <a href="dashboard.php">Dashboard</a> /
-                    <span><?php echo t('manage_users'); ?></span>
-                </nav>
-            </div>
-
-=======
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -197,7 +157,6 @@ foreach ($user_data as $user) {
                 </nav>
             </div>
 
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
             <h2><?php echo t('manage_users'); ?></h2>
             
             <?php if (isset($_SESSION['success_message'])): ?>
@@ -244,11 +203,7 @@ foreach ($user_data as $user) {
             </div>
 
             <!-- Form Tambah/Edit User -->
-<<<<<<< HEAD:crud_user.php
-            <div class="panel form-panel">
-=======
             <div class="crud-panel form-panel">
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                 <div class="panel-header">
                     <h3>
                         <i class="fas <?php echo $edit_data ? 'fa-user-edit' : 'fa-user-plus'; ?>"></i>
@@ -261,63 +216,28 @@ foreach ($user_data as $user) {
                     <?php endif; ?>
                     
                     <div class="form-group">
-<<<<<<< HEAD:crud_user.php
-                        <label><i class="fas fa-user"></i> Nama Lengkap:</label>
-                        <input type="text" name="nama" value="<?php echo $edit_data['nama'] ?? ''; ?>" required>
-=======
                         <label class="form-label"><i class="fas fa-user"></i> <?php echo t('name'); ?>:</label>
                         <input class="form-input" type="text" name="nama" value="<?php echo $edit_data['nama'] ?? ''; ?>" required>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                     </div>
 
                     <div class="form-group">
-<<<<<<< HEAD:crud_user.php
-                        <label><i class="fas fa-envelope"></i> Email:</label>
-                        <input type="email" name="email" value="<?php echo $edit_data['email'] ?? ''; ?>" required>
-=======
                         <label class="form-label"><i class="fas fa-envelope"></i> <?php echo t('email_address'); ?>:</label>
                         <input class="form-input" type="email" name="email" value="<?php echo $edit_data['email'] ?? ''; ?>" required>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                     </div>
 
                     <div class="form-group">
-<<<<<<< HEAD:crud_user.php
-                        <label><i class="fas fa-lock"></i> Password:</label>
-                        <input type="password" name="password" <?php echo $edit_data ? 'placeholder="Kosongkan jika tidak ingin mengubah"' : 'required'; ?>>
-                        <small class="form-text"><?php echo $edit_data ? 'Kosongkan password jika tidak ingin mengubah' : 'Password minimal 6 karakter'; ?></small>
-=======
                         <label class="form-label"><i class="fas fa-lock"></i> <?php echo t('password'); ?>:</label>
                         <input class="form-input" type="password" name="password" <?php echo $edit_data ? 'placeholder="Kosongkan jika tidak ingin mengubah"' : 'required'; ?>>
                         <small class="form-text"><?php echo $edit_data ? 'Kosongkan password jika tidak ingin mengubah' : t('password_min_length'); ?></small>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                     </div>
 
                     <div class="form-group">
-<<<<<<< HEAD:crud_user.php
-                        <label><i class="fas fa-user-tag"></i> Role:</label>
-                        <select name="role" required>
-=======
                         <label class="form-label"><i class="fas fa-user-tag"></i> <?php echo t('role'); ?>:</label>
                         <select class="form-input" name="role" required>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                             <option value="user" <?php echo ($edit_data['role'] ?? '') === 'user' ? 'selected' : ''; ?>>User</option>
                             <option value="admin" <?php echo ($edit_data['role'] ?? '') === 'admin' ? 'selected' : ''; ?>>Admin</option>
                         </select>
                     </div>
-<<<<<<< HEAD:crud_user.php
-                    
-                    <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary btn-icon">
-                        <i class="fas <?php echo $edit_data ? 'fa-save' : 'fa-plus'; ?>"></i>
-                        <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('user'); ?> 
-                    </button>
-                    
-                    <?php if ($edit_data): ?>
-                        <a href="crud_user.php" class="btn btn-warning btn-icon">
-                            <i class="fas fa-times"></i>
-                            <?php echo t('cancel'); ?>
-                        </a>
-                    <?php endif; ?>
-=======
 
                     <div class="form-actions" style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:6px;">
                         <?php if ($edit_data): ?>
@@ -328,27 +248,18 @@ foreach ($user_data as $user) {
                             <?php echo $edit_data ? t('update') : t('add'); ?> <?php echo t('user'); ?>
                         </button>
                     </div>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                 </form>
             </div>
 
             <!-- Table User -->
-<<<<<<< HEAD:crud_user.php
-            <div class="panel table-panel">
-=======
             <div class="crud-panel table-panel">
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                 <div class="panel-header">
                     <h3>
                         <i class="fas fa-list"></i>
                         <?php echo t('user'); ?> <?php echo t('gallery_list'); ?>
                     </h3>
                 </div>
-<<<<<<< HEAD:crud_user.php
-                <table>
-=======
                 <table class="crud-table">
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
                     <thead>
                         <tr>
                             <th>No</th>
@@ -417,15 +328,7 @@ foreach ($user_data as $user) {
         </div>
     </section>
     
-<<<<<<< HEAD:crud_user.php
-    <footer class="dashboard-footer">
-        <div class="footer-container">
-            <p>&copy; 2025 Kampoeng Jalak Bali | <i class="fas fa-users"></i> Kelola User</p>
-        </div>
-    </footer>
-=======
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_user.php
 
     <script>
         $(document).ready(function() {

@@ -199,34 +199,6 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_gallery'); ?> | Kampoeng Jalak Bali</title>
-<<<<<<< HEAD:crud_galeri.php
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    <header class="dashboard-header">
-        <div class="header-container">
-            <!--logo-->
-            <div class="logo-title">
-            <img src="uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
-            <h1>Kampoeng Jalak Bali</h1>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="crud_user.php" class="active"><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></a></li>
-                        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-=======
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -236,7 +208,6 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $current_page = 'admin';
     include __DIR__ . '/../../includes/header.php';
     ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_galeri.php
 
     <section class="crud-section">
         <div class="container">
@@ -281,13 +252,6 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </div>
 
             <!-- Form Upload/Edit Gambar -->
-<<<<<<< HEAD:crud_galeri.php
-            <div class="crud-panel">
-                <h3 class="panel-title">
-                    <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
-                    <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('upload_image'); ?> <?php echo t('gallery_list') == 'Gallery List' ? '' : ''; ?>
-                </h3>
-=======
             <div class="crud-panel form-panel">
                 <div class="panel-header">
                     <h3 class="panel-title">
@@ -295,7 +259,6 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <?php echo $edit_data ? t('edit') : t('add'); ?> <?php echo t('upload_image'); ?>
                     </h3>
                 </div>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_galeri.php
                 <form method="POST" action="" enctype="multipart/form-data">
                     <?php if ($edit_data): ?>
                         <input type="hidden" name="id" value="<?php echo $edit_data['id_galeri']; ?>">
@@ -447,11 +410,7 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
     </section>
 
-<<<<<<< HEAD:crud_galeri.php
-    <?php include 'footer.php'; ?>
-=======
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_galeri.php
 
     <script>
         // Preview gambar sebelum upload

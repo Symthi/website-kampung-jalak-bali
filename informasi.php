@@ -16,9 +16,6 @@ function public_url($path) {
 // Security
 define('ALLOWED', true);
 
-// Security
-define('ALLOWED', true);
-
 // Fungsi cek login
 function isLoggedIn() {
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
@@ -48,21 +45,12 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-    <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  </head>
-  <body>
-<?php include 'header.php'; ?>
-=======
     <title><?php echo t('information_title'); ?> | Kampoeng Jalak Bali</title>
   <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
 <?php include __DIR__ . '/includes/header.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
 
     <section class="content-section">
       <div class="container">
@@ -77,11 +65,7 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <div class="info-card">
               <div class="info-image">
                 <?php if ($informasi['gambar']): ?>
-<<<<<<< HEAD
-                <img src="<?php echo $informasi['gambar']; ?>" 
-=======
                 <img src="<?php echo $informasi['gambar'] ? public_url($informasi['gambar']) : ''; ?>" 
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
                      alt="<?php echo $informasi['judul']; ?>"
                      onerror="this.src='https://source.unsplash.com/random/800x400/?article,news'">
                 <?php endif; ?>
@@ -124,11 +108,7 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
       </div>
     </section>
 
-<<<<<<< HEAD
-<?php include 'footer.php'; ?>
-=======
 <?php include __DIR__ . '/includes/footer.php'; ?>
->>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
