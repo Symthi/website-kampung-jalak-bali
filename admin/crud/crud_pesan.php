@@ -1,7 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/../../config/koneksi.php';
+include __DIR__ . '/../../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))), '/\\');
 
 // Fungsi cek login dan admin
 function isAdmin() {
@@ -10,7 +13,7 @@ function isAdmin() {
 
 // Cek apakah user adalah admin
 if (!isAdmin()) {
-    header("Location: login.php");
+    header("Location: {$base}/auth/login.php");
     exit();
 }
 
@@ -56,11 +59,9 @@ $pesan_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 // Hitung statistik
 $total_pesan = count($pesan_data);
 $belum_dibaca = 0;
-$sudah_dibalas = 0;
 
 foreach ($pesan_data as $pesan) {
     if (!$pesan['dibaca']) $belum_dibaca++;
-    if ($pesan['dibalas']) $sudah_dibalas++;
 }
 ?>
 <!DOCTYPE html>
@@ -69,6 +70,7 @@ foreach ($pesan_data as $pesan) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('manage_messages'); ?> | Kampoeng Jalak Bali</title>
+<<<<<<< HEAD:crud_pesan.php
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -95,6 +97,17 @@ foreach ($pesan_data as $pesan) {
             </div>
         </div>
     </header>
+=======
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="admin-page">
+    <?php
+    // gunakan header pusat agar konsisten
+    $current_page = 'admin';
+    include __DIR__ . '/../../includes/header.php';
+    ?>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_pesan.php
 
     <section class="crud-section">
         <div class="container">
@@ -129,11 +142,14 @@ foreach ($pesan_data as $pesan) {
                     <i class="fa fa-envelope"></i>
                     <div class="stat-title"><?php echo t('unread'); ?></div>
                     <div class="stat-number"><?php echo $belum_dibaca; ?></div>
+<<<<<<< HEAD:crud_pesan.php
                 </div>
                 <div class="dashboard-card">
                     <i class="fa fa-reply-all"></i>
                     <div class="stat-title"><?php echo t('replied'); ?></div>
                     <div class="stat-number"><?php echo $sudah_dibalas; ?></div>
+=======
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_pesan.php
                 </div>
             </div>
         </div>
@@ -208,7 +224,11 @@ foreach ($pesan_data as $pesan) {
         </div>
     </section>
 
+<<<<<<< HEAD:crud_pesan.php
     <?php include 'footer.php'; ?>
+=======
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8:admin/crud/crud_pesan.php
     
     <script>
         // Toggle mobile menu

@@ -12,7 +12,7 @@ $lang['id'] = array(
     'information' => 'Informasi',
     'gallery' => 'Galeri',
     'products' => 'Produk',
-    'supporter' => 'Supporter',
+    'supporter' => 'Pendukung',
     'contact' => 'Kontak',
     'login' => 'Masuk',
     'logout' => 'Keluar',
@@ -33,6 +33,8 @@ $lang['id'] = array(
     'about_title' => 'Tentang Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.',
     'history' => 'Sejarah dan Latar Belakang',
+    'history_paragraph1' => 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.',
+    'history_paragraph2' => 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.',
     'vision' => 'Visi',
     'mission' => 'Misi',
     'vision_text' => 'Mewujudkan desa konservasi yang harmonis antara manusia, alam, dan budaya melalui pelestarian Jalak Bali sebagai warisan satwa endemik Pulau Bali.',
@@ -100,14 +102,17 @@ $lang['id'] = array(
     'total_tourism' => 'Total Wisata',
     'total_comments' => 'Total Komentar',
     'total_messages' => 'Total Pesan',
-    'total_users' => 'Total User',
+    'total_users' => 'Total Pengguna',
+        'total_products' => 'Total Produk',
+        'my_messages' => 'Pesan Saya',
+        'member_since' => 'Bergabung Sejak',
     'admin_menu' => 'Menu Admin',
     'user_menu' => 'Menu',
     'manage_tourism' => 'Kelola Wisata',
     'manage_comments' => 'Kelola Komentar',
     'manage_messages' => 'Kelola Pesan',
     'manage_gallery' => 'Kelola Galeri',
-    'manage_users' => 'Kelola User',
+    'manage_users' => 'Kelola Pengguna',
     'manage_information' => 'Kelola Informasi',
     'manage_products' => 'Kelola Produk',
     
@@ -134,7 +139,7 @@ $lang['id'] = array(
     // Additional small UI keys
     'comment_statistics' => 'Statistik Komentar',
     'no' => 'No',
-    'user' => 'User',
+    'user' => 'Pengguna',
     'date' => 'Tanggal',
     'view_tour' => 'Lihat Wisata',
     // Common UI and CRUD
@@ -209,6 +214,9 @@ $lang['id'] = array(
     'unread' => 'Belum Dibaca',
     'replied' => 'Sudah Dibalas',
     'read' => 'Baca'
+    ,
+    'uploaded_on' => 'Diunggah pada',
+    'no_description' => 'Tidak ada deskripsi.'
 );
 
 // English
@@ -241,6 +249,8 @@ $lang['en'] = array(
     'about_title' => 'About Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali is an ex-situ conservation center for the Bali Starling, a protected endemic species, located in Banjar Tingkihkerep, Tengkudak Village, Tabanan, Bali.',
     'history' => 'History and Background',
+    'history_paragraph1' => 'The conservation program began in April 2024 by the Friends of Nature, People and Forests (FNPF) foundation, releasing 60 Bali Starlings. The Tengkudak Village location was selected after habitat studies by academics from Udayana University and is strongly supported by the local community culture.',
+    'history_paragraph2' => 'The Tingkihkerep customary community has long protected wildlife through traditional regulations (Awig-Awig and Perarem) that prohibit hunting, grounded in the belief of the presence of the "Pelingsih Wewalungan" as a guardian spirit. This makes Kampoeng Jalak Bali a successful example of community-based conservation and was officially inaugurated by the Regent of Tabanan in June 2024.',
     'vision' => 'Vision',
     'mission' => 'Mission',
     'vision_text' => 'To realize a conservation village that harmonizes humans, nature, and culture through the preservation of Bali Starling as the endemic wildlife heritage of Bali Island.',
@@ -309,6 +319,9 @@ $lang['en'] = array(
     'total_comments' => 'Total Comments',
     'total_messages' => 'Total Messages',
     'total_users' => 'Total Users',
+        'total_products' => 'Total Products',
+        'my_messages' => 'My Messages',
+        'member_since' => 'Member Since',
     'admin_menu' => 'Admin Menu',
     'user_menu' => 'Menu',
     'manage_tourism' => 'Manage Tourism',
@@ -418,6 +431,9 @@ $lang['en'] = array(
     'unread' => 'Unread',
     'replied' => 'Replied',
     'read' => 'Read'
+    ,
+    'uploaded_on' => 'Uploaded on',
+    'no_description' => 'No description.'
 );
 
 // Function to get language string

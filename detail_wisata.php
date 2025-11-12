@@ -1,7 +1,20 @@
 <?php
 session_start();
-include 'koneksi.php';
-include 'language.php';
+include __DIR__ . '/config/koneksi.php';
+include __DIR__ . '/config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+
+function public_url($path) {
+  global $base;
+  if (empty($path)) return '';
+  if (preg_match('#^https?://#i', $path) || strpos($path, '/') === 0) return $path;
+  return $base . '/' . ltrim($path, '/');
+}
+
+// Security
+define('ALLOWED', true);
 
 // Security
 define('ALLOWED', true);
@@ -61,7 +74,11 @@ $komentar_data = mysqli_fetch_all($result_komentar, MYSQLI_ASSOC);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/style.css" />
+=======
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
@@ -70,14 +87,22 @@ $komentar_data = mysqli_fetch_all($result_komentar, MYSQLI_ASSOC);
 $pageTitle = $wisata['judul'] . ' | Kampoeng Jalak Bali';
 $currentPage = 'wisata';
 
+<<<<<<< HEAD
 include 'header.php'; ?>
+=======
+include __DIR__ . '/includes/header.php'; ?>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
 
     <section class="content-section bg-light">
       <div class="container">
         <div class="wisata-detail">
           <!-- Breadcrumb -->
           <div class="breadcrumb">
+<<<<<<< HEAD
             <a href="index.php"><i class="fas fa-home"></i> Home</a>
+=======
+            <a href="<?php echo $base; ?>/index.php"><i class="fas fa-home"></i> Home</a>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
             <span class="separator">/</span>
             <a href="index.php#wisata"><i class="fas fa-map-marked-alt"></i> Wisata</a>
             <span class="separator">/</span>
@@ -86,10 +111,17 @@ include 'header.php'; ?>
 
           <!-- Main Content -->
           <div class="detail-card">
+<<<<<<< HEAD
             <div class="wisata-image">
               <img src="<?php echo $wisata['gambar'] ?: 'https://source.unsplash.com/random/900x400/?bali'; ?>" 
                    alt="<?php echo $wisata['judul']; ?>" 
                    class="featured-image" />
+=======
+            <div class="wj-wisata-hero">
+        <img src="<?php echo $wisata['gambar'] ? public_url($wisata['gambar']) : 'https://source.unsplash.com/random/900x400/?bali'; ?>" 
+                   alt="<?php echo $wisata['judul']; ?>" 
+                   class="wj-featured-image" />
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
             </div>
             
             <div class="wisata-info">
@@ -124,7 +156,11 @@ include 'header.php'; ?>
             <!-- Comment Form -->
             <div class="comment-form-card">
               <?php if (isLoggedIn()): ?>
+<<<<<<< HEAD
               <form method="POST" action="proses_komentar.php" class="comment-form">
+=======
+              <form method="POST" action="<?php echo $base; ?>/processes/proses_komentar.php" class="comment-form">
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
                 <input type="hidden" name="wisata_id" value="<?php echo $wisata_id; ?>" />
                 <div class="form-group">
                   <label for="komentar">
@@ -150,7 +186,11 @@ include 'header.php'; ?>
               <div class="login-prompt">
                 <i class="fas fa-lock"></i>
                 <p><?php echo t('login_to_comment'); ?></p>
+<<<<<<< HEAD
                 <a href="login.php" class="btn btn-primary">
+=======
+                <a href="auth/login.php" class="btn btn-primary">
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
                   <i class="fas fa-sign-in-alt"></i> <?php echo t('login'); ?>
                 </a>
               </div>
@@ -182,7 +222,11 @@ include 'header.php'; ?>
                     </div>
                     <?php if (isAdmin() || (isLoggedIn() && $_SESSION['user_id'] == $komentar['id_user'])): ?>
                     <div class="comment-actions">
+<<<<<<< HEAD
                       <a href="hapus_komentar.php?id=<?php echo $komentar['id_komentar']; ?>&wisata_id=<?php echo $wisata_id; ?>" 
+=======
+               <a href="<?php echo $base; ?>/admin/proses/hapus_komentar.php?id=<?php echo $komentar['id_komentar']; ?>&wisata_id=<?php echo $wisata_id; ?>" 
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
                          class="btn btn-danger btn-sm"
                          onclick="return confirm('<?php echo addslashes(t('confirm_delete')); ?>')">
                         <i class="fas fa-trash"></i> <?php echo t('delete'); ?>
@@ -230,10 +274,17 @@ include 'header.php'; ?>
 
     <script>
     $(document).ready(function() {
+<<<<<<< HEAD
         // Image zoom effect
         $('.featured-image').click(function() {
             $(this).toggleClass('zoomed');
         });
+=======
+    // Image zoom effect
+    $('.wj-featured-image').click(function() {
+      $(this).toggleClass('zoomed');
+    });
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
 
         // Smooth scroll to comments
         $('a[href="#comments"]').click(function(e) {
@@ -265,7 +316,11 @@ include 'header.php'; ?>
     });
     </script>
 
+<<<<<<< HEAD
 <?php include 'footer.php'; ?>
+=======
+<?php include __DIR__ . '/includes/footer.php'; ?>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

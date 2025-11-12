@@ -1,0 +1,87 @@
+<?php
+session_start();
+include __DIR__ . '/../config/koneksi.php';
+include __DIR__ . '/../config/language.php';
+
+// compute base URL (site root)
+$base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
+
+// Fungsi cek login
+function isLoggedIn() {
+    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+}
+
+// Jika sudah login, redirect ke dashboard
+if (isLoggedIn()) {
+  header("Location: {$base}/admin/dashboard.php");
+  exit();
+}
+
+// Proses login
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    
+    // Cek user di database
+    $query = "SELECT * FROM user WHERE email = ?";
+    $stmt = mysqli_prepare($koneksi, $query);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $user = mysqli_fetch_assoc($result);
+    
+    if ($user) {
+        // Verifikasi password dengan password_verify
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id_user'];
+            $_SESSION['nama'] = $user['nama'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['role'] = $user['role'];
+
+            header("Location: {$base}/admin/dashboard.php");
+            exit();
+        } else {
+            $error = "Password salah!";
+        }
+    } else {
+        $error = "Email tidak ditemukan!";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><?php echo t('login_title'); ?> | Kampoeng Jalak Bali</title>
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
+  </head>
+  <body>
+    <?php include __DIR__ . '/../includes/header.php'; ?>
+
+    <section class="auth-section">
+      <div class="auth-card">
+        <h2><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login_title'); ?></h2>
+        <?php if (!empty($error)): ?>
+        <div class="alert-error">
+          <?php echo $error; ?>
+        </div>
+        <?php endif; ?>
+        <form method="POST" action="">
+          <label for="email"><i class="fa fa-envelope icon"></i> <?php echo t('email_address'); ?></label>
+          <input type="email" id="email" name="email" placeholder="email@example.com" required />
+          <label for="password"><i class="fa fa-lock icon"></i> <?php echo t('password'); ?></label>
+          <input type="password" id="password" name="password" placeholder="••••••" required />
+          <button type="submit"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></button>
+        </form>
+        <div class="auth-link">
+          <?php echo t('no_account'); ?> <a href="<?php echo $base; ?>/auth/register.php"><?php echo t('register_here'); ?></a>
+        </div>
+      </div>
+    </section>
+
+  <?php include __DIR__ . '/../includes/footer.php'; ?>
+  </body>
+</html>
+<?php mysqli_close($koneksi); ?>

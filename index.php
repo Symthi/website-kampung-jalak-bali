@@ -3,13 +3,24 @@ session_start();
 
 // Switch language
 if (isset($_GET['lang'])) {
-    $_SESSION['language'] = ($_GET['lang'] == 'en') ? 'en' : 'id';
-    header("Location: " . $_SERVER['HTTP_REFERER']);
-    exit();
+  $_SESSION['language'] = ($_GET['lang'] == 'en') ? 'en' : 'id';
+  header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/'));
+  exit();
 }
 
-include 'koneksi.php';
-include 'language.php'; // Include language file
+include __DIR__ . '/config/koneksi.php';
+include __DIR__ . '/config/language.php'; // Include language file
+
+// compute base URL (site root) dynamically, e.g. /uas
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+
+// helper to produce public URLs for uploaded files
+function public_url($path) {
+  global $base;
+  if (empty($path)) return '';
+  if (preg_match('#^https?://#i', $path) || strpos($path, '/') === 0) return $path;
+  return $base . '/' . ltrim($path, '/');
+}
 
 // Ambil data wisata dari database dengan pagination (section wisata)
 $per_page_wisata = 5;
@@ -37,6 +48,7 @@ function isAdmin() {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kampoeng Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
@@ -45,6 +57,16 @@ function isAdmin() {
     $current_page = 'home';
     include 'header.php';
     ?>
+=======
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>
+  <body>
+  <?php 
+  $current_page = 'home';
+  include __DIR__ . '/includes/header.php';
+  ?>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
     <!-- Hero Section -->
     <section id="home" class="hero-section">
       <div class="hero-container">
@@ -64,12 +86,19 @@ function isAdmin() {
         </div>
 
         <div class="about-content">
-          <div class="content-main">
-            <div class="text-content">
-              <p class="lead-text">
-                <?php echo t('about_description'); ?>
-              </p>
+          <!-- Deskripsi dan Sejarah -->
+          <div class="text-content">
+            <p class="lead-text">
+              <?php echo t('about_description'); ?>
+            </p>
+            <div class="history-section">
+              <h3 class="content-title"><?php echo t('history'); ?></h3>
+              <p><?php echo t('history_paragraph1'); ?></p>
+              <p><?php echo t('history_paragraph2'); ?></p>
+            </div>
+          </div>
 
+<<<<<<< HEAD
               <div class="content-section"> <br>
                 <h3 class="content-title"><?php echo t('history'); ?></h3>
                 <p>
@@ -84,6 +113,15 @@ function isAdmin() {
 
               <div class="content-section">
                 <div class="vision-mission-grid">
+=======
+          <!-- Cards Section -->
+          <div class="cards-section">
+            <!-- Vision & Mission Card -->
+            <div class="vision-mission-card">
+              <h3 class="content-title">Visi & Misi</h3>
+              <div class="vision-mission-slider">
+                <div class="slider-content" id="visionMissionSlider">
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
                   <div class="vision-card">
                     <div class="card-header">
                       <div class="icon-wrapper">
@@ -111,67 +149,124 @@ function isAdmin() {
                     </ul>
                   </div>
                 </div>
+                <div class="slider-nav">
+                  <button class="slider-btn active" onclick="showVisionMission(0)">Visi</button>
+                  <button class="slider-btn" onclick="showVisionMission(1)">Misi</button>
+                </div>
               </div>
             </div>
 
-            <!-- Structure Section tetap sama karena konten spesifik -->
-            <div class="structure-section">
+            <!-- Structure Card -->
+            <div class="structure-card">
               <h3 class="content-title"><?php echo t('management_structure'); ?></h3>
-              <div class="structure-grid">
-                <!-- ... struktur tetap ... -->
-                 <div class="structure-card">
-                  <h5 class="structure-title">PEMBINA</h5>
-                  <ul class="structure-list">
-                    <li>I KETUT SUARTANCA <span>(Perbekel Desa Tengkudak)</span></li>
-                    <li>Drh. I MADE SUGIARTA <span>(FNPF)</span></li>
-                  </ul>
-                </div>
+              <div class="structure-slider">
+                <div class="structure-slide" id="structureSlider">
+                  <div class="structure-item">
+                    <h5 class="structure-title">PEMBINA</h5>
+                    <ul class="structure-list">
+                      <li>I KETUT SUARTANCA <span>(Perbekel Desa Tengkudak)</span></li>
+                      <li>Drh. I MADE SUGIARTA <span>(FNPF)</span></li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">PENANGGUNGJAWAB</h5>
-                  <ul class="structure-list">
-                    <li>DESA ADAT TINGKIHKEREP</li>
-                  </ul>
-                </div>
+                  <div class="structure-item">
+                    <h5 class="structure-title">PENANGGUNGJAWAB</h5>
+                    <ul class="structure-list">
+                      <li>DESA ADAT TINGKIHKEREP</li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">KETUA</h5>
-                  <ul class="structure-list">
-                    <li>I NYOMAN OKA TRIADI <span>(Bandes Adat Tingkihkerep)</span></li>
-                  </ul>
-                </div>
+                  <div class="structure-item">
+                    <h5 class="structure-title">KETUA</h5>
+                    <ul class="structure-list">
+                      <li>I NYOMAN OKA TRIADI <span>(Bandes Adat Tingkihkerep)</span></li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">SEKRETARIS</h5>
-                  <ul class="structure-list">
-                    <li>I MADE SUKARATA</li>
-                  </ul>
-                </div>
+                  <div class="structure-item">
+                    <h5 class="structure-title">SEKRETARIS & BENDAHARA</h5>
+                    <ul class="structure-list">
+                      <li>I MADE SUKARATA <span>(Sekretaris)</span></li>
+                      <li>NI PUTU DESY ANGGRAENI <span>(Bendahara)</span></li>
+                    </ul>
+                  </div>
 
-                <div class="structure-card">
-                  <h5 class="structure-title">BENDAHARA</h5>
-                  <ul class="structure-list">
-                    <li>NI PUTU DESY ANGGRAENI</li>
-                  </ul>
+                  <div class="structure-item">
+                    <h5 class="structure-title">ANGGOTA</h5>
+                    <ul class="structure-list">
+                      <li>I WAYAN EDDYAS PRIHANTARA <span>(Pemandu)</span></li>
+                      <li>I KETUT MERTAJAYA <span>(Pemandu)</span></li>
+                      <li>I WAYAN SUDARMA <span>(Pemandu)</span></li>
+                      <li>I WAYAN YUDI ARTANA <span>(Pengamat)</span></li>
+                      <li>NI WAYAN SUIKI</li>
+                    </ul>
+                  </div>
                 </div>
-
-                <div class="structure-card full-width">
-                  <h5 class="structure-title">ANGGOTA</h5>
-                  <ul class="structure-list">
-                    <li>I WAYAN EDDYAS PRIHANTARA <span>(Pemandu)</span></li>
-                    <li>I KETUT MERTAJAYA <span>(Pemandu)</span></li>
-                    <li>I WAYAN SUDARMA <span>(Pemandu)</span></li>
-                    <li>I WAYAN YUDI ARTANA <span>(Pengamat)</span></li>
-                    <li>NI WAYAN SUIKI</li>
-                  </ul>
-                </div>
+                <div class="structure-dots" id="structureDots"></div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
+<<<<<<< HEAD
           <div class="content-image">
             <img src="https://source.unsplash.com/random/600x400/?bali,village" alt="Kampoeng Jalak Bali" class="featured-image" />
+=======
+    <script>
+              // Vision Mission Slider
+              function showVisionMission(index) {
+                const slider = document.getElementById('visionMissionSlider');
+                slider.style.transform = `translateX(-${index * 100}%)`;
+                
+                const buttons = document.querySelectorAll('.slider-btn');
+                buttons.forEach((btn, i) => {
+                  if (i === index) {
+                    btn.style.background = 'var(--dark-green)';
+                    btn.style.color = 'var(--white)';
+                  } else {
+                    btn.style.background = 'var(--tan)';
+                    btn.style.color = 'var(--brown)';
+                  }
+                });
+              }
+
+              // Structure Slider
+              const structureSlider = document.getElementById('structureSlider');
+              const structureCards = structureSlider.children;
+              const dotsContainer = document.getElementById('structureDots');
+              let currentSlide = 0;
+
+              // Create dots
+              for (let i = 0; i < structureCards.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => showStructureSlide(i);
+                dotsContainer.appendChild(dot);
+              }
+
+              function showStructureSlide(index) {
+                currentSlide = index;
+                structureSlider.style.transform = `translateX(-${index * 100}%)`;
+                
+                // Update dots
+                document.querySelectorAll('.dot').forEach((dot, i) => {
+                  dot.classList.toggle('active', i === index);
+                });
+              }
+
+              // Auto slide for structure
+              setInterval(() => {
+                currentSlide = (currentSlide + 1) % structureCards.length;
+                showStructureSlide(currentSlide);
+              }, 5000);
+            </script>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
           </div>
+
+
         </div>
       </div>
     </section>
@@ -188,8 +283,12 @@ function isAdmin() {
           <?php foreach ($wisata_data as $wisata): ?>
           <div class="wisata-card">
             <div class="card-image">
-              <img src="<?php echo $wisata['gambar'] ?: 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wisata-image" />
-            </div>
+                <img src="<?php echo $wisata['gambar'] ? public_url($wisata['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" width="600" height="400" alt="<?php echo $wisata['judul']; ?>" class="wj-wisata-img" />
+                <div class="location-badge">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <?php echo $wisata['lokasi'] ?? 'Bali'; ?>
+                </div>
+              </div>
             <div class="card-content">
               <h3 class="card-title"><?php echo $wisata['judul']; ?></h3>
               <div class="card-meta">
@@ -230,7 +329,17 @@ function isAdmin() {
 
         <div class="gallery-grid">
           <?php
-          $query_galeri = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT 6";
+          // Pagination untuk galeri
+          $per_page_galeri = 5;
+          $page_galeri = isset($_GET['p_g']) ? max(1, (int)$_GET['p_g']) : 1;
+          $offset_galeri = ($page_galeri - 1) * $per_page_galeri;
+          
+          // Hitung total data galeri
+          $total_galeri_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM galeri");
+          $total_galeri = mysqli_fetch_assoc($total_galeri_q)['cnt'];
+          
+          // Query dengan pagination
+          $query_galeri = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT $per_page_galeri OFFSET $offset_galeri";
           $result_galeri = mysqli_query($koneksi, $query_galeri);
           $galeri_data = mysqli_fetch_all($result_galeri, MYSQLI_ASSOC);
           
@@ -238,13 +347,13 @@ function isAdmin() {
           ?>
           <div class="gallery-item">
             <div class="image-container">
-              <img src="<?php echo $galeri['gambar'] ?: 'https://source.unsplash.com/random/600x400/?bali'; ?>" alt="<?php echo $galeri['judul']; ?>" class="gallery-image" />
+              <img src="<?php echo $galeri['gambar'] ? public_url($galeri['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" alt="<?php echo $galeri['judul']; ?>" class="gallery-image" />
               <div class="image-overlay">
                 <div class="overlay-content">
                   <h4 class="image-title"><?php echo $galeri['judul']; ?></h4>
                   <button class="view-button" onclick="openGalleryDetail({
                       title: '<?php echo htmlspecialchars($galeri['judul'], ENT_QUOTES); ?>',
-                      src: '<?php echo htmlspecialchars($galeri['gambar'], ENT_QUOTES); ?>',
+                      src: '<?php echo htmlspecialchars($galeri['gambar'] ? public_url($galeri['gambar']) : '', ENT_QUOTES); ?>',
                       desc: `<?php echo htmlspecialchars($galeri['keterangan'] ?? '', ENT_QUOTES); ?>`,
                       date: '<?php echo htmlspecialchars(date('d M Y', strtotime($galeri['tanggal_upload'] ?? $galeri['tanggal'] ?? 'now')), ENT_QUOTES); ?>'
                     })">
@@ -256,6 +365,22 @@ function isAdmin() {
           </div>
           <?php endforeach; ?>
         </div>
+
+        <?php 
+        // Tampilkan pagination untuk galeri jika ada lebih dari 1 halaman
+        $total_pages_g = (int)ceil($total_galeri / $per_page_galeri);
+        if ($total_pages_g > 1):
+        ?>
+        <div class="pagination">
+          <?php for ($p=1; $p<=$total_pages_g; $p++): ?>
+            <?php if ($p == $page_galeri): ?>
+              <span class="active"><?php echo $p; ?></span>
+            <?php else: ?>
+              <a href="?p_g=<?php echo $p; ?>#galeri"><?php echo $p; ?></a>
+            <?php endif; ?>
+          <?php endfor; ?>
+        </div>
+        <?php endif; ?>
 
         <!-- Modal Detail Galeri -->
         <div id="gallery-modal">
@@ -363,7 +488,7 @@ function isAdmin() {
           <!-- Form Kontak -->
           <div class="contact-form">
             <h3 class="contact-title"><?php echo t('send_message'); ?></h3>
-            <form method="POST" action="proses_kontak.php" class="form">
+            <form method="POST" action="<?php echo $base; ?>/processes/proses_kontak.php" class="form">
               <div class="form-group">
                 <label for="nama" class="form-label"><?php echo t('full_name'); ?></label>
                 <input type="text" id="nama" name="nama" class="form-input" required />
@@ -407,6 +532,7 @@ function isAdmin() {
       </div>
     </section>
 
+<<<<<<< HEAD
     <!-- Footer -->
     <footer class="footer">
       <div class="container">        
@@ -448,6 +574,9 @@ function isAdmin() {
         </div>
       </div>
     </footer>
+=======
+  <?php include __DIR__ . '/includes/footer.php'; ?>
+>>>>>>> 5a8afd3427364eab5bee3caf7b30eb4d0e3ba3e8
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
