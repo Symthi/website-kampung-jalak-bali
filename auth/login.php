@@ -11,9 +11,9 @@ function isLoggedIn() {
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
-// Jika sudah login, redirect ke dashboard
+// Jika sudah login, redirect ke dashboard baru
 if (isLoggedIn()) {
-  header("Location: {$base}/admin/dashboard.php");
+  header("Location: {$base}/dashboard/index.php");
   exit();
 }
 
@@ -39,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email'] = $user['email'];
             $_SESSION['role'] = $user['role'];
 
-            header("Location: {$base}/admin/dashboard.php");
+            // Redirect ke dashboard baru (bukan yang lama)
+            header("Location: {$base}/dashboard/index.php");
             exit();
         } else {
             $error = "Password salah!";

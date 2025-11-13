@@ -33,13 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_bind_param($stmt, "sss", $nama, $email, $hashed_password);
 
             if (mysqli_stmt_execute($stmt)) {
-                // Auto login
+                // Auto login setelah register
                 $_SESSION['user_id'] = mysqli_insert_id($koneksi);
                 $_SESSION['nama'] = $nama;
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = 'user';
 
-        header("Location: {$base}/admin/dashboard.php");
+                // Redirect ke dashboard baru (bukan yang lama)
+                header("Location: {$base}/dashboard/index.php");
                 exit();
             } else {
                 $error = "Gagal membuat akun! Silakan coba lagi.";

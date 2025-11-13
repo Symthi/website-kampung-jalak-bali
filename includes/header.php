@@ -56,7 +56,7 @@ include_once __DIR__ . '/../config/language.php';
         }
 
         if ($loggedIn): ?>
-              <li><a href="<?php echo $base; ?>/admin/dashboard.php"><i class="fa fa-tachometer-alt icon"></i> <?php echo t('dashboard'); ?></a></li>
+              <li><a href="<?php echo $base; ?>/dashboard/index.php"><i class="fa fa-tachometer-alt icon"></i> <?php echo t('dashboard'); ?></a></li>
               <li><a href="<?php echo $base; ?>/auth/logout.php"><i class="fa fa-sign-out-alt icon"></i> <?php echo t('logout'); ?></a></li>
             <?php else: ?>
               <li><a href="<?php echo $base; ?>/auth/login.php"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></a></li>

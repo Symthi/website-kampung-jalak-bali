@@ -1,0 +1,309 @@
+/* 
+ * Dashboard Responsive Customization
+ * Integrates SB Admin 2 with Kampung Jalak Bali design
+ */
+
+/* Mobile Responsive Sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 56px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  #wrapper.sidebar-toggled .sidebar {
+    transform: translateX(0);
+  }
+
+  #sidebarToggleTop {
+    display: block !important;
+  }
+
+  .topbar {
+    padding: 0.5rem 1rem;
+  }
+
+  /* Prevent body scroll when sidebar is open */
+  body.sidebar-open {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 85vw;
+    right: auto;
+  }
+
+  .sidebar-brand {
+    height: 3.5rem;
+  }
+
+  .sidebar-brand-text {
+    font-size: 1rem;
+  }
+
+  .nav-item {
+    padding: 0;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .row > .col-xl-3,
+  .row > .col-md-6 {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Chart responsiveness */
+@media (max-width: 992px) {
+  .col-xl-8,
+  .col-lg-7 {
+    width: 100%;
+  }
+
+  .col-xl-4,
+  .col-lg-5 {
+    width: 100%;
+  }
+}
+
+/* Topbar adjustments */
+.topbar {
+  background-color: #f8f9fc;
+  border-bottom: 1px solid #e3e6f0;
+}
+
+.topbar .navbar-nav .nav-item.dropdown .nav-link::after {
+  content: "";
+}
+
+/* Sidebar customization to match Kampung Jalak theme */
+.sidebar-dark .sidebar-brand {
+  background-color: #354024;
+  padding: 1.5rem 0;
+  font-size: 1.1rem;
+}
+
+.sidebar-dark .sidebar-brand:hover {
+  background-color: #2d3620;
+}
+
+.sidebar-dark .nav-link {
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  padding-left: 1.25rem;
+}
+
+.sidebar-dark .nav-link:hover {
+  border-left-color: #cfbb99;
+  background-color: rgba(207, 187, 153, 0.1);
+}
+
+.sidebar-dark .nav-link.active {
+  border-left-color: #cfbb99;
+  background-color: rgba(207, 187, 153, 0.15);
+  font-weight: 600;
+}
+
+.sidebar-heading {
+  color: #cfbb99;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.5rem 0.5rem;
+}
+
+/* Card styling enhancements */
+.card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background-color: #f8f9fc;
+  border-bottom: 1px solid #e3e6f0;
+}
+
+.border-left-primary {
+  border-left: 4px solid #4e73df !important;
+}
+
+.border-left-success {
+  border-left: 4px solid #1cc88a !important;
+}
+
+.border-left-info {
+  border-left: 4px solid #36b9cc !important;
+}
+
+.border-left-warning {
+  border-left: 4px solid #f6c23e !important;
+}
+
+/* Chart container responsive */
+.chart-area {
+  position: relative;
+  width: 100%;
+}
+
+.chart-pie {
+  position: relative;
+  width: 100%;
+}
+
+/* Dashboard stats cards improvements */
+.dashboard-card .stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Badge styling */
+.badge-counter {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Footer */
+footer.sticky-footer {
+  background-color: #f8f9fc;
+  border-top: 1px solid #e3e6f0;
+  margin-top: auto;
+}
+
+/* Scroll to top button */
+.scroll-to-top {
+  background-color: #4e73df;
+  width: 2.5rem;
+  height: 2.5rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  display: none;
+  text-align: center;
+  color: white;
+  border-radius: 50%;
+  scroll-behavior: smooth;
+}
+
+.scroll-to-top:hover {
+  background-color: #224abe;
+}
+
+.scroll-to-top:focus {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+}
+
+/* Modal improvements */
+.modal-content {
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  background-color: #f8f9fc;
+  border-bottom: 1px solid #e3e6f0;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fc;
+}
+
+/* Profile image */
+.img-profile {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid #e3e6f0;
+}
+
+/* Loading states */
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Print styles */
+@media print {
+  .sidebar,
+  .topbar,
+  footer,
+  .scroll-to-top {
+    display: none !important;
+  }
+
+  #content-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .container-fluid {
+    padding: 0 !important;
+  }
+}
+
+/* Animation improvements */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.sidebar.show {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* Utility classes */
+.text-gray-600 {
+  color: #858796 !important;
+}
+
+.text-gray-800 {
+  color: #2e59a7 !important;
+}
+
+.bg-light {
+  background-color: #f8f9fc !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}

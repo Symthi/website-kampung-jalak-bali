@@ -152,7 +152,7 @@ foreach ($user_data as $user) {
             <div class="page-header">
                 <h2><i class="fas fa-users"></i> <?php echo t('manage_users'); ?></h2>
                 <nav class="breadcrumb">
-                    <a href="<?php echo $base; ?>/admin/dashboard.php">Dashboard</a> /
+                    <a href="<?php echo $base; ?>/dashboard/index.php">Dashboard</a> /
                     <span><?php echo t('manage_users'); ?></span>
                 </nav>
             </div>

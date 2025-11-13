@@ -500,6 +500,123 @@ function isAdmin() {
     </section>
 
   <?php include __DIR__ . '/includes/footer.php'; ?>
+  <script>
+  // Scroll Animation with Intersection Observer
+  document.addEventListener('DOMContentLoaded', function() {
+    // Observer for section animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          
+          // Stagger animation for child elements
+          const staggerItems = entry.target.querySelectorAll('.stagger-item');
+          staggerItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+          });
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+      section.classList.add('section-observed');
+      observer.observe(section);
+    });
+
+    // Add staggered animation to mission items
+    const missionItems = document.querySelectorAll('.mission-item');
+    missionItems.forEach((item, index) => {
+      item.classList.add('stagger-item');
+      item.classList.add(`stagger-delay-${(index % 5) + 1}`);
+    });
+
+    // Add staggered animation to wisata cards
+    const wisataCards = document.querySelectorAll('.wisata-card');
+    wisataCards.forEach((card, index) => {
+      card.classList.add('stagger-item');
+      card.classList.add(`stagger-delay-${(index % 5) + 1}`);
+    });
+
+    // Add staggered animation to gallery items
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach((item, index) => {
+      item.classList.add('stagger-item');
+      item.classList.add(`stagger-delay-${(index % 5) + 1}`);
+    });
+  });
+
+  // Enhanced Vision Mission Slider with animation
+  function showVisionMission(index) {
+    const slider = document.getElementById('visionMissionSlider');
+    const buttons = document.querySelectorAll('.slider-btn');
+    
+    // Add transition class
+    slider.classList.add('sliding');
+    
+    setTimeout(() => {
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      
+      buttons.forEach((btn, i) => {
+        if (i === index) {
+          btn.style.background = 'var(--dark-green)';
+          btn.style.color = 'var(--white)';
+          btn.classList.add('active');
+        } else {
+          btn.style.background = 'var(--tan)';
+          btn.style.color = 'var(--brown)';
+          btn.classList.remove('active');
+        }
+      });
+      
+      // Remove transition class after animation
+      setTimeout(() => {
+        slider.classList.remove('sliding');
+      }, 500);
+    }, 50);
+  }
+
+  // Add CSS for sliding transition
+  const style = document.createElement('style');
+  style.textContent = `
+    .sliding {
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Parallax effect for hero section
+  window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero-section');
+    if (hero) {
+      hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+  });
+
+  // Initialize animations on page load
+  window.addEventListener('load', function() {
+    document.body.classList.add('loaded');
+    
+    // Add loaded class to images for loading animation
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', function() {
+          this.classList.add('loaded');
+        });
+      }
+    });
+  });
+  </script>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
