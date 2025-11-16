@@ -50,7 +50,7 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-<?php include __DIR__ . '/includes/header.php'; ?>
+    <?php include __DIR__ . '/includes/header.php'; ?>
 
     <section class="content-section">
       <div class="container">
@@ -108,7 +108,7 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
       </div>
     </section>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

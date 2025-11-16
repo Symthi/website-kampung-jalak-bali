@@ -166,20 +166,8 @@ $komentar_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </section>
 
   <?php include __DIR__ . '/../../includes/footer.php'; ?>
-    
-    <script>
-        // Toggle mobile menu
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    navLinks.classList.toggle('show');
-                });
-            }
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../script/script.js"></script>
 </body>
 </html>
 <?php mysqli_close($koneksi); ?>

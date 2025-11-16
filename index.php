@@ -48,14 +48,14 @@ function isAdmin() {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kampoeng Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
-  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
-  <?php 
-  $current_page = 'home';
-  include __DIR__ . '/includes/header.php';
-  ?>
+    <?php 
+    $current_page = 'home';
+    include __DIR__ . '/includes/header.php';
+    ?>
     <!-- Hero Section -->
     <section id="home" class="hero-section">
       <div class="hero-container">
@@ -178,62 +178,6 @@ function isAdmin() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <script>
-              // Vision Mission Slider
-              function showVisionMission(index) {
-                const slider = document.getElementById('visionMissionSlider');
-                slider.style.transform = `translateX(-${index * 100}%)`;
-                
-                const buttons = document.querySelectorAll('.slider-btn');
-                buttons.forEach((btn, i) => {
-                  if (i === index) {
-                    btn.style.background = 'var(--dark-green)';
-                    btn.style.color = 'var(--white)';
-                  } else {
-                    btn.style.background = 'var(--tan)';
-                    btn.style.color = 'var(--brown)';
-                  }
-                });
-              }
-
-              // Structure Slider
-              const structureSlider = document.getElementById('structureSlider');
-              const structureCards = structureSlider.children;
-              const dotsContainer = document.getElementById('structureDots');
-              let currentSlide = 0;
-
-              // Create dots
-              for (let i = 0; i < structureCards.length; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                if (i === 0) dot.classList.add('active');
-                dot.onclick = () => showStructureSlide(i);
-                dotsContainer.appendChild(dot);
-              }
-
-              function showStructureSlide(index) {
-                currentSlide = index;
-                structureSlider.style.transform = `translateX(-${index * 100}%)`;
-                
-                // Update dots
-                document.querySelectorAll('.dot').forEach((dot, i) => {
-                  dot.classList.toggle('active', i === index);
-                });
-              }
-
-              // Auto slide for structure
-              setInterval(() => {
-                currentSlide = (currentSlide + 1) % structureCards.length;
-                showStructureSlide(currentSlide);
-              }, 5000);
-            </script>
-          </div>
-
-
         </div>
       </div>
     </section>
@@ -371,42 +315,10 @@ function isAdmin() {
           </div>
         </div>
       </div>
+        <script>
+          const NO_DESCRIPTION_TEXT = "<?php echo t('no_description'); ?>";
+        </script>
     </section>
-
-    <script>
-      function openGalleryDetail(data){
-        var m = document.getElementById('gallery-modal');
-        document.getElementById('gm-title').textContent = data.title || '';
-        var img = document.getElementById('gm-image');
-        img.src = data.src || '';
-        img.alt = data.title || '';
-        var descEl = document.getElementById('gm-desc');
-        var raw = (data.desc || '').trim();
-        // Render deskripsi sebagai HTML sederhana (sudah di-escape server-side) agar bisa ada pemformatan dasar
-        descEl.textContent = '';
-        if(raw){
-          descEl.innerHTML = raw;
-        } else {
-          descEl.textContent = '<?php echo t('no_description'); ?>';
-        }
-        document.getElementById('gm-date').textContent = data.date || '';
-        m.style.display = 'flex';
-      }
-      function closeGalleryDetail(){
-        var m = document.getElementById('gallery-modal');
-        m.style.display = 'none';
-      }
-      // Close on backdrop click
-      document.addEventListener('click', function(e){
-        var m = document.getElementById('gallery-modal');
-        if(!m || m.style.display==='none') return;
-        if(e.target === m) closeGalleryDetail();
-      });
-      // ESC to close
-      document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape') closeGalleryDetail();
-      });
-    </script>
 
     <!-- Kontak Section -->
     <section id="kontak" class="contact-section">
@@ -446,8 +358,8 @@ function isAdmin() {
               <h4 class="social-title"><?php echo t('follow_us'); ?></h4>
               <div class="social-icons">
                 <a href="https://instagram.com/kampoengjalakbali/" target="_blank" class="social-link"> <i class="fab fa-instagram"></i>@kampoengjalakbali </a>
-                <a href="#" class="social-link"> <i class="fab fa-facebook-f"></i>Kampoeng Jalak Bali </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kampoengjalakbali@gmail.com" class="social-link"> <i class="fas fa-envelope"></i>kampoengjalakbali@gmail.com </a>
+                <a href="https://web.facebook.com/kampoeng.jalak.bali" target="_blank" class="social-link"> <i class="fab fa-facebook-f"></i>Kampoeng Jalak Bali </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kampoengjalakbali@gmail.com" target="_blank" class="social-link"> <i class="fas fa-envelope"></i>kampoengjalakbali@gmail.com </a>
               </div>
             </div>
           </div>
@@ -490,8 +402,7 @@ function isAdmin() {
           <p class="center"><?php echo t('location_subtitle'); ?></p>
           <iframe 
             class="map-iframe"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.447676234625!2d115.09547427579436!3d-8.506537491489967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23ba60f56f36f%3A0x9ac1cda35155124c!2sDesa%20Tengkudak%2C%20Kec.%20Penebel%2C%20Kabupaten%20Tabanan%2C%20Bali!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-            allowfullscreen="" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.745252189239!2d115.11536599999998!3d-8.4266598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd225006bc21dfd%3A0x485a7470e57deebc!2sKampoeng%20Jalak%20Bali!5e0!3m2!1sid!2sid!4v1763306878994!5m2!1sid!2sid"
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
@@ -499,124 +410,9 @@ function isAdmin() {
       </div>
     </section>
 
-  <?php include __DIR__ . '/includes/footer.php'; ?>
-  <script>
-  // Scroll Animation with Intersection Observer
-  document.addEventListener('DOMContentLoaded', function() {
-    // Observer for section animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-          
-          // Stagger animation for child elements
-          const staggerItems = entry.target.querySelectorAll('.stagger-item');
-          staggerItems.forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.1}s`;
-          });
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-      section.classList.add('section-observed');
-      observer.observe(section);
-    });
-
-    // Add staggered animation to mission items
-    const missionItems = document.querySelectorAll('.mission-item');
-    missionItems.forEach((item, index) => {
-      item.classList.add('stagger-item');
-      item.classList.add(`stagger-delay-${(index % 5) + 1}`);
-    });
-
-    // Add staggered animation to wisata cards
-    const wisataCards = document.querySelectorAll('.wisata-card');
-    wisataCards.forEach((card, index) => {
-      card.classList.add('stagger-item');
-      card.classList.add(`stagger-delay-${(index % 5) + 1}`);
-    });
-
-    // Add staggered animation to gallery items
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    galleryItems.forEach((item, index) => {
-      item.classList.add('stagger-item');
-      item.classList.add(`stagger-delay-${(index % 5) + 1}`);
-    });
-  });
-
-  // Enhanced Vision Mission Slider with animation
-  function showVisionMission(index) {
-    const slider = document.getElementById('visionMissionSlider');
-    const buttons = document.querySelectorAll('.slider-btn');
-    
-    // Add transition class
-    slider.classList.add('sliding');
-    
-    setTimeout(() => {
-      slider.style.transform = `translateX(-${index * 100}%)`;
-      
-      buttons.forEach((btn, i) => {
-        if (i === index) {
-          btn.style.background = 'var(--dark-green)';
-          btn.style.color = 'var(--white)';
-          btn.classList.add('active');
-        } else {
-          btn.style.background = 'var(--tan)';
-          btn.style.color = 'var(--brown)';
-          btn.classList.remove('active');
-        }
-      });
-      
-      // Remove transition class after animation
-      setTimeout(() => {
-        slider.classList.remove('sliding');
-      }, 500);
-    }, 50);
-  }
-
-  // Add CSS for sliding transition
-  const style = document.createElement('style');
-  style.textContent = `
-    .sliding {
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Parallax effect for hero section
-  window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-section');
-    if (hero) {
-      hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-  });
-
-  // Initialize animations on page load
-  window.addEventListener('load', function() {
-    document.body.classList.add('loaded');
-    
-    // Add loaded class to images for loading animation
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', function() {
-          this.classList.add('loaded');
-        });
-      }
-    });
-  });
-  </script>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/script.js"></script>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

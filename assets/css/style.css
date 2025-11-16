@@ -274,10 +274,10 @@ nav a:hover {
 
 /* Section Backgrounds - Alternating Colors */
 .hero-section {
-  background: var(--muted-green);
-  background-size: cover;
-  background: linear-gradient(rgba(162, 152, 117, 0.7), rgba(76, 61, 25, 0.7)),
-    url("https://image.idntimes.com/post/20231202/2000px-jalak-bali-3241d69518fb4418eb841c3d4dc24ca6-cb2b7565fe20af4ceb63daad0976cd31.jpg?tr=w-1200,f-webp,q-75&width=1200&format=webp&quality=75");
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
   color: var(--white);
   padding: 80px 0;
   text-align: center;
@@ -286,6 +286,67 @@ nav a:hover {
   min-height: 91vh;
   display: flex;
   align-items: center;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.4)
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+.slideshow {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.bg-slider {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+@keyframes slideIn {
+  0% {transform: translateX(100%);}
+  100% {transform: translateX(0);}
+}
+
+@keyframes slideOut {
+  0% {transform: translateX(0);}
+  100% {transform: translateX(-100%);}
+}
+
+.slide-in {
+  animation: slideIn 1.4s ease forwards;
+}
+
+.slide-out {
+  animation: slideOut 1.4s ease forwards;
 }
 
 /* Enhanced About Section */

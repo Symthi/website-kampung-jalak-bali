@@ -75,12 +75,12 @@ $komentar_data = mysqli_fetch_all($result_komentar, MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-<?php 
-// Set page info
-$pageTitle = $wisata['judul'] . ' | Kampoeng Jalak Bali';
-$currentPage = 'wisata';
+    <?php 
+    // Set page info
+    $pageTitle = $wisata['judul'] . ' | Kampoeng Jalak Bali';
+    $currentPage = 'wisata';
 
-include __DIR__ . '/includes/header.php'; ?>
+    include __DIR__ . '/includes/header.php'; ?>
 
     <section class="content-section bg-light">
       <div class="container">
@@ -237,45 +237,8 @@ include __DIR__ . '/includes/header.php'; ?>
         </div>
       </div>
     </section>
-
-    <script>
-    $(document).ready(function() {
-    // Image zoom effect
-    $('.wj-featured-image').click(function() {
-      $(this).toggleClass('zoomed');
-    });
-
-        // Smooth scroll to comments
-        $('a[href="#comments"]').click(function(e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: $($(this).attr('href')).offset().top - 100
-            }, 500);
-        });
-
-        // Auto-resize textarea
-        $('textarea').on('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-
-        // Toggle mobile menu
-        $('.menu-toggle').click(function() {
-            $('.main-nav').toggleClass('active');
-            $(this).find('i').toggleClass('fa-bars fa-times');
-        });
-
-        // Close menu on window resize
-        $(window).resize(function() {
-            if ($(window).width() > 768) {
-                $('.main-nav').removeClass('active');
-                $('.menu-toggle i').removeClass('fa-times').addClass('fa-bars');
-            }
-        });
-    });
-    </script>
-
-<?php include __DIR__ . '/includes/footer.php'; ?>
+    <script src="assets/js/script.js"></script>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

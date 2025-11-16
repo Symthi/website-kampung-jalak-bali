@@ -411,37 +411,8 @@ $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </section>
 
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
-
-    <script>
-        // Preview gambar sebelum upload
-        document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.querySelector('input[type="file"]');
-            if (fileInput) {
-                fileInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            // Hapus preview lama jika ada
-                            const oldPreview = document.querySelector('.gambar-preview');
-                            if (oldPreview) {
-                                oldPreview.remove();
-                            }
-                            
-                            // Buat preview baru
-                            const preview = document.createElement('img');
-                            preview.src = e.target.result;
-                            preview.className = 'gambar-preview';
-                            
-                            // Sisipkan setelah input file
-                            fileInput.parentNode.appendChild(preview);
-                        }
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../script/script.js"></script>
 </body>
 </html>
 <?php mysqli_close($koneksi); ?>
