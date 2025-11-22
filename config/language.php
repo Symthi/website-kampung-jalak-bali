@@ -1,11 +1,13 @@
 <?php
 
-// Language strings
+// Language strings - Complete with Indonesian & English
 $lang = array();
 
-// Indonesian
+// ========================================
+// INDONESIAN (Bahasa Indonesia)
+// ========================================
 $lang['id'] = array(
-    // General
+    // ====== GENERAL ======
     'home' => 'Beranda',
     'about' => 'Tentang',
     'tourism' => 'Wisata',
@@ -23,13 +25,16 @@ $lang['id'] = array(
     'send_message' => 'Kirim Pesan',
     'view_details' => 'Lihat Detail',
     'book_now' => 'Pesan Sekarang',
+    'back' => 'Kembali',
+    'next' => 'Selanjutnya',
+    'previous' => 'Sebelumnya',
     
-    // Hero Section
+    // ====== HERO SECTION ======
     'hero_title' => 'Selamat Datang di Kampoeng Jalak Bali',
     'hero_description' => 'Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.',
     'explore_now' => 'Jelajahi Sekarang',
     
-    // About Section
+    // ====== ABOUT SECTION ======
     'about_title' => 'Tentang Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.',
     'history' => 'Sejarah dan Latar Belakang',
@@ -45,36 +50,69 @@ $lang['id'] = array(
         'Mengembangkan potensi ekowisata berbasis konservasi dan budaya lokal.',
         'Membangun kemitraan dengan lembaga konservasi, pemerintah, dan pihak swasta.'
     ),
+    // ====== ORGANIZATIONAL (STRUKTUR) - INDONESIAN ======
+    'advisor' => 'Pembina',
+    'responsible_party' => 'Penanggungjawab',
+    'chairperson' => 'Ketua',
+    'guide' => 'Pemandu',
+    'observer' => 'Pengamat',
+    'member' => 'Anggota',
+    'secretary' => 'Sekretaris',
+    'treasurer' => 'Bendahara',
+    'position_village_chief' => 'Perbekel Desa Tengkudak',
+    'position_fnpf' => 'FNPF',
+    'position_adat_village' => 'Desa Adat Tingkihkerep',
+    'position_adat_leader' => 'Bandes Adat Tingkihkerep',
+    'position_secretary' => 'Sekretaris',
+    'position_treasurer' => 'Bendahara',
+    'position_guide' => 'Pemandu',
+    'position_observer' => 'Pengamat',
+    'secretary_and_treasurer' => 'Sekretaris & Bendahara',
     
-    // Tourism Section
-    'tourism_title' => 'Wisata Edukasi',
+    // ====== TOURISM SECTION ======
+    'tourism_sec' => 'Wisata Edukasi',
     'tourism_subtitle' => 'Jelajahi pengalaman unik konservasi dan budaya di Kampoeng Jalak Bali',
+    'tourism_list' => 'Daftar Wisata',
     'duration' => 'Durasi',
+    'location' => 'Lokasi',
+    'price_from' => 'Mulai dari',
+    'no_tourism' => 'Belum ada data wisata',
     
-    // Information Section
+    // ====== INFORMATION SECTION ======
+    'information' => 'Informasi',
     'information_title' => 'Informasi Terbaru',
     'information_subtitle' => 'Update terbaru seputar Kampoeng Jalak Bali',
     'news' => 'Berita',
     'article' => 'Artikel',
     'announcement' => 'Pengumuman',
     'event' => 'Event',
+    'no_information' => 'Belum ada informasi yang tersedia.',
+    'info_date' => 'Tanggal',
+    'info_category' => 'Kategori',
     
-    // Gallery Section
+    // ====== GALLERY SECTION ======
+    'gallery' => 'Galeri',
     'gallery_title' => 'Galeri',
+    'gallery_list' => 'Daftar Galeri',
     'gallery_subtitle' => 'Momen-momen indah di Kampoeng Jalak Bali',
     'view_gallery' => 'Lihat Galeri',
+    'no_gallery_images' => 'Belum ada gambar di galeri. Silakan upload gambar pertama Anda.',
     
-    // Products Section
+    // ====== PRODUCTS SECTION ======
+    'products' => 'Produk',
     'products_title' => 'Produk & Merchandise',
     'products_subtitle' => 'Dukung konservasi Jalak Bali dengan membeli produk kami',
     'price' => 'Harga',
     'stock' => 'Stok',
+    'product_description' => 'Deskripsi Produk',
+    'no_products' => 'Belum ada produk yang tersedia.',
     
-    // Supporter Section
+    // ====== SUPPORTER SECTION ======
     'supporter_title' => 'Supporter & Donor',
     'supporter_subtitle' => 'Organisasi dan mitra yang mendukung Kampoeng Jalak Bali',
     
-    // Contact Section
+    // ====== CONTACT SECTION ======
+    'contact' => 'Kontak',
     'contact_title' => 'Kontak Kami',
     'contact_subtitle' => 'Hubungi kami untuk informasi lebih lanjut tentang Kampoeng Jalak Bali',
     'contact_info' => 'Informasi Kontak',
@@ -85,17 +123,28 @@ $lang['id'] = array(
     'message' => 'Pesan',
     'follow_us' => 'Ikuti Kami',
     'full_name' => 'Nama Lengkap',
+    'contact_us' => 'Hubungi Kami',
     
-    // Location Section
+    // ====== LOCATION SECTION ======
     'location_title' => 'Lokasi Kami',
     'location_subtitle' => 'Kunjungi Kampoeng Jalak Bali di Tabanan, Bali',
+    'location' => 'Lokasi',
     
-    // Footer
+    // ====== FOOTER ======
     'quick_links' => 'Menu Cepat',
     'follow' => 'Ikuti Kami',
     'rights_reserved' => 'Semua Hak Dilindungi',
+    'copyright' => 'Hak Cipta',
+    'footer_description' => 'Website resmi Kampoeng Jalak Bali untuk promosi wisata, produk, dan informasi desa.',
+    'made_with_love' => 'Dibuat dengan ❤️ untuk konservasi Jalak Bali',
+    'footer_title' => 'Kampoeng Jalak Bali',
+    'footer_tagline' => 'Desa Konservasi Burung Jalak Bali',
+    'follow_us_social' => 'Ikuti kami di media sosial untuk update terbaru',
+    'contact_us_anytime' => 'Hubungi kami kapan saja untuk pertanyaan',
+    'designed_by' => 'Dirancang dan dikembangkan dengan ❤️',
+    'all_rights_reserved' => 'Semua hak dilindungi © 2025',
     
-    // Dashboard
+    // ====== DASHBOARD ======
     'admin_dashboard' => 'Dashboard Admin',
     'user_dashboard' => 'Dashboard User',
     'statistics' => 'Statistik',
@@ -104,6 +153,8 @@ $lang['id'] = array(
     'total_messages' => 'Total Pesan',
     'total_users' => 'Total Pengguna',
     'total_products' => 'Total Produk',
+    'total_stock' => 'Total Stok',
+    'total_images' => 'Total Gambar',
     'my_messages' => 'Pesan Saya',
     'member_since' => 'Bergabung Sejak',
     'admin_menu' => 'Menu Admin',
@@ -115,8 +166,11 @@ $lang['id'] = array(
     'manage_users' => 'Kelola Pengguna',
     'manage_information' => 'Kelola Informasi',
     'manage_products' => 'Kelola Produk',
+    'manage_media' => 'Kelola Media',
+    'folder' => 'Folder',
+    'max_size' => 'Ukuran Maks',
     
-    // Forms
+    // ====== FORMS & AUTH ======
     'login_title' => 'Masuk ke Akun Anda',
     'register_title' => 'Buat Akun Baru',
     'email_address' => 'Alamat Email',
@@ -128,41 +182,52 @@ $lang['id'] = array(
     'have_account' => 'Sudah punya akun?',
     'register_here' => 'Daftar di sini',
     'login_here' => 'Masuk di sini',
+    'password_min_length' => 'Password minimal 6 karakter',
+    'invalid_password' => 'Password salah!',
+    'email_not_found' => 'Email tidak ditemukan!',
+    'email_exists' => 'Email sudah terdaftar!',
+    'all_fields_required' => 'Semua field harus diisi!',
+    'registration_failed' => 'Gagal membuat akun! Silakan coba lagi.',
     
-    // Comments
+    // ====== COMMENTS ======
     'comments' => 'Komentar',
+    'comment_count' => 'Jumlah Komentar',
     'write_comment' => 'Tulis Komentar',
     'post_comment' => 'Kirim Komentar',
-    'no_comments' => 'Belum ada komentar',
-    'login_to_comment' => 'Silakan login untuk menulis komentar'
-    ,
-    // Additional small UI keys
+    'no_comments' => 'Belum ada komentar. Jadilah yang pertama berkomentar!',
+    'login_to_comment' => 'Silakan login untuk menulis komentar',
     'comment_statistics' => 'Statistik Komentar',
-    'no' => 'No',
-    'user' => 'Pengguna',
-    'date' => 'Tanggal',
-    'view_tour' => 'Lihat Wisata',
-    // Common UI and CRUD
+    
+    // ====== CRUD OPERATIONS ======
     'add' => 'Tambah',
+    'add_new' => 'Tambah Baru',
     'create' => 'Buat',
     'edit' => 'Ubah',
     'update' => 'Perbarui',
     'delete' => 'Hapus',
-    'confirm_delete' => 'Yakin ingin menghapus?',
     'save' => 'Simpan',
-    'save_success' => 'Data berhasil disimpan',
-    'delete_success' => 'Data berhasil dihapus',
     'cancel' => 'Batal',
     'search' => 'Cari',
     'filter' => 'Filter',
     'upload' => 'Unggah',
     'download' => 'Unduh',
-    'no_data' => 'Tidak ada data',
-    'created_at' => 'Dibuat pada',
-    'updated_at' => 'Diubah pada',
+    'view' => 'Lihat',
     'actions' => 'Aksi',
+    'confirm_delete' => 'Yakin ingin menghapus?',
+    'delete_success' => 'Data berhasil dihapus',
+    'save_success' => 'Data berhasil disimpan',
+    'update_success' => 'Data berhasil diperbarui',
+    'add_success' => 'Data berhasil ditambahkan',
+    'error_save' => 'Gagal menyimpan data',
+    'error_delete' => 'Gagal menghapus data',
+    'error_occurred' => 'Terjadi kesalahan, silakan coba lagi',
+    
+    // ====== FORM FIELDS ======
+    'no' => 'No',
+    'number' => 'Nomor',
     'name' => 'Nama',
     'title' => 'Judul',
+    'description' => 'Deskripsi',
     'description_short' => 'Deskripsi Singkat',
     'content' => 'Konten',
     'category' => 'Kategori',
@@ -170,11 +235,120 @@ $lang['id'] = array(
     'position' => 'Jabatan',
     'phone_number' => 'No. Telepon',
     'postal_code' => 'Kode Pos',
-    'address_short' => 'Alamat Singkat',
+    'date' => 'Tanggal',
+    'created_at' => 'Dibuat pada',
+    'created_date' => 'Tanggal Dibuat',
+    'updated_at' => 'Diubah pada',
+    'uploaded_on' => 'Diunggah pada',
+    'user' => 'Pengguna',
+    'image' => 'Gambar',
+    'upload_image' => 'Unggah Gambar',
     'required_field' => 'Field ini wajib diisi',
     'invalid_input' => 'Input tidak valid',
-    'error_occurred' => 'Terjadi kesalahan, silakan coba lagi',
-
+    'no_data' => 'Tidak ada data',
+    'no_description' => 'Tidak ada deskripsi.',
+    
+    // ====== TOURISM/WISATA CRUD ======
+    'tourism' => 'Wisata',
+    'tourism_management' => 'Kelola Wisata',
+    'tourism_add' => 'Tambah Wisata',
+    'tourism_edit' => 'Edit Wisata',
+    'tourism_delete' => 'Hapus Wisata',
+    'tourism_list' => 'Daftar Wisata',
+    'tourism_created' => 'Wisata berhasil ditambahkan!',
+    'tourism_updated' => 'Wisata berhasil diperbarui!',
+    'tourism_deleted' => 'Wisata berhasil dihapus!',
+    'tourism_error' => 'Gagal memproses wisata',
+    'tour_date_added' => 'Tanggal Ditambahkan',
+    
+    // ====== INFORMATION/INFORMASI CRUD ======
+    'information_management' => 'Kelola Informasi',
+    'information_add' => 'Tambah Informasi',
+    'information_edit' => 'Edit Informasi',
+    'information_delete' => 'Hapus Informasi',
+    'information_created' => 'Informasi berhasil ditambahkan!',
+    'information_updated' => 'Informasi berhasil diperbarui!',
+    'information_deleted' => 'Informasi berhasil dihapus!',
+    'information_error' => 'Gagal memproses informasi',
+    
+    // ====== GALLERY/GALERI CRUD ======
+    'gallery_management' => 'Kelola Galeri',
+    'gallery_add' => 'Tambah Gambar',
+    'gallery_edit' => 'Edit Gambar',
+    'gallery_delete' => 'Hapus Gambar',
+    'gallery_created' => 'Gambar berhasil ditambahkan ke galeri!',
+    'gallery_updated' => 'Gambar galeri berhasil diperbarui!',
+    'gallery_deleted' => 'Gambar berhasil dihapus dari galeri!',
+    'gallery_error' => 'Gagal memproses galeri',
+    'upload_tips_title' => 'Tips Upload Gambar',
+    'upload_tip_resolution' => 'Gunakan gambar dengan resolusi minimal 800x600 pixel',
+    'upload_tip_formats' => 'Format yang didukung: JPG, PNG, GIF',
+    'upload_tip_size' => 'Ukuran maksimal file: 2MB',
+    'upload_tip_name' => 'Nama file akan di-generate otomatis',
+    'upload_tip_optimize' => 'Gambar akan di-compress otomatis untuk optimasi',
+    'current_image' => 'Gambar saat ini',
+    
+    // ====== PRODUCTS/PRODUK CRUD ======
+    'product_management' => 'Kelola Produk',
+    'product_add' => 'Tambah Produk',
+    'product_edit' => 'Edit Produk',
+    'product_delete' => 'Hapus Produk',
+    'product_created' => 'Produk berhasil ditambahkan!',
+    'product_updated' => 'Produk berhasil diperbarui!',
+    'product_deleted' => 'Produk berhasil dihapus!',
+    'product_error' => 'Gagal memproses produk',
+    'product_name' => 'Nama Produk',
+    'product_description' => 'Deskripsi Produk',
+    'product_price' => 'Harga (Rp)',
+    'product_stock' => 'Stok',
+    'product_date_added' => 'Tanggal Ditambahkan',
+    
+    // ====== USERS/PENGGUNA CRUD ======
+    'user_management' => 'Kelola Pengguna',
+    'user_add' => 'Tambah Pengguna',
+    'user_edit' => 'Edit Pengguna',
+    'user_delete' => 'Hapus Pengguna',
+    'user_created' => 'Pengguna berhasil ditambahkan!',
+    'user_updated' => 'Pengguna berhasil diperbarui!',
+    'user_deleted' => 'Pengguna berhasil dihapus!',
+    'user_error' => 'Gagal memproses pengguna',
+    'cannot_delete_self' => 'Tidak bisa menghapus akun sendiri!',
+    'user_register_date' => 'Tanggal Daftar',
+    'admin_user' => 'Admin',
+    'regular_user' => 'User Regular',
+    'you' => 'Anda',
+    
+    // ====== MESSAGES/PESAN CRUD ======
+    'message_management' => 'Kelola Pesan',
+    'message_read' => 'Baca Pesan',
+    'message_delete' => 'Hapus Pesan',
+    'message_created' => 'Pesan berhasil disimpan!',
+    'message_deleted' => 'Pesan berhasil dihapus!',
+    'message_error' => 'Gagal memproses pesan',
+    'message_sender' => 'Pengirim',
+    'message_subject' => 'Subjek Pesan',
+    'message_content' => 'Isi Pesan',
+    'message_date' => 'Tanggal Pesan',
+    'message_status' => 'Status',
+    'unread' => 'Belum Dibaca',
+    'read' => 'Sudah Dibaca',
+    'replied' => 'Sudah Dibalas',
+    'new_message' => 'Pesan Baru',
+    
+    // ====== COMMENTS MANAGEMENT ======
+    'comment_management' => 'Kelola Komentar',
+    'comment_read' => 'Baca Komentar',
+    'comment_delete' => 'Hapus Komentar',
+    'comment_created' => 'Komentar berhasil ditambahkan!',
+    'comment_updated' => 'Komentar berhasil diperbarui!',
+    'comment_deleted' => 'Komentar berhasil dihapus!',
+    'comment_error' => 'Gagal memproses komentar',
+    'you_cannot_delete_comment' => 'Anda tidak berhak menghapus komentar ini!',
+    'tour' => 'Wisata',
+    'comment_author' => 'Penulis Komentar',
+    'comment_date' => 'Tanggal Komentar',
+    
+    // ====== ORGANIZATIONAL ======
     'management_structure' => 'Struktur Kepengurusan',
     'management_structure_subtitle' => 'Susunan pengurus dan peran mereka di Kampoeng Jalak Bali',
     'board_of_directors' => 'Pengurus',
@@ -183,45 +357,64 @@ $lang['id'] = array(
     'vice_chair' => 'Wakil Ketua',
     'secretary' => 'Sekretaris',
     'treasurer' => 'Bendahara',
-    'member' => 'Anggota'
-    ,
-    // Gallery specific
-    'total_images' => 'Total Gambar',
-    'folder' => 'Folder',
-    'max_size' => 'Ukuran Maks',
-    'upload_tips_title' => 'Tips Upload Gambar',
-    'upload_tip_resolution' => 'Gunakan gambar dengan resolusi minimal 800x600 pixel',
-    'upload_tip_formats' => 'Format yang didukung: JPG, PNG, GIF',
-    'upload_tip_size' => 'Ukuran maksimal file: 2MB',
-    'upload_tip_name' => 'Nama file akan di-generate otomatis',
-    'upload_tip_optimize' => 'Gambar akan di-compress otomatis untuk optimasi',
-    'upload_image' => 'Gambar',
-    'gallery_list' => 'Daftar Galeri',
-    'no_gallery_images' => 'Belum ada gambar di galeri. Silakan upload gambar pertama Anda.'
-    ,
-    // Error & form messages
-    'invalid_password' => 'Password salah!',
-    'email_not_found' => 'Email tidak ditemukan!',
-    'all_fields_required' => 'Semua field harus diisi!',
-    'password_min_length' => 'Password minimal 6 karakter!',
-    'email_exists' => 'Email sudah terdaftar!',
-    'registration_failed' => 'Gagal membuat akun! Silakan coba lagi.',
-    'register' => 'Daftar',
+    'member' => 'Anggota',
+    'advisor' => 'Pembina',
+    'responsible_party' => 'Penanggungjawab',
+    'guide' => 'Pemandu',
+    'observer' => 'Pengamat',
+    
+    // ====== COMMON UI ======
     'back_to_home' => 'Kembali ke Beranda',
-    'no_information' => 'Belum ada informasi yang tersedia.'
-    ,
-    // Message status
-    'unread' => 'Belum Dibaca',
-    'replied' => 'Sudah Dibalas',
-    'read' => 'Baca'
-    ,
-    'uploaded_on' => 'Diunggah pada',
-    'no_description' => 'Tidak ada deskripsi.'
+    'back_to_dashboard' => 'Kembali ke Dashboard',
+    'page_not_found' => 'Halaman tidak ditemukan',
+    'server_error' => 'Kesalahan server',
+    'loading' => 'Memuat...',
+    'please_wait' => 'Silakan tunggu...',
+    'success' => 'Berhasil',
+    'error' => 'Kesalahan',
+    'warning' => 'Peringatan',
+    'info' => 'Informasi',
+    'register' => 'Daftar',
+    'answer' => 'Jawab',
+    'close' => 'Tutup',
+    'open' => 'Buka',
+    'print' => 'Cetak',
+    'share' => 'Bagikan',
+    'copy' => 'Salin',
+
+    // ====== MERCHANDISE/PRODUK DISPLAY ======
+    'merchandise' => 'Merchandise',
+    'merchandise_title' => 'Produk & Merchandise',
+    'merchandise_subtitle' => 'Dukung konservasi Jalak Bali dengan membeli produk kami',
+    'merchandise_description' => 'Deskripsi Merchandise',
+    'merchandise_available' => 'Tersedia di lokasi Kampoeng Jalak Bali',
+    'merchandise_about_title' => 'Tentang Merchandise Kami',
+    'merchandise_about_text1' => 'Semua merchandise di Kampoeng Jalak Bali adalah pilihan spesial yang dirancang untuk mendukung konservasi Jalak Bali. Setiap pembelian Anda berkontribusi langsung pada program pelestarian burung Jalak Bali yang terancam punah.',
+    'merchandise_about_text2' => 'Tertarik untuk melihat langsung dan membeli merchandise kami? Kunjungi lokasi kami di Desa Tengkudak, Tabanan, Bali atau hubungi kami untuk informasi lebih lanjut tentang ketersediaan produk dan pemesanan.',
+    'visit_us' => 'Kunjungi Kami',
+    'merchandise_location' => 'Lokasi Merchandise',
+    'merchandise_collection' => 'Koleksi Merchandise',
+    'merchandise_gallery' => 'Galeri Merchandise',
+    'merchandise_limited' => 'Edisi Terbatas',
+    'merchandise_featured' => 'Merchandise Unggulan',
+    'merchandise_new' => 'Merchandise Baru',
+    'merchandise_popular' => 'Merchandise Populer',
+    'merchandise_price_contact' => 'Hubungi untuk harga',
+    'merchandise_visit_location' => 'Kunjungi lokasi kami untuk informasi lebih lanjut',
+    'interested_visit_us' => 'Tertarik? Kunjungi kami sekarang juga!',
+    'for_more_info' => 'Untuk informasi lebih lanjut',
+    'available_at_location' => 'Tersedia di lokasi kami',
+    'shop_merchandise' => 'Belanja Merchandise',
+    'view_merchandise' => 'Lihat Merchandise',
+    'merchandise_support_conservation' => 'Setiap pembelian mendukung konservasi Jalak Bali',
+    'merchandise_conservation_contribution' => 'Berkontribusi untuk konservasi',
 );
 
-// English
+// ========================================
+// ENGLISH (Bahasa Inggris)
+// ========================================
 $lang['en'] = array(
-    // General
+    // ====== GENERAL ======
     'home' => 'Home',
     'about' => 'About',
     'tourism' => 'Tourism',
@@ -239,13 +432,16 @@ $lang['en'] = array(
     'send_message' => 'Send Message',
     'view_details' => 'View Details',
     'book_now' => 'Book Now',
+    'back' => 'Back',
+    'next' => 'Next',
+    'previous' => 'Previous',
     
-    // Hero Section
+    // ====== HERO SECTION ======
     'hero_title' => 'Welcome to Kampoeng Jalak Bali',
     'hero_description' => 'A stunning educational tourism destination in the Island of Gods, offering unique experiences about Bali Starling conservation and local culture.',
     'explore_now' => 'Explore Now',
     
-    // About Section
+    // ====== ABOUT SECTION ======
     'about_title' => 'About Kampoeng Jalak Bali',
     'about_description' => 'Kampoeng Jalak Bali is an ex-situ conservation center for the Bali Starling, a protected endemic species, located in Banjar Tingkihkerep, Tengkudak Village, Tabanan, Bali.',
     'history' => 'History and Background',
@@ -262,35 +458,50 @@ $lang['en'] = array(
         'Build partnerships with conservation institutions, government, and private parties.'
     ),
     
-    // Tourism Section
-    'tourism_title' => 'Educational Tourism',
+    // ====== TOURISM SECTION ======
+    'tourism_sec' => 'Educational Tourism',
     'tourism_subtitle' => 'Explore unique conservation and cultural experiences at Kampoeng Jalak Bali',
+    'tourism_list' => 'Tourism List',
     'duration' => 'Duration',
+    'location' => 'Location',
+    'price_from' => 'Starting from',
+    'no_tourism' => 'No tourism data available',
     
-    // Information Section
+    // ====== INFORMATION SECTION ======
+    'information' => 'Information',
     'information_title' => 'Latest Information',
     'information_subtitle' => 'Latest updates about Kampoeng Jalak Bali',
     'news' => 'News',
     'article' => 'Article',
     'announcement' => 'Announcement',
     'event' => 'Event',
+    'no_information' => 'No information available.',
+    'info_date' => 'Date',
+    'info_category' => 'Category',
     
-    // Gallery Section
+    // ====== GALLERY SECTION ======
+    'gallery' => 'Gallery',
     'gallery_title' => 'Gallery',
+    'gallery_list' => 'Gallery List',
     'gallery_subtitle' => 'Beautiful moments at Kampoeng Jalak Bali',
     'view_gallery' => 'View Gallery',
+    'no_gallery_images' => 'No images in the gallery yet. Please upload your first image.',
     
-    // Products Section
+    // ====== PRODUCTS SECTION ======
+    'products' => 'Products',
     'products_title' => 'Products & Merchandise',
     'products_subtitle' => 'Support Bali Starling conservation by purchasing our products',
     'price' => 'Price',
     'stock' => 'Stock',
+    'product_description' => 'Product Description',
+    'no_products' => 'No products available.',
     
-    // Supporter Section
+    // ====== SUPPORTER SECTION ======
     'supporter_title' => 'Supporter & Donor',
     'supporter_subtitle' => 'Organizations and partners supporting Kampoeng Jalak Bali',
     
-    // Contact Section
+    // ====== CONTACT SECTION ======
+    'contact' => 'Contact',
     'contact_title' => 'Contact Us',
     'contact_subtitle' => 'Contact us for more information about Kampoeng Jalak Bali',
     'contact_info' => 'Contact Information',
@@ -301,17 +512,28 @@ $lang['en'] = array(
     'message' => 'Message',
     'follow_us' => 'Follow Us',
     'full_name' => 'Full Name',
+    'contact_us' => 'Contact Us',
     
-    // Location Section
+    // ====== LOCATION SECTION ======
     'location_title' => 'Our Location',
     'location_subtitle' => 'Visit Kampoeng Jalak Bali in Tabanan, Bali',
+    'location' => 'Location',
     
-    // Footer
+    // ====== FOOTER ======
     'quick_links' => 'Quick Links',
     'follow' => 'Follow Us',
     'rights_reserved' => 'All Rights Reserved',
+    'copyright' => 'Copyright',
+    'footer_description' => 'Official website of Kampoeng Jalak Bali for tourism promotion, products, and village information.',
+    'made_with_love' => 'Made with ❤️ for Bali Starling conservation',
+    'footer_title' => 'Kampoeng Jalak Bali',
+    'footer_tagline' => 'Bali Starling Conservation Village',
+    'follow_us_social' => 'Follow us on social media for the latest updates',
+    'contact_us_anytime' => 'Contact us anytime for inquiries',
+    'designed_by' => 'Designed and developed with ❤️',
+    'all_rights_reserved' => 'All rights reserved © 2025',
     
-    // Dashboard
+    // ====== DASHBOARD ======
     'admin_dashboard' => 'Admin Dashboard',
     'user_dashboard' => 'User Dashboard',
     'statistics' => 'Statistics',
@@ -319,9 +541,11 @@ $lang['en'] = array(
     'total_comments' => 'Total Comments',
     'total_messages' => 'Total Messages',
     'total_users' => 'Total Users',
-        'total_products' => 'Total Products',
-        'my_messages' => 'My Messages',
-        'member_since' => 'Member Since',
+    'total_products' => 'Total Products',
+    'total_stock' => 'Total Stock',
+    'total_images' => 'Total Images',
+    'my_messages' => 'My Messages',
+    'member_since' => 'Member Since',
     'admin_menu' => 'Admin Menu',
     'user_menu' => 'Menu',
     'manage_tourism' => 'Manage Tourism',
@@ -331,8 +555,11 @@ $lang['en'] = array(
     'manage_users' => 'Manage Users',
     'manage_information' => 'Manage Information',
     'manage_products' => 'Manage Products',
+    'manage_media' => 'Manage Media',
+    'folder' => 'Folder',
+    'max_size' => 'Max Size',
     
-    // Forms
+    // ====== FORMS & AUTH ======
     'login_title' => 'Login to Your Account',
     'register_title' => 'Create New Account',
     'email_address' => 'Email Address',
@@ -344,41 +571,52 @@ $lang['en'] = array(
     'have_account' => 'Already have an account?',
     'register_here' => 'Register here',
     'login_here' => 'Login here',
+    'password_min_length' => 'Password must be at least 6 characters',
+    'invalid_password' => 'Invalid password!',
+    'email_not_found' => 'Email not found!',
+    'email_exists' => 'Email is already registered!',
+    'all_fields_required' => 'All fields are required!',
+    'registration_failed' => 'Failed to create account! Please try again.',
     
-    // Comments
+    // ====== COMMENTS ======
     'comments' => 'Comments',
+    'comment_count' => 'Comment Count',
     'write_comment' => 'Write Comment',
     'post_comment' => 'Post Comment',
-    'no_comments' => 'No comments yet',
-    'login_to_comment' => 'Please login to write a comment'
-    ,
-    // Additional small UI keys
+    'no_comments' => 'No comments yet. Be the first to comment!',
+    'login_to_comment' => 'Please login to write a comment',
     'comment_statistics' => 'Comment Statistics',
-    'no' => 'No',
-    'user' => 'User',
-    'date' => 'Date',
-    'view_tour' => 'View Tour',
-    // Common UI and CRUD
+    
+    // ====== CRUD OPERATIONS ======
     'add' => 'Add',
+    'add_new' => 'Add New',
     'create' => 'Create',
     'edit' => 'Edit',
     'update' => 'Update',
     'delete' => 'Delete',
-    'confirm_delete' => 'Are you sure you want to delete?',
     'save' => 'Save',
-    'save_success' => 'Data saved successfully',
-    'delete_success' => 'Data deleted successfully',
     'cancel' => 'Cancel',
     'search' => 'Search',
     'filter' => 'Filter',
     'upload' => 'Upload',
     'download' => 'Download',
-    'no_data' => 'No data available',
-    'created_at' => 'Created at',
-    'updated_at' => 'Updated at',
+    'view' => 'View',
     'actions' => 'Actions',
+    'confirm_delete' => 'Are you sure you want to delete?',
+    'delete_success' => 'Data deleted successfully',
+    'save_success' => 'Data saved successfully',
+    'update_success' => 'Data updated successfully',
+    'add_success' => 'Data added successfully',
+    'error_save' => 'Failed to save data',
+    'error_delete' => 'Failed to delete data',
+    'error_occurred' => 'An error occurred, please try again',
+    
+    // ====== FORM FIELDS ======
+    'no' => 'No',
+    'number' => 'Number',
     'name' => 'Name',
     'title' => 'Title',
+    'description' => 'Description',
     'description_short' => 'Short Description',
     'content' => 'Content',
     'category' => 'Category',
@@ -386,12 +624,157 @@ $lang['en'] = array(
     'position' => 'Position',
     'phone_number' => 'Phone Number',
     'postal_code' => 'Postal Code',
-    'address_short' => 'Short Address',
+    'date' => 'Date',
+    'created_at' => 'Created at',
+    'created_date' => 'Created Date',
+    'updated_at' => 'Updated at',
+    'uploaded_on' => 'Uploaded on',
+    'user' => 'User',
+    'image' => 'Image',
+    'upload_image' => 'Upload Image',
     'required_field' => 'This field is required',
     'invalid_input' => 'Invalid input',
-    'error_occurred' => 'An error occurred, please try again',
-
-    // Management / organizational
+    'no_data' => 'No data available',
+    'no_description' => 'No description.',
+    
+    // ====== TOURISM/WISATA CRUD ======
+    'tourism' => 'Tourism',
+    'manage_tourism' => 'Manage Tourism',
+    'tourism_management' => 'Tourism Management',
+    'tourism_add' => 'Add Tourism',
+    'tourism_edit' => 'Edit Tourism',
+    'tourism_delete' => 'Delete Tourism',
+    'tourism_list' => 'Tourism List',
+    'tourism_created' => 'Tourism added successfully!',
+    'tourism_updated' => 'Tourism updated successfully!',
+    'tourism_deleted' => 'Tourism deleted successfully!',
+    'tourism_error' => 'Failed to process tourism',
+    'tour_date_added' => 'Date Added',
+    'tourism_title' => 'Tourism Title',
+    'tourism_description' => 'Tourism Description',
+    'tourism_duration' => 'Tourism Duration',
+    'tour_guide' => 'Tour Guide',
+    'tour_capacity' => 'Capacity',
+    'tour_schedule' => 'Schedule',
+    
+    // ====== INFORMATION/INFORMASI CRUD ======
+    'manage_information' => 'Manage Information',
+    'information_management' => 'Information Management',
+    'information_add' => 'Add Information',
+    'information_edit' => 'Edit Information',
+    'information_delete' => 'Delete Information',
+    'information_created' => 'Information added successfully!',
+    'information_updated' => 'Information updated successfully!',
+    'information_deleted' => 'Information deleted successfully!',
+    'information_error' => 'Failed to process information',
+    'information_title' => 'Information Title',
+    'information_content' => 'Information Content',
+    'information_category' => 'Information Category',
+    'category_news' => 'News',
+    'category_article' => 'Article',
+    'category_announcement' => 'Announcement',
+    'category_event' => 'Event',
+    
+    // ====== GALLERY/GALERI CRUD ======
+    'manage_gallery' => 'Manage Gallery',
+    'gallery_management' => 'Gallery Management',
+    'gallery_add' => 'Add Image',
+    'gallery_edit' => 'Edit Image',
+    'gallery_delete' => 'Delete Image',
+    'gallery_created' => 'Image added to gallery successfully!',
+    'gallery_updated' => 'Gallery image updated successfully!',
+    'gallery_deleted' => 'Image deleted from gallery successfully!',
+    'gallery_error' => 'Failed to process gallery',
+    'upload_tips_title' => 'Image Upload Tips',
+    'upload_tip_resolution' => 'Use images with a minimum resolution of 800x600 pixels',
+    'upload_tip_formats' => 'Supported formats: JPG, PNG, GIF',
+    'upload_tip_size' => 'Maximum file size: 2MB',
+    'upload_tip_name' => 'File names will be generated automatically',
+    'upload_tip_optimize' => 'Images will be automatically compressed for optimization',
+    'current_image' => 'Current Image',
+    'gallery_image_title' => 'Image Title',
+    'gallery_image_caption' => 'Image Caption',
+    
+    // ====== PRODUCTS/PRODUK CRUD ======
+    'manage_products' => 'Manage Products',
+    'product_management' => 'Product Management',
+    'product_add' => 'Add Product',
+    'product_edit' => 'Edit Product',
+    'product_delete' => 'Delete Product',
+    'product_created' => 'Product added successfully!',
+    'product_updated' => 'Product updated successfully!',
+    'product_deleted' => 'Product deleted successfully!',
+    'product_error' => 'Failed to process product',
+    'product_name' => 'Product Name',
+    'product_description' => 'Product Description',
+    'product_price' => 'Price (Rp)',
+    'product_stock' => 'Stock',
+    'product_date_added' => 'Date Added',
+    'product_image' => 'Product Image',
+    'low_stock' => 'Low Stock',
+    'out_of_stock' => 'Out of Stock',
+    'in_stock' => 'In Stock',
+    
+    // ====== USERS/PENGGUNA CRUD ======
+    'manage_users' => 'Manage Users',
+    'user_management' => 'User Management',
+    'user_add' => 'Add User',
+    'user_edit' => 'Edit User',
+    'user_delete' => 'Delete User',
+    'user_created' => 'User added successfully!',
+    'user_updated' => 'User updated successfully!',
+    'user_deleted' => 'User deleted successfully!',
+    'user_error' => 'Failed to process user',
+    'cannot_delete_self' => 'Cannot delete your own account!',
+    'user_register_date' => 'Registration Date',
+    'admin_user' => 'Admin',
+    'regular_user' => 'Regular User',
+    'user_role_admin' => 'Administrator',
+    'user_role_user' => 'User',
+    'you' => 'You',
+    'user_email' => 'User Email',
+    'user_name' => 'User Name',
+    'total_admin' => 'Total Admin',
+    'total_regular_users' => 'Total Regular Users',
+    
+    // ====== MESSAGES/PESAN CRUD ======
+    'manage_messages' => 'Manage Messages',
+    'message_management' => 'Message Management',
+    'message_read' => 'Read Message',
+    'message_delete' => 'Delete Message',
+    'message_created' => 'Message saved successfully!',
+    'message_deleted' => 'Message deleted successfully!',
+    'message_error' => 'Failed to process message',
+    'message_sender' => 'Sender',
+    'message_subject' => 'Message Subject',
+    'message_content' => 'Message Content',
+    'message_date' => 'Message Date',
+    'message_status' => 'Status',
+    'message_reply' => 'Reply',
+    'unread' => 'Unread',
+    'read' => 'Read',
+    'replied' => 'Replied',
+    'new_message' => 'New Message',
+    'sender_email' => 'Sender Email',
+    'contact_message' => 'Contact Message',
+    
+    // ====== COMMENTS MANAGEMENT ======
+    'manage_comments' => 'Manage Comments',
+    'comment_management' => 'Comment Management',
+    'comment_read' => 'Read Comment',
+    'comment_delete' => 'Delete Comment',
+    'comment_created' => 'Comment added successfully!',
+    'comment_updated' => 'Comment updated successfully!',
+    'comment_deleted' => 'Comment deleted successfully!',
+    'comment_error' => 'Failed to process comment',
+    'cannot_delete_comment' => 'You don\'t have permission to delete this comment!',
+    'tour' => 'Tour',
+    'comment_author' => 'Comment Author',
+    'comment_date' => 'Comment Date',
+    'comment_content' => 'Comment Content',
+    'related_tour' => 'Related Tour',
+    
+    // ====== ORGANIZATIONAL ======
     'management_structure' => 'Organizational Structure',
     'management_structure_subtitle' => 'Composition of management and their roles at Kampoeng Jalak Bali',
     'board_of_directors' => 'Board',
@@ -400,62 +783,221 @@ $lang['en'] = array(
     'vice_chair' => 'Vice Chair',
     'secretary' => 'Secretary',
     'treasurer' => 'Treasurer',
-    'member' => 'Member'
-    ,
-    // Gallery specific
-    'total_images' => 'Total Images',
-    'folder' => 'Folder',
-    'max_size' => 'Max Size',
-    'upload_tips_title' => 'Upload Image Tips',
-    'upload_tip_resolution' => 'Use images with a minimum resolution of 800x600 pixels',
-    'upload_tip_formats' => 'Supported formats: JPG, PNG, GIF',
-    'upload_tip_size' => 'Maximum file size: 2MB',
-    'upload_tip_name' => 'File names will be generated automatically',
-    'upload_tip_optimize' => 'Images will be automatically compressed for optimization',
-    'upload_image' => 'Image',
-    'gallery_list' => 'Gallery List',
-    'no_gallery_images' => 'No images in the gallery yet. Please upload your first image.'
-    ,
-    // Error & form messages
-    'invalid_password' => 'Invalid password',
-    'email_not_found' => 'Email not found',
-    'all_fields_required' => 'All fields are required',
-    'password_min_length' => 'Password must be at least 6 characters',
-    'email_exists' => 'Email is already registered',
-    'registration_failed' => 'Failed to create account, please try again',
-    'register' => 'Register',
+    'member' => 'Member',
+    'advisor' => 'Advisor',
+    'responsible_party' => 'Responsible Party',
+    'guide' => 'Guide',
+    'observer' => 'Observer',
+    'position_village_chief' => 'Village Chief (Perbekel)',
+    'position_fnpf' => 'FNPF',
+    'customary_village' => 'Customary Village (Adat Tingkihkerep)',
+    'position_adat_village' => 'Customary Village Adat Tingkihkerep',
+    'position_adat_leader' => 'Customary Leader (Bandes Adat)',
+    'position_secretary' => 'Secretary',
+    'position_treasurer' => 'Treasurer',
+    'secretary_and_treasurer' => 'Secretary & Treasurer',
+    'structure_board' => 'Board Members',
+    'structure_committee' => 'Committee Members',
+    'position_guide' => 'Guide',
+    'position_observer' => 'Observer',
+    
+    // ====== COMMON UI ======
     'back_to_home' => 'Back to Home',
-    'no_information' => 'No information available.'
-    ,
-    // Message status
-    'unread' => 'Unread',
-    'replied' => 'Replied',
-    'read' => 'Read'
-    ,
-    'uploaded_on' => 'Uploaded on',
-    'no_description' => 'No description.'
+    'back_to_dashboard' => 'Back to Dashboard',
+    'page_not_found' => 'Page Not Found',
+    'server_error' => 'Server Error',
+    'loading' => 'Loading...',
+    'please_wait' => 'Please wait...',
+    'success' => 'Success',
+    'error' => 'Error',
+    'warning' => 'Warning',
+    'info' => 'Information',
+    'register' => 'Register',
+    'answer' => 'Answer',
+    'close' => 'Close',
+    'open' => 'Open',
+    'print' => 'Print',
+    'share' => 'Share',
+    'copy' => 'Copy',
+    'copied' => 'Copied to clipboard',
+    'refresh' => 'Refresh',
+    'apply' => 'Apply',
+    'reset' => 'Reset',
+    'export' => 'Export',
+    'import' => 'Import',
+    'select_all' => 'Select All',
+    'deselect_all' => 'Deselect All',
+    'bulk_action' => 'Bulk Action',
+    'no_selection' => 'No items selected',
+    'confirm_action' => 'Confirm Action',
+    'are_you_sure' => 'Are you sure?',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'ok' => 'OK',
+
+    // ====== MERCHANDISE/PRODUK DISPLAY ======
+    'merchandise' => 'Merchandise',
+    'merchandise_title' => 'Products & Merchandise',
+    'merchandise_subtitle' => 'Support Bali Starling conservation by purchasing our products',
+    'merchandise_description' => 'Merchandise Description',
+    'merchandise_available' => 'Available at Kampoeng Jalak Bali location',
+    'merchandise_about_title' => 'About Our Merchandise',
+    'merchandise_about_text1' => 'All merchandise at Kampoeng Jalak Bali are special selections designed to support Bali Starling conservation. Every purchase you make contributes directly to the conservation program for this endangered Bali Starling bird.',
+    'merchandise_about_text2' => 'Interested in seeing and buying our merchandise in person? Visit our location in Tengkudak Village, Tabanan, Bali or contact us for more information about product availability and ordering.',
+    'visit_us' => 'Visit Us',
+    'merchandise_location' => 'Merchandise Location',
+    'merchandise_collection' => 'Merchandise Collection',
+    'merchandise_gallery' => 'Merchandise Gallery',
+    'merchandise_limited' => 'Limited Edition',
+    'merchandise_featured' => 'Featured Merchandise',
+    'merchandise_new' => 'New Merchandise',
+    'merchandise_popular' => 'Popular Merchandise',
+    'merchandise_price_contact' => 'Contact for price',
+    'merchandise_visit_location' => 'Visit our location for more information',
+    'interested_visit_us' => 'Interested? Visit us now!',
+    'for_more_info' => 'For more information',
+    'available_at_location' => 'Available at our location',
+    'shop_merchandise' => 'Shop Merchandise',
+    'view_merchandise' => 'View Merchandise',
+    'merchandise_support_conservation' => 'Every purchase supports Bali Starling conservation',
+    'merchandise_conservation_contribution' => 'Contribute to conservation',
 );
 
-// Function to get language string
+// ========================================
+// LANGUAGE FUNCTION
+// ========================================
+/**
+ * Translate function to get language strings
+ * @param string $key Language key
+ * @return string Translated string or key if not found
+ */
 function t($key) {
     global $lang;
     
     // Set default language if not set
     if (!isset($_SESSION['language'])) {
-        $_SESSION['language'] = 'id';
+        $_SESSION['language'] = 'id'; // Default to Indonesian
     }
 
     $language = $_SESSION['language'];
     
+    // Return translated string if exists
     if (isset($lang[$language][$key])) {
         return $lang[$language][$key];
     }
     
-    // Fallback to Indonesian if key not found
+    // Fallback to Indonesian if key not found in current language
     if (isset($lang['id'][$key])) {
         return $lang['id'][$key];
     }
     
-    return $key; // Return key if not found in any language
+    // Return key itself if not found in any language
+    return $key;
 }
+
+/**
+ * Get all language strings for current language
+ * @return array Language strings array
+ */
+function get_current_language_array() {
+    global $lang;
+    
+    if (!isset($_SESSION['language'])) {
+        $_SESSION['language'] = 'id';
+    }
+    
+    $language = $_SESSION['language'];
+    
+    if (isset($lang[$language])) {
+        return $lang[$language];
+    }
+    
+    return $lang['id']; // Default fallback
+}
+
+/**
+ * Set language session
+ * @param string $lang_code Language code ('id' or 'en')
+ * @return bool True if set successfully
+ */
+function set_language($lang_code) {
+    $allowed_languages = ['id', 'en'];
+    
+    if (in_array($lang_code, $allowed_languages)) {
+        $_SESSION['language'] = $lang_code;
+        return true;
+    }
+    
+    return false;
+}
+
+/**
+ * Get current language code
+ * @return string Current language code
+ */
+function get_current_language() {
+    if (!isset($_SESSION['language'])) {
+        $_SESSION['language'] = 'id';
+    }
+    
+    return $_SESSION['language'];
+}
+
+/**
+ * Get language flag emoji
+ * @param string $lang_code Language code
+ * @return string Flag emoji
+ */
+function get_language_flag($lang_code) {
+    $flags = [
+        'id' => '🇮🇩',
+        'en' => '🇬🇧'
+    ];
+    
+    return isset($flags[$lang_code]) ? $flags[$lang_code] : '🌐';
+}
+
+/**
+ * Get language name
+ * @param string $lang_code Language code
+ * @return string Language name
+ */
+function get_language_name($lang_code) {
+    $names = [
+        'id' => 'Indonesian',
+        'en' => 'English'
+    ];
+    
+    return isset($names[$lang_code]) ? $names[$lang_code] : 'Unknown';
+}
+
+/**
+ * Get all available languages
+ * @return array Available languages
+ */
+function get_available_languages() {
+    return [
+        ['code' => 'id', 'name' => 'Bahasa Indonesia', 'flag' => '🇮🇩'],
+        ['code' => 'en', 'name' => 'English', 'flag' => '🇬🇧']
+    ];
+}
+
+/**
+ * Format message with variables
+ * @param string $key Language key
+ * @param array $variables Variables to replace
+ * @return string Formatted message
+ */
+function t_format($key, $variables = []) {
+    $message = t($key);
+    
+    if (!empty($variables)) {
+        foreach ($variables as $placeholder => $value) {
+            $message = str_replace(':' . $placeholder, $value, $message);
+        }
+    }
+    
+    return $message;
+}
+
 ?>

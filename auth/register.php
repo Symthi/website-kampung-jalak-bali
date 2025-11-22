@@ -58,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
-  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
@@ -66,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <section class="auth-section">
       <div class="auth-card">
-        <h2><i class="fa fa-user-plus icon"></i> <?php echo t('register_title'); ?></h2>
+        <h2><i class="fas fa-user-plus"></i> <?php echo t('register_title'); ?></h2>
 
         <?php if (!empty($error)): ?>
         <div class="alert-error">
@@ -75,16 +76,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <form method="POST" action="">
-          <label for="nama"><i class="fa fa-user icon"></i> <?php echo t('name'); ?></label>
-          <input type="text" id="nama" name="nama" required />
+          <div>
+            <label for="nama"><i class="fas fa-user"></i> <?php echo t('name'); ?></label>
+            <input type="text" id="nama" name="nama" required />
+          </div>
 
-          <label for="email"><i class="fa fa-envelope icon"></i> <?php echo t('email_address'); ?></label>
-          <input type="email" id="email" name="email" required />
+          <div>
+            <label for="email"><i class="fas fa-envelope"></i> <?php echo t('email_address'); ?></label>
+            <input type="email" id="email" name="email" required />
+          </div>
 
-          <label for="password"><i class="fa fa-lock icon"></i> <?php echo t('password'); ?></label>
-          <input type="password" id="password" name="password" required />
+          <div>
+            <label for="password"><i class="fas fa-lock"></i> <?php echo t('password'); ?></label>
+            <input type="password" id="password" name="password" required />
+          </div>
 
-          <button type="submit"><i class="fa fa-user-plus icon"></i> <?php echo t('register'); ?></button>
+          <button type="submit"><i class="fas fa-user-plus"></i> <?php echo t('register'); ?></button>
         </form>
 
         <div class="auth-link">

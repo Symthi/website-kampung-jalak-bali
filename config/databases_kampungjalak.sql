@@ -87,5 +87,8 @@ CREATE TABLE produk (
     tanggal_ditambahkan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+alter table produk modify column stok int default 0;
+alter table produk modify column harga decimal(10,2) NOT NULL;
+
 DROP TABLE wisata;
 DROP TABLE komentar;

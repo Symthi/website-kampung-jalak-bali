@@ -56,25 +56,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?php echo t('login_title'); ?> | Kampoeng Jalak Bali</title>
-  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css">
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
+  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
     <?php include __DIR__ . '/../includes/header.php'; ?>
 
     <section class="auth-section">
       <div class="auth-card">
-        <h2><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login_title'); ?></h2>
+        <h2><i class="fas fa-sign-in-alt"></i> <?php echo t('login_title'); ?></h2>
         <?php if (!empty($error)): ?>
         <div class="alert-error">
           <?php echo $error; ?>
         </div>
         <?php endif; ?>
         <form method="POST" action="">
-          <label for="email"><i class="fa fa-envelope icon"></i> <?php echo t('email_address'); ?></label>
-          <input type="email" id="email" name="email" placeholder="email@example.com" required />
-          <label for="password"><i class="fa fa-lock icon"></i> <?php echo t('password'); ?></label>
-          <input type="password" id="password" name="password" placeholder="••••••" required />
-          <button type="submit"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></button>
+          <div>
+            <label for="email"><i class="fas fa-envelope"></i> <?php echo t('email_address'); ?></label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required />
+          </div>
+          <div>
+            <label for="password"><i class="fas fa-lock"></i> <?php echo t('password'); ?></label>
+            <input type="password" id="password" name="password" placeholder="••••••" required />
+          </div>
+          <button type="submit"><i class="fas fa-sign-in-alt"></i> <?php echo t('login'); ?></button>
         </form>
         <div class="auth-link">
           <?php echo t('no_account'); ?> <a href="<?php echo $base; ?>/auth/register.php"><?php echo t('register_here'); ?></a>

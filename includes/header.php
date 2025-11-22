@@ -36,12 +36,12 @@ include_once __DIR__ . '/../config/language.php';
     </div>
     <nav class="navbar">
       <ul>
-  <li><a href="<?php echo $base; ?>/index.php#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
-  <li><a href="<?php echo $base; ?>/index.php#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
-  <li><a href="<?php echo $base; ?>/index.php#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
-  <li><a href="<?php echo $base; ?>/index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
-  <li><a href="<?php echo $base; ?>/informasi.php"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
-  <li><a href="<?php echo $base; ?>/produk.php"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/informasi.php"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/produk.php"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
         <?php
         // Determine logged-in state: prefer site function if exists, otherwise use session fallback
         $loggedIn = false;
@@ -75,5 +75,45 @@ include_once __DIR__ . '/../config/language.php';
         <li role="none"><a role="menuitem" href="#" data-lang="en">🇬🇧 English</a></li>
       </ul>
     </div>
-    <script src='../assets/js/script.js'></script>
+
+    <script>
+      (function(){
+        const btn = document.getElementById('langBtn');
+        const menu = document.getElementById('langMenu');
+        const currentFlag = document.getElementById('currentFlag');
+        const currentLangCode = document.getElementById('currentLangCode');
+        const active = ("<?php echo $_SESSION['language'] ?? 'id'; ?>").toLowerCase();
+
+        // Close menu on outside click
+        document.addEventListener('click', function(e){
+          if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.style.display = 'none';
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        btn.addEventListener('click', function(e){
+          e.preventDefault();
+          const showing = menu.style.display === 'block';
+          menu.style.display = showing ? 'none' : 'block';
+          btn.setAttribute('aria-expanded', String(!showing));
+        });
+
+        // Handle selection
+        menu.querySelectorAll('a[data-lang]').forEach(function(a){
+          a.addEventListener('click', function(ev){
+            ev.preventDefault();
+            const lang = a.getAttribute('data-lang');
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', lang);
+            // navigate to same page with lang param; header.php will set session and redirect cleanly
+            window.location.href = url.toString();
+          });
+        });
+      })();
+    </script>
+
 </header>
+
+<!-- HERO SECTION DENGAN SLIDER GAMBAR -->
+

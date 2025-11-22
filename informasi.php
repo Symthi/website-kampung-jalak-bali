@@ -30,7 +30,7 @@ $pageTitle = t('information_title') . ' | Kampoeng Jalak Bali';
 $currentPage = 'informasi';
 
 // Ambil data informasi dengan pagination
-$per_page = 5;
+$per_page = 4;
 $page = isset($_GET['page_info']) ? max(1, (int)$_GET['page_info']) : 1;
 $offset = ($page - 1) * $per_page;
 $total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM informasi");
@@ -46,11 +46,12 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo t('information_title'); ?> | Kampoeng Jalak Bali</title>
-  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-    <?php include __DIR__ . '/includes/header.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
     <section class="content-section">
       <div class="container">
@@ -108,7 +109,7 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
       </div>
     </section>
 
-    <?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

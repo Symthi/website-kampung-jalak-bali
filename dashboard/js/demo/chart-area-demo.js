@@ -1,126 +1,210 @@
-// Set new default font family and font color to match theme
-Chart.defaults.font.family = '"Poppins", sans-serif';
-Chart.defaults.color = "#6b6458";
+// Set default options for charts
+Chart.defaults.font.family = "'Poppins', sans-serif";
+Chart.defaults.color = '#6b6458';
 
-// Area Chart Example
-const ctx = document.getElementById("myAreaChart");
+// Area Chart
+var ctx = document.getElementById("myAreaChart");
 if (ctx) {
-  const myLineChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"],
-      datasets: [
-        {
-          label: isAdminUser ? "Ikhtisar Aktivitas" : "Aktivitas Saya",
-          lineTension: 0.3,
-          backgroundColor: "rgba(76, 61, 25, 0.05)",
-          borderColor: "rgba(76, 61, 25, 1)",
-          pointRadius: 3,
-          pointBackgroundColor: "rgba(76, 61, 25, 1)",
-          pointBorderColor: "rgba(76, 61, 25, 1)",
-          pointHoverRadius: 3,
-          pointHoverBackgroundColor: "rgba(76, 61, 25, 1)",
-          pointHoverBorderColor: "rgba(76, 61, 25, 1)",
-          pointHitRadius: 10,
-          pointBorderWidth: 2,
-          data: earningsData,
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Aktivitas',
+                lineTension: 0.3,
+                backgroundColor: 'rgba(136, 144, 99, 0.1)',
+                borderColor: 'rgb(136, 144, 99)',
+                pointRadius: 5,
+                pointBackgroundColor: 'rgb(53, 64, 36)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: 2,
+                pointHoverRadius: 7,
+                pointHoverBackgroundColor: 'rgb(76, 61, 25)',
+                pointHoverBorderColor: 'rgb(255, 255, 255)',
+                pointHoverBorderWidth: 2,
+                pointDropRadius: 0,
+                pointDataLabels: {
+                    align: 'top',
+                    anchor: 'end',
+                    backgroundColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'rgb(75, 192, 192)',
+                },
+                data: earningsData,
+            }],
         },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: 2,
-      layout: {
-        padding: {
-          top: 5,
-          bottom: 5,
-          left: 0,
-          right: 0,
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            min: 0,
-            max: Math.max(...earningsData, 10) + 5,
-            maxTicksLimit: 5,
-            stepSize: Math.ceil((Math.max(...earningsData, 10) + 5) / 5),
-            color: "#6b6458",
-            font: {
-              family: '"Poppins", sans-serif',
-              size: 12,
-              weight: "500",
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: 'bold',
+                            family: "'Poppins', sans-serif"
+                        },
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        color: '#354024'
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(76, 61, 25, 0.9)',
+                    padding: 12,
+                    titleFont: {
+                        size: 12,
+                        weight: 'bold',
+                        family: "'Playfair Display', serif"
+                    },
+                    bodyFont: {
+                        size: 11,
+                        family: "'Poppins', sans-serif"
+                    },
+                    borderColor: '#cfbb99',
+                    borderWidth: 1,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y;
+                        }
+                    }
+                }
             },
-            padding: 10,
-          },
-          grid: {
-            color: "rgba(207, 187, 153, 0.2)",
-            drawBorder: false,
-            drawTicks: false,
-          },
+            scales: {
+                x: {
+                    grid: {
+                        display: true,
+                        drawBorder: true,
+                        color: 'rgba(207, 187, 153, 0.1)',
+                        lineWidth: 1
+                    },
+                    ticks: {
+                        font: {
+                            size: 11,
+                            family: "'Poppins', sans-serif"
+                        },
+                        color: '#6b6458'
+                    }
+                },
+                y: {
+                    grid: {
+                        display: true,
+                        drawBorder: true,
+                        color: 'rgba(207, 187, 153, 0.1)',
+                        lineWidth: 1
+                    },
+                    ticks: {
+                        font: {
+                            size: 11,
+                            family: "'Poppins', sans-serif"
+                        },
+                        color: '#6b6458',
+                        beginAtZero: true
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Pie Chart
+var pieCtx = document.getElementById("myPieChart");
+if (pieCtx) {
+    var myPieChart = new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+            labels: categoryData.map(item => item.label),
+            datasets: [{
+                data: categoryData.map(item => item.value),
+                backgroundColor: [
+                    'rgb(53, 64, 36)',      // Dark Green
+                    'rgb(136, 144, 99)',    // Muted Green
+                    'rgb(207, 187, 153)',   // Tan
+                    'rgb(76, 61, 25)',      // Brown
+                    'rgb(101, 89, 52)',     // Dark Brown
+                    'rgb(169, 153, 122)',   // Light Tan
+                    'rgb(142, 133, 110)'    // Medium Brown
+                ],
+                borderColor: [
+                    'rgb(255, 255, 255)',
+                    'rgb(255, 255, 255)',
+                    'rgb(255, 255, 255)',
+                    'rgb(255, 255, 255)',
+                    'rgb(255, 255, 255)',
+                    'rgb(255, 255, 255)',
+                    'rgb(255, 255, 255)'
+                ],
+                borderWidth: 2,
+                borderRadius: 5,
+                hoverBorderColor: 'rgba(76, 61, 25, 0.8)',
+                hoverBorderWidth: 3,
+                hoverOffset: 10
+            }]
         },
-        x: {
-          ticks: {
-            maxRotation: 0,
-            maxTicksLimit: 7,
-            color: "#6b6458",
-            font: {
-              family: '"Poppins", sans-serif',
-              size: 12,
-              weight: "500",
-            },
-            padding: 10,
-          },
-          grid: {
-            color: "rgba(207, 187, 153, 0.1)",
-            drawBorder: false,
-            drawTicks: false,
-          },
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            font: {
-              family: '"Poppins", sans-serif',
-              size: 13,
-              weight: "600",
-            },
-            color: "#2d2a23",
-            padding: 15,
-            usePointStyle: true,
-          },
-        },
-        tooltip: {
-          backgroundColor: "rgba(76, 61, 25, 0.95)",
-          titleFont: {
-            family: '"Playfair Display", serif',
-            size: 14,
-            weight: "700",
-          },
-          bodyFont: {
-            family: '"Poppins", sans-serif',
-            size: 12,
-          },
-          titleColor: "#ffffff",
-          bodyColor: "#ffffff",
-          borderColor: "#cfbb99",
-          borderWidth: 1,
-          padding: 12,
-          displayColors: true,
-          xPadding: 15,
-          yPadding: 15,
-          caretPadding: 10,
-          callbacks: {
-            label: function (context) {
-              return context.dataset.label + ": " + context.parsed.y + " aktivitas";
-            },
-          },
-        },
-      },
-    },
-  });
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: '500',
+                            family: "'Poppins', sans-serif"
+                        },
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        color: '#354024',
+                        generateLabels: function(chart) {
+                            const data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map((label, i) => {
+                                    const value = data.datasets[0].data[i];
+                                    return {
+                                        text: label + ': ' + value,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        strokeStyle: data.datasets[0].borderColor[i],
+                                        lineWidth: data.datasets[0].borderWidth,
+                                        hidden: false,
+                                        index: i
+                                    };
+                                });
+                            }
+                            return [];
+                        }
+                    },
+                    onClick: null
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    backgroundColor: 'rgba(76, 61, 25, 0.9)',
+                    padding: 12,
+                    titleFont: {
+                        size: 12,
+                        weight: 'bold',
+                        family: "'Playfair Display', serif"
+                    },
+                    bodyFont: {
+                        size: 11,
+                        family: "'Poppins', sans-serif"
+                    },
+                    borderColor: '#cfbb99',
+                    borderWidth: 1,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }

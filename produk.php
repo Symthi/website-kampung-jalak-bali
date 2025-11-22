@@ -30,7 +30,7 @@ $pageTitle = t('products_title') . ' | Kampoeng Jalak Bali';
 $currentPage = 'produk';
 
 // Ambil data produk dengan pagination
-$per_page = 5;
+$per_page = 6;
 $page = isset($_GET['page_produk']) ? max(1, (int)$_GET['page_produk']) : 1;
 $offset = ($page - 1) * $per_page;
 $total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM produk");
@@ -46,80 +46,136 @@ $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo t('products_title'); ?> | Kampoeng Jalak Bali</title>
-  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/style.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css" />
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
     <?php include __DIR__ . '/includes/header.php'; ?>
 
-    <section class="content-section">
+    <section class="content-section bg-light">
       <div class="container">
+
+        <!-- Page Header -->
         <div class="page-header text-center">
-          <h2><i class="fas fa-shopping-bag"></i> <?php echo t('products_title'); ?></h2>
+          <h2><i class="fas fa-gift"></i> <?php echo t('products_title'); ?></h2>
           <p class="section-subtitle"><?php echo t('products_subtitle'); ?></p>
         </div>
 
-        <div class="product-section">
+        <!-- Merchandise Section -->
+        <div class="merchandise-section">
           <?php if (count($produk_data) > 0): ?>
-          <div class="produk-grid">
-            <?php foreach ($produk_data as $produk): 
-              // Format pesan WhatsApp
-              $whatsapp_message = urlencode(
-                "Halo, saya ingin memesan produk:\n" .
-                "📦 *" . $produk['nama'] . "*\n" .
-                "💵 Harga: Rp " . number_format($produk['harga'], 0, ',', '.') . "\n" .
-                "\n" .
-                "Bisa info lebih detail dan cara pemesanan?"
-              );
-              $whatsapp_url = "https://wa.me/6283862519604?text=" . $whatsapp_message;
-            ?>
-            <div class="produk-card">
-              <div class="produk-image">
-                <img src="<?php echo $produk['gambar'] ? public_url($produk['gambar']) : 'https://source.unsplash.com/random/300x200/?merchandise'; ?>" 
-                     alt="<?php echo $produk['nama']; ?>">
-              </div>
-              <div class="produk-content">
-                <h3><?php echo $produk['nama']; ?></h3>
-                <p class="produk-description"><?php echo $produk['deskripsi']; ?></p>
-                <div class="price">
-                  <i class="fas fa-tag"></i> Rp <?php echo number_format($produk['harga'], 0, ',', '.'); ?>
+            
+            <!-- Product Grid -->
+            <div class="merchandise-grid">
+              <?php foreach ($produk_data as $produk): ?>
+                <div class="merchandise-card">
+                  
+                  <!-- Product Image -->
+                  <div class="merchandise-image">
+                    <img 
+                      src="<?php echo $produk['gambar'] ? public_url($produk['gambar']) : 'https://source.unsplash.com/random/400x300/?souvenir'; ?>" 
+                      alt="<?php echo htmlspecialchars($produk['nama']); ?>" 
+                      class="merchandise-img"
+                      loading="lazy">
+                    
+                    <!-- Hover Overlay -->
+                    <div class="merchandise-overlay">
+                      <div class="overlay-text">
+                        <h4><?php echo htmlspecialchars($produk['nama']); ?></h4>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Product Content -->
+                  <div class="merchandise-content">
+                    <h3><?php echo htmlspecialchars($produk['nama']); ?></h3>
+                    <p class="merchandise-desc"><?php echo htmlspecialchars($produk['deskripsi']); ?></p>
+                    
+                    <!-- Price & Stock Info -->
+                    <div class="merchandise-price-stock">
+                      <div class="price-item">
+                        <span class="label"><i class="fas fa-tag"></i> Harga</span>
+                        <span class="value">Rp <?php echo number_format($produk['harga'], 0, ',', '.'); ?></span>
+                      </div>
+                      <div class="stock-item">
+                        <span class="label"><i class="fas fa-boxes"></i> Stok</span>
+                        <span class="value <?php echo $produk['stok'] > 0 ? 'in-stock' : 'out-stock'; ?>">
+                          <?php echo $produk['stok'] > 0 ? $produk['stok'] . ' pcs' : 'Habis'; ?>
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <!-- Product Footer -->
+                    <div class="merchandise-footer">
+                      <p class="merchandise-info">
+                        <i class="fas fa-location-dot"></i>
+                        <?php echo t('merchandise_available'); ?>
+                      </p>
+                      <a href="<?php echo $base; ?>/index.php#kontak" class="btn btn-primary btn-block">
+                        <i class="fas fa-map-location-dot"></i> <?php echo t('visit_us'); ?>
+                      </a>
+                    </div>
+                  </div>
+                  
                 </div>
-                <div class="stock">
-                  <i class="fas fa-box"></i> <?php echo t('stock'); ?>: 
-                  <span class="stock-number"><?php echo $produk['stok']; ?></span>
-                </div>
-                
-                <a href="<?php echo $whatsapp_url; ?>" target="_blank" class="whatsapp-btn">
-                  <i class="fab fa-whatsapp"></i> <?php echo t('book_now'); ?>
-                </a>
-              </div>
+              <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
-          </div>
-          
-          <?php $total_pages = (int)ceil($total_produk / $per_page); if ($total_pages > 1): ?>
-          <div class="pagination">
-            <?php for ($p=1; $p<=$total_pages; $p++): ?>
-              <?php if ($p == $page): ?>
-                <span class="active"><?php echo $p; ?></span>
-              <?php else: ?>
-                <a href="?page_produk=<?php echo $p; ?>"><?php echo $p; ?></a>
+
+            <!-- Pagination -->
+            <?php $total_pages = (int)ceil($total_produk / $per_page); if ($total_pages > 1): ?>
+            <div class="pagination">
+              <?php if ($page > 1): ?>
+                <a href="?page_produk=1" class="page-nav" title="First Page">
+                  <i class="fas fa-chevron-left"></i>
+                </a>
               <?php endif; ?>
-            <?php endfor; ?>
-          </div>
-          <?php endif; ?>
-          
+
+              <?php 
+              $start = max(1, $page - 2);
+              $end = min($total_pages, $page + 2);
+              
+              for ($p = $start; $p <= $end; $p++): 
+              ?>
+                <?php if ($p == $page): ?>
+                  <span class="active"><?php echo $p; ?></span>
+                <?php else: ?>
+                  <a href="?page_produk=<?php echo $p; ?>"><?php echo $p; ?></a>
+                <?php endif; ?>
+              <?php endfor; ?>
+
+              <?php if ($page < $total_pages): ?>
+                <a href="?page_produk=<?php echo $total_pages; ?>" class="page-nav" title="Last Page">
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+              <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
           <?php else: ?>
-          <div class="empty-state">
-            <i class="fas fa-shopping-basket"></i>
-            <p><?php echo t('no_data'); ?></p>
-          </div>
+            <!-- Empty State -->
+            <div class="empty-state">
+              <i class="fas fa-box-open"></i>
+              <p><?php echo t('no_data'); ?></p>
+            </div>
           <?php endif; ?>
         </div>
+
+        <!-- Info Section -->
+        <div class="merchandise-info-section">
+          <h3><i class="fas fa-info-circle"></i> <?php echo t('merchandise_about_title'); ?></h3>
+          <p><?php echo t('merchandise_about_text1'); ?></p>
+          <p>
+            <?php echo t('interested_visit_us'); ?> 
+            <strong><a href="<?php echo $base; ?>/index.php#kontak"><?php echo t('visit_us'); ?></a></strong> 
+            <?php echo t('for_more_info'); ?>.
+          </p>
+        </div>
+
       </div>
     </section>
 
-      <?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>
