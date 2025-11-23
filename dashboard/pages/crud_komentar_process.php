@@ -2,8 +2,8 @@
 // Process CRUD Operations untuk Komentar
 
 // Hapus komentar
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
     $query = "DELETE FROM komentar WHERE id_komentar=?";
     $stmt = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);

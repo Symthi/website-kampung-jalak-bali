@@ -68,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Hapus user
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
     
     if ($id == $_SESSION['user_id']) {
         $_SESSION['error_message'] = "Tidak bisa menghapus akun sendiri!";

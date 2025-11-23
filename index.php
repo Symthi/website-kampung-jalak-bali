@@ -390,7 +390,7 @@ function isAdmin() {
                 <div class="card-meta">
                   <span class="meta-item">
                     <i class="fas fa-clock"></i>
-                    <?php echo t('duration'); ?>: <?php echo $wisata['durasi']; ?>
+                    <?php echo t('time'); ?>: <strong><?php echo ucfirst($wisata['waktu']); ?></strong> (<?php echo date('H:i', strtotime($wisata['jam'])); ?>)
                   </span>
                 </div>
                 <a href="detail_wisata.php?id=<?php echo $wisata['id_wisata']; ?>" class="card-button">
@@ -452,14 +452,6 @@ function isAdmin() {
                 <div class="image-overlay">
                   <div class="overlay-content">
                     <h4 class="image-title"><?php echo $galeri['judul']; ?></h4>
-                    <button class="view-button" onclick="openGalleryDetail({
-                        title: '<?php echo htmlspecialchars($galeri['judul'], ENT_QUOTES); ?>',
-                        src: '<?php echo htmlspecialchars($galeri['gambar'] ? public_url($galeri['gambar']) : '', ENT_QUOTES); ?>',
-                        desc: `<?php echo htmlspecialchars($galeri['keterangan'] ?? '', ENT_QUOTES); ?>`,
-                        date: '<?php echo htmlspecialchars(date('d M Y', strtotime($galeri['tanggal_upload'] ?? $galeri['tanggal'] ?? 'now')), ENT_QUOTES); ?>'
-                      })">
-                      <?php echo t('view_details'); ?>
-                    </button>
                   </div>
                 </div>
               </div>
@@ -484,61 +476,11 @@ function isAdmin() {
         </div>
         <?php endif; ?>
 
-        <!-- Modal Detail Galeri -->
-        <div id="gallery-modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 id="gm-title" class="modal-title"></h3>
-              <button onclick="closeGalleryDetail()" class="modal-close">✕</button>
-            </div>
-            <div class="modal-grid">
-              <div>
-                <img id="gm-image" src="" alt="" />
-              </div>
-              <div>
-                <div class="muted-text">
-                  <span><?php echo t('uploaded_on'); ?> </span><span id="gm-date"></span>
-                </div>
-                <h4><?php echo t('description'); ?></h4>
-                <div id="gm-desc" class="modal-desc"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
 
-    <script>
-      function openGalleryDetail(data){
-        var m = document.getElementById('gallery-modal');
-        document.getElementById('gm-title').textContent = data.title || '';
-        var img = document.getElementById('gm-image');
-        img.src = data.src || '';
-        img.alt = data.title || '';
-        var descEl = document.getElementById('gm-desc');
-        var raw = (data.desc || '').trim();
-        descEl.textContent = '';
-        if(raw){
-          descEl.innerHTML = raw;
-        } else {
-          descEl.textContent = '<?php echo t('no_description'); ?>';
-        }
-        document.getElementById('gm-date').textContent = data.date || '';
-        m.style.display = 'flex';
-      }
-      function closeGalleryDetail(){
-        var m = document.getElementById('gallery-modal');
-        m.style.display = 'none';
-      }
-      document.addEventListener('click', function(e){
-        var m = document.getElementById('gallery-modal');
-        if(!m || m.style.display==='none') return;
-        if(e.target === m) closeGalleryDetail();
-      });
-      document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape') closeGalleryDetail();
-      });
-    </script>
+
 
     <!-- Kontak Section -->
     <section id="kontak" class="contact-section">

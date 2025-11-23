@@ -121,8 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Hapus produk
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
     
     $query_select = "SELECT gambar FROM produk WHERE id_produk = ?";
     $stmt_select = mysqli_prepare($koneksi, $query_select);

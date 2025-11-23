@@ -120,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Hapus informasi
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
     
     $query_select = "SELECT gambar FROM informasi WHERE id_informasi = ?";
     $stmt_select = mysqli_prepare($koneksi, $query_select);

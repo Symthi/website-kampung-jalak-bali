@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['error_message'] = '';
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
-        $durasi = $_POST['durasi'];
+        $waktu = $_POST['waktu'];
+        $jam = $_POST['jam'];
         $gambar = '';
         
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
@@ -43,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($_SESSION['error_message'])) {
-            $query = "INSERT INTO wisata (judul, deskripsi, gambar, durasi) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO wisata (judul, deskripsi, gambar, waktu, jam) VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ssss", $judul, $deskripsi, $gambar, $durasi);
+            mysqli_stmt_bind_param($stmt, "sssss", $judul, $deskripsi, $gambar, $waktu, $jam);
 
             if (mysqli_stmt_execute($stmt)) {
                 $_SESSION['success_message'] = "Wisata berhasil ditambahkan!";
@@ -62,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id = $_POST['id'];
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
-        $durasi = $_POST['durasi'];
+        $waktu = $_POST['waktu'];
+        $jam = $_POST['jam'];
         $gambar = $_POST['gambar_lama'];
         
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
@@ -101,9 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($_SESSION['error_message'])) {
-            $query = "UPDATE wisata SET judul=?, deskripsi=?, gambar=?, durasi=? WHERE id_wisata=?";
+            $query = "UPDATE wisata SET judul=?, deskripsi=?, gambar=?, waktu=?, jam=? WHERE id_wisata=?";
             $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ssssi", $judul, $deskripsi, $gambar, $durasi, $id);
+            mysqli_stmt_bind_param($stmt, "sssssi", $judul, $deskripsi, $gambar, $waktu, $jam, $id);
             
             if (mysqli_stmt_execute($stmt)) {
                 $_SESSION['success_message'] = "Wisata berhasil diupdate!";
@@ -118,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Hapus wisata
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
     
     $query_select = "SELECT gambar FROM wisata WHERE id_wisata = ?";
     $stmt_select = mysqli_prepare($koneksi, $query_select);

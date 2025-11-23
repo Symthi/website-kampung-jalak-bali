@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tambah'])) {
     $_SESSION['error_message'] = '';
     
     $judul = $_POST['judul'];
-    $keterangan = $_POST['keterangan'];
     $gambar = '';
     
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == 0) {
@@ -43,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tambah'])) {
     }
     
     if (empty($_SESSION['error_message'])) {
-        $query = "INSERT INTO galeri (judul, gambar, keterangan) VALUES (?, ?, ?)";
+        $query = "INSERT INTO galeri (judul, gambar) VALUES (?, ?)";
         $stmt = mysqli_prepare($koneksi, $query);
-        mysqli_stmt_bind_param($stmt, "sss", $judul, $gambar, $keterangan);
+        mysqli_stmt_bind_param($stmt, "ss", $judul, $gambar);
         
         if (mysqli_stmt_execute($stmt)) {
             $_SESSION['success_message'] = "Gambar berhasil ditambahkan ke galeri!";
@@ -67,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit'])) {
     
     $id = $_POST['id'];
     $judul = $_POST['judul'];
-    $keterangan = $_POST['keterangan'];
     $gambar_lama = $_POST['gambar_lama'];
     
     $gambar = $gambar_lama;
@@ -107,9 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit'])) {
     }
     
     if (empty($_SESSION['error_message'])) {
-        $query = "UPDATE galeri SET judul=?, gambar=?, keterangan=? WHERE id_galeri=?";
+        $query = "UPDATE galeri SET judul=?, gambar=? WHERE id_galeri=?";
         $stmt = mysqli_prepare($koneksi, $query);
-        mysqli_stmt_bind_param($stmt, "sssi", $judul, $gambar, $keterangan, $id);
+        mysqli_stmt_bind_param($stmt, "ssi", $judul, $gambar, $id);
         
         if (mysqli_stmt_execute($stmt)) {
             $_SESSION['success_message'] = "Gambar galeri berhasil diupdate!";
@@ -123,8 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit'])) {
 }
 
 // Hapus galeri
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
     
     $query_select = "SELECT gambar FROM galeri WHERE id_galeri = ?";
     $stmt_select = mysqli_prepare($koneksi, $query_select);

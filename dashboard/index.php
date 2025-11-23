@@ -29,7 +29,8 @@ $user_email = $_SESSION['email'] ?? '';
 
 // Tentukan page mana yang akan ditampilkan
 $current_page = isset($_GET['page']) ? basename($_GET['page']) : 'dashboard';
-$allowed_pages = ['dashboard', 'wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user'];
+$action = isset($_GET['action']) ? basename($_GET['action']) : null;
+$allowed_pages = ['dashboard', 'wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user', 'settings'];
 
 // Validasi page
 if (!in_array($current_page, $allowed_pages)) {
@@ -43,7 +44,7 @@ if (!isAdmin() && in_array($current_page, ['wisata', 'informasi', 'produk', 'gal
 
 // ===== PROSES FORM SUBMISSION SEBELUM OUTPUT HTML =====
 // Jika ada POST request, proses di sini sebelum HTML dikirim
-if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['hapus']) || isset($_GET['baca']) || isset($_GET['edit'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['hapus']) || isset($_GET['baca']) || isset($_GET['delete']) || isset($_GET['delete_navbar'])) {
     // Include CRUD processing file untuk halaman saat ini
     if ($current_page === 'wisata' && isAdmin()) {
         include __DIR__ . '/pages/crud_wisata_process.php';
@@ -59,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['hapus']) || isset($_GET
         include __DIR__ . '/pages/crud_pesan_process.php';
     } elseif ($current_page === 'user' && isAdmin()) {
         include __DIR__ . '/pages/crud_user_process.php';
+    } elseif ($current_page === 'settings' && isAdmin()) {
+        include __DIR__ . '/pages/settings_process.php';
     }
 }
 
@@ -596,15 +599,6 @@ if (isAdmin()) {
                 <div class="sidebar-brand-text mx-3">KJB</div>
             </a>
 
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item">
-                <a class="nav-link <?php echo $current_page === 'dashboard' ? 'active' : ''; ?>" href="<?php echo $base; ?>/dashboard/index.php?page=dashboard">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span><?php echo t('dashboard') ?: 'Dashboard'; ?></span>
-                </a>
-            </li>
-
             <hr class="sidebar-divider">
 
             <?php if (isAdmin()): ?>
@@ -664,27 +658,17 @@ if (isAdmin()) {
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link <?php echo $current_page === 'settings' ? 'active' : ''; ?>" href="<?php echo $base; ?>/dashboard/index.php?page=settings">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Pengaturan Website</span>
+                </a>
+            </li>
+
             <hr class="sidebar-divider">
             <?php else: ?>
             <hr class="sidebar-divider">
             <?php endif; ?>
-
-            <div class="sidebar-heading">
-                <?php echo t('account') ?: 'Akun'; ?>
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $base; ?>/index.php">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span><?php echo t('home') ?: 'Halaman Utama'; ?></span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
 
         </ul>
 
@@ -708,10 +692,6 @@ if (isAdmin()) {
                                 <img class="img-profile rounded-circle" src="https://ui-avatars.com/api/?name=<?php echo urlencode($user_nama); ?>&background=random">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?php echo $base; ?>/index.php">
-                                    <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    <?php echo t('home') ?: 'Halaman Utama'; ?>
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo $base; ?>/auth/logout.php" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -728,25 +708,45 @@ if (isAdmin()) {
 
                     <div id="main-content">
                         <?php
-                        // Load content berdasarkan current_page
-                        if ($current_page === 'dashboard') {
-                            include __DIR__ . '/pages/dashboard.php';
-                        } elseif ($current_page === 'wisata' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_wisata.php';
-                        } elseif ($current_page === 'informasi' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_informasi.php';
-                        } elseif ($current_page === 'produk' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_produk.php';
-                        } elseif ($current_page === 'galeri' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_galeri.php';
-                        } elseif ($current_page === 'komentar' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_komentar.php';
-                        } elseif ($current_page === 'pesan' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_pesan.php';
-                        } elseif ($current_page === 'user' && isAdmin()) {
-                            include __DIR__ . '/pages/crud_user.php';
+                        // Load content berdasarkan current_page dan action
+                        if ($action === 'add' || $action === 'edit') {
+                            // Load form pages
+                            if ($current_page === 'galeri' && isAdmin()) {
+                                include __DIR__ . '/pages/galeri_form.php';
+                            } elseif ($current_page === 'wisata' && isAdmin()) {
+                                include __DIR__ . '/pages/wisata_form.php';
+                            } elseif ($current_page === 'informasi' && isAdmin()) {
+                                include __DIR__ . '/pages/informasi_form.php';
+                            } elseif ($current_page === 'produk' && isAdmin()) {
+                                include __DIR__ . '/pages/produk_form.php';
+                            } elseif ($current_page === 'user' && isAdmin()) {
+                                include __DIR__ . '/pages/user_form.php';
+                            } else {
+                                include __DIR__ . '/pages/dashboard.php';
+                            }
                         } else {
-                            include __DIR__ . '/pages/dashboard.php';
+                            // Load list pages
+                            if ($current_page === 'dashboard') {
+                                include __DIR__ . '/pages/dashboard.php';
+                            } elseif ($current_page === 'wisata' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_wisata.php';
+                            } elseif ($current_page === 'informasi' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_informasi.php';
+                            } elseif ($current_page === 'produk' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_produk.php';
+                            } elseif ($current_page === 'galeri' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_galeri.php';
+                            } elseif ($current_page === 'komentar' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_komentar.php';
+                            } elseif ($current_page === 'pesan' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_pesan.php';
+                            } elseif ($current_page === 'user' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_user.php';
+                            } elseif ($current_page === 'settings' && isAdmin()) {
+                                include __DIR__ . '/pages/settings.php';
+                            } else {
+                                include __DIR__ . '/pages/dashboard.php';
+                            }
                         }
                         ?>
                     </div>

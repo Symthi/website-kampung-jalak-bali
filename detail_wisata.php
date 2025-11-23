@@ -125,7 +125,7 @@ $currentPage = 'wisata';
                 <span class="duration">
                   <i class="fas fa-clock"></i>
                   <strong><?php echo t('duration'); ?>:</strong>
-                  <?php echo htmlspecialchars($wisata['durasi']); ?>
+                  <strong><?php echo ucfirst($wisata['waktu']); ?></strong> (<?php echo date('H:i', strtotime($wisata['jam'])); ?>)
                 </span>
                 <span class="location">
                   <i class="fas fa-map-marker-alt"></i>
