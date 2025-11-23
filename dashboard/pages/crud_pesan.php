@@ -39,45 +39,44 @@ foreach ($pesan_data as $pesan) {
 }
 ?>
 
-
-<h2 class="section-title">
-    <i class="fa fa-envelope"></i> <?php echo t('manage_messages') ?: 'Kelola Pesan'; ?>
-</h2>
-
 <?php if (isset($_SESSION['success_message'])): ?>
-    <div class="alert alert-success alert-dismissible fade show" style="padding:0.6rem;margin-bottom:0.8rem" role="alert">
+    <div class="alert alert-success">
+        <i class="fa fa-check-circle"></i>
         <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
-        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        <button type="button" class="close">&times;</button>
     </div>
 <?php endif; ?>
 
 <?php if (isset($_SESSION['error_message'])): ?>
-    <div class="alert alert-danger alert-dismissible fade show" style="padding:0.6rem;margin-bottom:0.8rem" role="alert">
+    <div class="alert alert-danger">
+        <i class="fa fa-exclamation-circle"></i>
         <?php echo $_SESSION['error_message']; unset($_SESSION['error_message']); ?>
-        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        <button type="button" class="close">&times;</button>
     </div>
 <?php endif; ?>
 
-<!-- Daftar Pesan -->
-<div class="crud-list shadow mb-4">
+<div class="crud-list">
     <div class="list-header">
-        <h3 style="margin:0;font-size:1.1rem"><i class="fa fa-list"></i> Daftar Pesan (<?php echo $total_pesan_all; ?>) | <span class="text-danger">Baru: <?php echo $belum_dibaca; ?></span></h3>
+        <h3><i class="fa fa-envelope"></i> Daftar Pesan (<?php echo $total_pesan_all; ?>) | <span class="text-danger">Baru: <?php echo $belum_dibaca; ?></span></h3>
     </div>
     
     <form method="POST" action="?page=pesan" class="search-box">
         <input type="text" name="cari" placeholder="Cari pengirim, email, atau subjek..." value="<?php echo htmlspecialchars($search); ?>">
-        <button type="submit">Cari</button>
+        <button type="submit"><i class="fa fa-search"></i> Cari</button>
         <?php if ($search): ?>
-            <a href="?page=pesan" class="btn btn-secondary btn-sm" style="padding:0.6rem 1rem;text-decoration:none;color:white">Reset</a>
+            <a href="?page=pesan" class="btn btn-secondary">Reset</a>
         <?php endif; ?>
     </form>
     
     <?php if (empty($pesan_data)): ?>
-        <p class="text-muted" style="padding:1rem">Tidak ada pesan.</p>
+        <div class="empty-state">
+            <i class="fa fa-envelope"></i>
+            <p>Tidak ada data pesan</p>
+        </div>
     <?php else: ?>
         <div class="table-responsive">
-            <table class="table table-bordered table-hover crud-table">
-                <thead class="bg-light">
+            <table class="crud-table">
+                <thead>
                     <tr>
                         <th width="40">No</th>
                         <th width="120">Pengirim</th>
@@ -91,13 +90,18 @@ foreach ($pesan_data as $pesan) {
                 <tbody>
                     <?php foreach ($pesan_data as $index => $pesan): ?>
                     <tr class="<?php echo !$pesan['dibaca'] ? 'row-unread' : ''; ?>">
-                        <td><?php echo $offset + $index + 1; ?></td>
+                        <td class="text-center"><?php echo $offset + $index + 1; ?></td>
                         <td>
-                            <strong><?php echo htmlspecialchars($pesan['nama']); ?></strong><br>
-                            <small class="text-muted" style="font-size:0.75rem"><?php echo htmlspecialchars($pesan['email']); ?></small>
+                            <strong style="font-size: 0.9rem;"><?php echo htmlspecialchars($pesan['nama']); ?></strong>
+                            <br>
+                            <small class="text-muted" style="font-size: 0.75rem;"><?php echo htmlspecialchars($pesan['email']); ?></small>
                         </td>
-                        <td><?php echo htmlspecialchars(substr($pesan['subjek'], 0, 20)); ?></td>
-                        <td><p class="mb-0" style="font-size:0.9rem"><?php echo substr(htmlspecialchars($pesan['isi']), 0, 70); ?></p></td>
+                        <td>
+                            <strong style="font-size: 0.9rem;"><?php echo htmlspecialchars(substr($pesan['subjek'], 0, 20)); ?></strong>
+                        </td>
+                        <td>
+                            <p class="mb-0" style="font-size: 0.9rem;"><?php echo substr(htmlspecialchars($pesan['isi']), 0, 70); ?></p>
+                        </td>
                         <td><?php echo date('d M Y', strtotime($pesan['tanggal'])); ?></td>
                         <td>
                             <?php if (!$pesan['dibaca']): ?>
@@ -107,10 +111,19 @@ foreach ($pesan_data as $pesan) {
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php if (!$pesan['dibaca']): ?>
-                                <a href="?page=pesan&baca=<?php echo $pesan['id_pesan']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a>
-                            <?php endif; ?>
-                            <a href="?page=pesan&action=delete&id=<?php echo $pesan['id_pesan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')"><i class="fa fa-trash"></i></a>
+                            <div class="btn-group">
+                                <?php if (!$pesan['dibaca']): ?>
+                                    <a href="?page=pesan&baca=<?php echo $pesan['id_pesan']; ?>" 
+                                       class="btn btn-primary btn-sm" title="Tandai Sudah Dibaca">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <a href="?page=pesan&action=delete&id=<?php echo $pesan['id_pesan']; ?>" 
+                                   class="btn btn-danger btn-sm" 
+                                   onclick="return confirm('Yakin ingin menghapus pesan ini?')" title="Hapus">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -119,14 +132,16 @@ foreach ($pesan_data as $pesan) {
         </div>
         
         <?php $total_pages = (int)ceil($total_pesan_all / $per_page); if ($total_pages > 1): ?>
-        <nav aria-label="Pagination" style="text-align:center">
-            <ul class="pagination justify-content-center">
+        <nav aria-label="Pagination">
+            <ul class="pagination">
                 <?php for ($p = 1; $p <= $total_pages; $p++): ?>
                     <li class="page-item <?php echo $p == $page ? 'active' : ''; ?>">
                         <?php if ($p == $page): ?>
                             <span class="page-link"><?php echo $p; ?></span>
                         <?php else: ?>
-                            <a class="page-link" href="?page=pesan&p=<?php echo $p; ?><?php echo $search ? '&cari=' . urlencode($search) : ''; ?>"><?php echo $p; ?></a>
+                            <a class="page-link" href="?page=pesan&p=<?php echo $p; ?><?php echo $search ? '&cari=' . urlencode($search) : ''; ?>">
+                                <?php echo $p; ?>
+                            </a>
                         <?php endif; ?>
                     </li>
                 <?php endfor; ?>
@@ -135,3 +150,13 @@ foreach ($pesan_data as $pesan) {
         <?php endif; ?>
     <?php endif; ?>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.alert .close').forEach(function(closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            this.closest('.alert').remove();
+        });
+    });
+});
+</script>
