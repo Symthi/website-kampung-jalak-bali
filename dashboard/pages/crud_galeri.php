@@ -32,17 +32,6 @@ if ($search) {
 $galeri_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
-<style>
-.section-title{font-size:1.8rem;color:var(--dark-green);font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem}
-.list-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem}
-.search-box{display:flex;gap:0.5rem;margin-bottom:1rem}
-.search-box input{flex:1;padding:0.6rem;font-size:0.9rem}
-.search-box button{padding:0.6rem 1rem;background:var(--dark-green);color:white;border:none;cursor:pointer;font-size:0.9rem}
-.img-preview{max-width:100px;max-height:80px;border-radius:4px;object-fit:cover}
-table.crud-table{font-size:0.9rem}
-table.crud-table th, table.crud-table td{padding:0.6rem 0.5rem!important;vertical-align:middle}
-.pagination{margin-top:1rem!important}
-</style>
 
 <h2 class="section-title">
     <i class="fa fa-images"></i> <?php echo t('manage_gallery') ?: 'Kelola Galeri'; ?>

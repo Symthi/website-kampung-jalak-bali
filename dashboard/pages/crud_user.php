@@ -33,24 +33,6 @@ if ($search) {
 $user_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
-<style>
-.section-title{font-size:1.8rem;color:var(--dark-green);font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem}
-.list-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem}
-.search-box{display:flex;gap:0.5rem;margin-bottom:1rem}
-.search-box input{flex:1;padding:0.6rem;font-size:0.9rem}
-.search-box button{padding:0.6rem 1rem;background:var(--dark-green);color:white;border:none;cursor:pointer;font-size:0.9rem}
-.crud-form{margin-bottom:1rem}
-.form-group{margin-bottom:0.8rem}
-.form-group label{margin-bottom:0.3rem;font-weight:600;font-size:0.95rem}
-.form-group input, .form-group select{font-size:0.9rem;padding:0.6rem}
-.btn-group{display:flex;gap:0.5rem;margin-top:1rem}
-table.crud-table{font-size:0.9rem}
-table.crud-table th, table.crud-table td{padding:0.6rem 0.5rem!important;vertical-align:middle}
-.status-badge{padding:0.3rem 0.5rem;border-radius:3px;font-size:0.8rem}
-.status-badge.admin{background:#28a745;color:white}
-.status-badge.user{background:#007bff;color:white}
-.pagination{margin-top:1rem!important}
-</style>
 
 <h2 class="section-title">
     <i class="fas fa-users"></i> <?php echo t('manage_users') ?: 'Kelola User'; ?>

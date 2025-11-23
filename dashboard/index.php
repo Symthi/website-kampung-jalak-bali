@@ -198,6 +198,7 @@ if (isAdmin()) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Dashboard Styles -->
+    <link href="css/crud.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/responsive-custom.css" rel="stylesheet">
 
@@ -554,6 +555,31 @@ if (isAdmin()) {
         background: var(--dark-green);
         transform: scale(1.05);
         }
+
+        #sidebarToggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        color: var(--cream);
+        border: 2px solid var(--cream) !important;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        }
+
+        #sidebarToggle:hover {
+        background: var(--cream);
+        color: var(--brown);
+        }
+
+        #sidebarToggle::before {
+        content: '\f00d';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        }
     }
 
     @media (max-width: 480px) {
@@ -669,6 +695,11 @@ if (isAdmin()) {
             <?php else: ?>
             <hr class="sidebar-divider">
             <?php endif; ?>
+
+            <!-- Sidebar Toggle (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
 
         </ul>
 
