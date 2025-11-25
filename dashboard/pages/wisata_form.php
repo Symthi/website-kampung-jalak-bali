@@ -9,17 +9,14 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<a href="?page=wisata" class="back-link"><i class="fa fa-arrow-left"></i> Kembali ke Daftar Wisata</a>
+<a href="?page=wisata" class="back-link"><i class="fa fa-arrow-left"></i> Kembali</a>
 
 <div class="form-wrapper">
     <div class="form-header">
         <h2>
             <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
-            <?php echo $edit_data ? 'Edit Data Wisata' : 'Tambah Wisata Baru'; ?>
+            <?php echo $edit_data ? 'Edit Wisata' : 'Tambah Wisata'; ?>
         </h2>
-        <div class="form-info">
-            <i class="fa fa-info-circle"></i> Lengkapi data wisata dengan benar
-        </div>
     </div>
 
     <form method="POST" action="?page=wisata" enctype="multipart/form-data" class="form-grid">
@@ -28,79 +25,81 @@ if (isset($_GET['id'])) {
             <input type="hidden" name="gambar_lama" value="<?php echo $edit_data['gambar']; ?>">
         <?php endif; ?>
 
-        <div class="form-group full-width" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
-            <div>
-                <label for="judul"><i class="fa fa-heading"></i> Judul Wisata</label>
-                <input type="text" id="judul" name="judul" 
-                       value="<?php echo htmlspecialchars($edit_data['judul'] ?? ''); ?>" 
-                       placeholder="Nama tempat wisata" required>
-            </div>
-            
-            <div>
-                <label for="waktu"><i class="fa fa-sun"></i> Waktu Terbaik</label>
-                <select id="waktu" name="waktu" required>
-                    <option value="">-- Pilih --</option>
-                    <option value="pagi" <?php echo ($edit_data && $edit_data['waktu'] === 'pagi') ? 'selected' : ''; ?>>Pagi</option>
-                    <option value="siang" <?php echo ($edit_data && $edit_data['waktu'] === 'siang') ? 'selected' : ''; ?>>Siang</option>
-                    <option value="malam" <?php echo ($edit_data && $edit_data['waktu'] === 'malam') ? 'selected' : ''; ?>>Malam</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="jam"><i class="fa fa-clock"></i> Jam Buka</label>
-                <input type="time" id="jam" name="jam" 
-                       value="<?php echo htmlspecialchars($edit_data['jam'] ?? '08:00'); ?>" required>
-            </div>
+        <!-- 3 kolom: Judul, Waktu, Jam -->
+        <div class="form-group">
+            <label for="judul"><i class="fa fa-heading"></i> Judul</label>
+            <input type="text" id="judul" name="judul" 
+                   value="<?php echo htmlspecialchars($edit_data['judul'] ?? ''); ?>" 
+                   placeholder="Nama wisata" required>
         </div>
 
+        <div class="form-group">
+            <label for="waktu"><i class="fa fa-sun"></i> Waktu</label>
+            <select id="waktu" name="waktu" required>
+                <option value="">Pilih</option>
+                <option value="pagi" <?php echo ($edit_data && $edit_data['waktu'] === 'pagi') ? 'selected' : ''; ?>>Pagi</option>
+                <option value="siang" <?php echo ($edit_data && $edit_data['waktu'] === 'siang') ? 'selected' : ''; ?>>Siang</option>
+                <option value="malam" <?php echo ($edit_data && $edit_data['waktu'] === 'malam') ? 'selected' : ''; ?>>Malam</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="jam"><i class="fa fa-clock"></i> Jam</label>
+            <input type="time" id="jam" name="jam" 
+                   value="<?php echo htmlspecialchars($edit_data['jam'] ?? '08:00'); ?>" required>
+        </div>
+
+        <!-- Deskripsi -->
         <div class="form-group full-width">
-            <label for="deskripsi"><i class="fa fa-align-left"></i> Deskripsi Wisata</label>
+            <label for="deskripsi"><i class="fa fa-align-left"></i> Deskripsi</label>
             <textarea id="deskripsi" name="deskripsi" 
-                      placeholder="Jelaskan keunikan, fasilitas, dan daya tarik wisata ini..."
+                      placeholder="Deskripsi singkat wisata..."
                       required><?php echo htmlspecialchars($edit_data['deskripsi'] ?? ''); ?></textarea>
         </div>
 
+        <!-- Gambar -->
         <div class="form-group full-width image-upload-section">
             <div class="upload-controls">
-                <label for="gambar"><i class="fa fa-camera"></i> Foto Wisata</label>
+                <label for="gambar"><i class="fa fa-image"></i> Gambar</label>
                 <input type="file" id="gambar" name="gambar" accept="image/*" 
                        <?php echo !$edit_data ? 'required' : ''; ?> onchange="previewImage(this)">
-                <small>Format: JPG, PNG, GIF | Maksimal 2MB</small>
+                <small>JPG, PNG, GIF (max 2MB)</small>
             </div>
             
             <div class="preview-container">
                 <div class="current-image">
-                    <p><i class="fa fa-image"></i> Gambar Saat Ini</p>
+                    <p><i class="fa fa-image"></i> Saat Ini</p>
                     <?php if ($edit_data && $edit_data['gambar']): ?>
                         <img src="<?php echo $base . '/' . $edit_data['gambar']; ?>" class="img-preview" 
-                             onerror="this.src='https://source.unsplash.com/random/160x120/?bali'">
+                             onerror="this.src='https://source.unsplash.com/random/100x75/?bali,blur'">
                     <?php else: ?>
                         <div class="placeholder-image">
                             <i class="fa fa-landmark"></i>
-                            <span>Belum ada gambar</span>
+                            <span>No Image</span>
                         </div>
                     <?php endif; ?>
                 </div>
                 
                 <div class="new-preview">
-                    <p><i class="fa fa-eye"></i> Preview Baru</p>
+                    <p><i class="fa fa-eye"></i> Preview</p>
                     <div id="preview-box">
                         <div class="placeholder-image">
                             <i class="fa fa-upload"></i>
-                            <span>Pilih file</span>
+                            <span>Pilih</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Tombol -->
         <div class="form-actions">
             <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
                 <i class="fa <?php echo $edit_data ? 'fa-save' : 'fa-plus'; ?>"></i>
-                <?php echo $edit_data ? 'Simpan Perubahan' : 'Tambah Wisata'; ?>
+                <?php echo $edit_data ? 'Update' : 'Tambah'; ?>
             </button>
             <a href="?page=wisata" class="btn btn-secondary">
-                <i class="fa fa-times"></i> Batalkan
+                <i class="fa fa-times"></i> Batal
             </a>
         </div>
     </form>
@@ -112,20 +111,18 @@ function previewImage(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            box.innerHTML = `<img src="${e.target.result}" class="img-preview" alt="Preview Gambar Baru">`;
+            box.innerHTML = `<img src="${e.target.result}" class="img-preview" alt="Preview">`;
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        box.innerHTML = '<div class="placeholder-image"><i class="fa fa-upload"></i><span>Pilih file</span></div>';
+        box.innerHTML = '<div class="placeholder-image"><i class="fa fa-upload"></i><span>Pilih</span></div>';
     }
 }
-
-// Auto-resize textarea
 document.addEventListener('DOMContentLoaded', function() {
     const textarea = document.getElementById('deskripsi');
     if (textarea) {
         textarea.style.height = 'auto';
-        textarea.style.height = (textarea.scrollHeight) + 'px';
+        textarea.style.height = Math.min(textarea.scrollHeight, 70) + 'px';
     }
 });
 </script>

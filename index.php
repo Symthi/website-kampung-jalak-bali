@@ -581,6 +581,72 @@ function isAdmin() {
 
   <?php include __DIR__ . '/includes/footer.php'; ?>
   
+  <script>
+  // Smooth scroll dengan offset yang lebih besar untuk navbar
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        // PERBAIKAN: Offset diperbesar dari 10px menjadi 80px
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 40;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL hash tanpa trigger scroll ulang
+        history.pushState(null, null, targetId);
+      }
+    });
+  });
+
+  // Handle URL hash on page load dengan offset yang sama
+  window.addEventListener('load', function() {
+    if (window.location.hash) {
+      const targetElement = document.querySelector(window.location.hash);
+      if (targetElement) {
+        setTimeout(() => {
+          const headerHeight = document.querySelector('.header').offsetHeight;
+          // PERBAIKAN: Offset diperbesar dari 10px menjadi 80px
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 40;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
+    }
+  });
+
+  // Tambahan: Handle resize untuk update offset jika navbar berubah ukuran
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      // Refresh scroll position jika ada hash di URL
+      if (window.location.hash) {
+        const targetElement = document.querySelector(window.location.hash);
+        if (targetElement) {
+          const headerHeight = document.querySelector('.header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 80;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'auto'
+          });
+        }
+      }
+    }, 250);
+  });
+  </script>
   </body>
 </html>
 <?php mysqli_close($koneksi); ?>

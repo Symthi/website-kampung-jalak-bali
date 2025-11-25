@@ -9,17 +9,14 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<a href="?page=informasi" class="back-link"><i class="fa fa-arrow-left"></i> Kembali ke Daftar Informasi</a>
+<a href="?page=informasi" class="back-link"><i class="fa fa-arrow-left"></i> Kembali</a>
 
 <div class="form-wrapper">
     <div class="form-header">
         <h2>
             <i class="fa <?php echo $edit_data ? 'fa-edit' : 'fa-plus-circle'; ?>"></i>
-            <?php echo $edit_data ? 'Edit Informasi' : 'Tambah Informasi Baru'; ?>
+            <?php echo $edit_data ? 'Edit Informasi' : 'Tambah Informasi'; ?>
         </h2>
-        <div class="form-info">
-            <i class="fa fa-info-circle"></i> Buat informasi yang menarik dan informatif
-        </div>
     </div>
 
     <form method="POST" action="?page=informasi" enctype="multipart/form-data" class="form-grid">
@@ -28,74 +25,76 @@ if (isset($_GET['id'])) {
             <input type="hidden" name="gambar_lama" value="<?php echo $edit_data['gambar']; ?>">
         <?php endif; ?>
 
-        <div class="form-group full-width" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
-            <div>
-                <label for="judul"><i class="fa fa-heading"></i> Judul Informasi</label>
-                <input type="text" id="judul" name="judul" 
-                       value="<?php echo htmlspecialchars($edit_data['judul'] ?? ''); ?>" 
-                       placeholder="Judul informasi yang menarik" required>
-            </div>
-            
-            <div>
-                <label for="kategori"><i class="fa fa-folder"></i> Kategori</label>
-                <select id="kategori" name="kategori" required>
-                    <option value="">-- Pilih --</option>
-                    <option value="berita" <?php echo ($edit_data && $edit_data['kategori'] === 'berita') ? 'selected' : ''; ?>>Berita</option>
-                    <option value="artikel" <?php echo ($edit_data && $edit_data['kategori'] === 'artikel') ? 'selected' : ''; ?>>Artikel</option>
-                    <option value="pengumuman" <?php echo ($edit_data && $edit_data['kategori'] === 'pengumuman') ? 'selected' : ''; ?>>Pengumuman</option>
-                    <option value="event" <?php echo ($edit_data && $edit_data['kategori'] === 'event') ? 'selected' : ''; ?>>Event</option>
-                </select>
-            </div>
+        <!-- Baris 1: Judul & Kategori (2/3 + 1/3) -->
+        <div class="form-group two-thirds">
+            <label for="judul"><i class="fa fa-heading"></i> Judul</label>
+            <input type="text" id="judul" name="judul" 
+                   value="<?php echo htmlspecialchars($edit_data['judul'] ?? ''); ?>" 
+                   placeholder="Judul informasi" required>
         </div>
 
+        <div class="form-group">
+            <label for="kategori"><i class="fa fa-folder"></i> Kategori</label>
+            <select id="kategori" name="kategori" required>
+                <option value="">Pilih</option>
+                <option value="berita" <?php echo ($edit_data && $edit_data['kategori'] === 'berita') ? 'selected' : ''; ?>>Berita</option>
+                <option value="artikel" <?php echo ($edit_data && $edit_data['kategori'] === 'artikel') ? 'selected' : ''; ?>>Artikel</option>
+                <option value="pengumuman" <?php echo ($edit_data && $edit_data['kategori'] === 'pengumuman') ? 'selected' : ''; ?>>Pengumuman</option>
+                <option value="event" <?php echo ($edit_data && $edit_data['kategori'] === 'event') ? 'selected' : ''; ?>>Event</option>
+            </select>
+        </div>
+
+        <!-- Baris 2: Isi (full width) -->
         <div class="form-group full-width">
-            <label for="isi"><i class="fa fa-align-left"></i> Isi Informasi</label>
+            <label for="isi"><i class="fa fa-align-left"></i> Isi</label>
             <textarea id="isi" name="isi" 
-                      placeholder="Tulis isi informasi secara lengkap dan jelas..."
+                      placeholder="Isi informasi..."
                       required><?php echo htmlspecialchars($edit_data['isi'] ?? ''); ?></textarea>
         </div>
 
+        <!-- Baris 3: Upload Gambar (full width) -->
         <div class="form-group full-width image-upload-section">
             <div class="upload-controls">
-                <label for="gambar"><i class="fa fa-image"></i> Gambar Informasi</label>
+                <label for="gambar"><i class="fa fa-image"></i> Gambar</label>
                 <input type="file" id="gambar" name="gambar" accept="image/*" 
                        <?php echo !$edit_data ? 'required' : ''; ?> onchange="previewImage(this)">
-                <small>Format: JPG, PNG, GIF | Maksimal 2MB</small>
+                <small>JPG, PNG, GIF (max 2MB)</small>
             </div>
             
             <div class="preview-container">
                 <div class="current-image">
-                    <p><i class="fa fa-image"></i> Gambar Saat Ini</p>
+                    <p><i class="fa fa-image"></i> Saat Ini</p>
                     <?php if ($edit_data && $edit_data['gambar']): ?>
                         <img src="<?php echo $base . '/' . $edit_data['gambar']; ?>" class="img-preview" 
-                             onerror="this.src='https://source.unsplash.com/random/160x120/?news'">
+                             onerror="this.src='https://source.unsplash.com/random/100x75/?news,blur'">
                     <?php else: ?>
                         <div class="placeholder-image">
                             <i class="fa fa-newspaper"></i>
-                            <span>Belum ada gambar</span>
+                            <span>No Image</span>
                         </div>
                     <?php endif; ?>
                 </div>
                 
                 <div class="new-preview">
-                    <p><i class="fa fa-eye"></i> Preview Baru</p>
+                    <p><i class="fa fa-eye"></i> Preview</p>
                     <div id="preview-box">
                         <div class="placeholder-image">
                             <i class="fa fa-upload"></i>
-                            <span>Pilih file</span>
+                            <span>Pilih</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Tombol -->
         <div class="form-actions">
             <button type="submit" name="<?php echo $edit_data ? 'edit' : 'tambah'; ?>" class="btn btn-primary">
                 <i class="fa <?php echo $edit_data ? 'fa-save' : 'fa-plus'; ?>"></i>
-                <?php echo $edit_data ? 'Update Informasi' : 'Tambah Informasi'; ?>
+                <?php echo $edit_data ? 'Update' : 'Tambah'; ?>
             </button>
             <a href="?page=informasi" class="btn btn-secondary">
-                <i class="fa fa-times"></i> Batalkan
+                <i class="fa fa-times"></i> Batal
             </a>
         </div>
     </form>
@@ -107,20 +106,18 @@ function previewImage(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            box.innerHTML = `<img src="${e.target.result}" class="img-preview" alt="Preview Gambar Baru">`;
+            box.innerHTML = `<img src="${e.target.result}" class="img-preview" alt="Preview">`;
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        box.innerHTML = '<div class="placeholder-image"><i class="fa fa-upload"></i><span>Pilih file</span></div>';
+        box.innerHTML = '<div class="placeholder-image"><i class="fa fa-upload"></i><span>Pilih</span></div>';
     }
 }
-
-// Auto-resize textarea
 document.addEventListener('DOMContentLoaded', function() {
     const textarea = document.getElementById('isi');
     if (textarea) {
         textarea.style.height = 'auto';
-        textarea.style.height = (textarea.scrollHeight) + 'px';
+        textarea.style.height = Math.min(textarea.scrollHeight, 70) + 'px';
     }
 });
 </script>

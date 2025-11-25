@@ -30,13 +30,13 @@
         /* DASHBOARD MAIN HEADING */
         /* ============================================ */
         .dashboard-header {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
             border-bottom: 2px solid var(--tan);
         }
 
         .dashboard-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-family: var(--font-heading);
             color: var(--dark-green);
             font-weight: 700;
@@ -44,9 +44,9 @@
         }
 
         .dashboard-header .subtitle {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--muted-text);
-            margin-top: 0.5rem;
+            margin-top: 0.3rem;
             font-weight: 500;
         }
 
@@ -58,22 +58,26 @@
         /* ============================================ */
         /* STAT CARDS - DASHBOARD */
         /* ============================================ */
+        .stats-container {
+            margin-bottom: 1.5rem;
+        }
+
         .dashboard-stat-card {
             background: var(--white);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 1.2rem;
-            box-shadow: 0 4px 12px rgba(76, 61, 25, 0.1);
+            box-shadow: 0 4px 10px rgba(76, 61, 25, 0.08);
             border-left: 4px solid var(--dark-green);
             transition: all 0.3s ease;
-            height: 90%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .dashboard-stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 20px rgba(76, 61, 25, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(76, 61, 25, 0.12);
             border-left-color: var(--tan);
         }
 
@@ -121,22 +125,24 @@
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             color: var(--muted-text);
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
         .stat-number {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--dark-green);
             font-family: var(--font-heading);
+            line-height: 1.2;
         }
 
         .stat-icon {
-            font-size: 1.5rem;
-            opacity: 0.7;
+            font-size: 2rem;
+            opacity: 0.8;
             text-align: right;
+            margin-top: 0.5rem;
         }
 
         .stat-icon.brown {
@@ -155,40 +161,77 @@
             color: var(--tan);
         }
 
+        /* Layout khusus untuk 7 kartu admin */
+        .stats-row-admin {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -0.5rem;
+        }
+
+        .stats-row-admin .col-card {
+            padding: 0 0.5rem;
+            margin-bottom: 1rem;
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        /* Container untuk 3 kartu di baris kedua */
+        .second-row-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .second-row-inner {
+            display: flex;
+            flex-wrap: wrap;
+            width: 75%; /* 3 kartu x 25% = 75% */
+            margin: 0 -0.5rem;
+        }
+
+        .second-row-inner .col-card {
+            padding: 0 0.5rem;
+            margin-bottom: 1rem;
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
         /* ============================================ */
         /* CHART CARDS */
         /* ============================================ */
         .dashboard-chart-card {
             background: var(--white);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(76, 61, 25, 0.1);
+            box-shadow: 0 4px 10px rgba(76, 61, 25, 0.08);
             transition: all 0.3s ease;
-            border: 1px solid rgba(207, 187, 153, 0.2);
+            border: 1px solid rgba(207, 187, 153, 0.15);
+            margin-bottom: 1.5rem;
+            height: 100%;
         }
 
         .dashboard-chart-card:hover {
-            box-shadow: 0 8px 20px rgba(76, 61, 25, 0.15);
+            box-shadow: 0 8px 15px rgba(76, 61, 25, 0.12);
         }
 
         .chart-header {
             background: linear-gradient(135deg, var(--tan), var(--muted-green));
             color: var(--white);
-            padding: 1.5rem;
+            padding: 1.2rem 1.5rem;
             border-bottom: 2px solid var(--tan);
         }
 
         .chart-header h6 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             font-family: var(--font-heading);
         }
 
         .chart-body {
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: var(--white);
-            min-height: 350px;
+            min-height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -198,15 +241,15 @@
 
         .chart-area {
             width: 100%;
-            height: 300px;
+            height: 280px;
             position: relative;
         }
 
         .chart-pie {
             width: 100%;
-            height: 300px;
+            height: 280px;
             position: relative;
-            max-width: 300px;
+            max-width: 280px;
             margin: 0 auto;
         }
 
@@ -227,22 +270,44 @@
         /* ============================================ */
         @media (max-width: 1200px) {
             .dashboard-header h1 {
-                font-size: 2rem;
+                font-size: 1.9rem;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .stat-icon {
+                font-size: 1.8rem;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .dashboard-header {
-                margin-bottom: 2rem;
-                padding-bottom: 1rem;
+                margin-bottom: 1.2rem;
+                padding-bottom: 0.8rem;
             }
 
             .dashboard-header h1 {
-                font-size: 1.75rem;
+                font-size: 1.7rem;
+            }
+
+            .stats-row-admin .col-card,
+            .second-row-inner .col-card {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .second-row-container {
+                justify-content: flex-start;
+            }
+
+            .second-row-inner {
+                width: 100%;
             }
 
             .stat-number {
-                font-size: 2rem;
+                font-size: 1.6rem;
             }
 
             .stat-label {
@@ -252,9 +317,13 @@
             .chart-body {
                 min-height: 250px;
             }
+            
+            .chart-area, .chart-pie {
+                height: 240px;
+            }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .dashboard-header h1 {
                 font-size: 1.5rem;
             }
@@ -263,13 +332,26 @@
                 font-size: 0.9rem;
             }
 
+            .stats-row-admin .col-card,
+            .second-row-inner .col-card {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .second-row-container {
+                justify-content: flex-start;
+            }
+
+            .second-row-inner {
+                width: 100%;
+            }
+
             .stat-number {
-                font-size: 1.75rem;
-                margin-bottom: 0.5rem;
+                font-size: 1.5rem;
             }
 
             .stat-icon {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
 
             .chart-header {
@@ -277,13 +359,40 @@
             }
 
             .chart-header h6 {
-                font-size: 0.95rem;
+                font-size: 1rem;
+            }
+            
+            .chart-body {
+                padding: 1rem;
+                min-height: 220px;
+            }
+            
+            .chart-area, .chart-pie {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .dashboard-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .dashboard-header .subtitle {
+                font-size: 0.85rem;
+            }
+
+            .stat-number {
+                font-size: 1.4rem;
+            }
+            
+            .dashboard-stat-card {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid p-4">
+    <div class="container-fluid p-3 p-md-4">
 
         <!-- Dashboard Header -->
         <div class="dashboard-header">
@@ -292,146 +401,156 @@
         </div>
 
         <!-- Stats Row -->
-        <div class="row">
+        <div class="stats-container">
             <?php if (isAdmin()): ?>
-                <!-- Admin Stats -->
-                <!-- Wisata Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card wisata">
-                        <div>
-                            <div class="stat-label">Wisata</div>
-                            <div class="stat-number"><?php echo $stats['wisata']; ?></div>
-                        </div>
-                        <div class="stat-icon brown">
-                            <i class="fas fa-map-marked-alt"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Komentar Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card komentar">
-                        <div>
-                            <div class="stat-label">Komentar</div>
-                            <div class="stat-number"><?php echo $stats['komentar']; ?></div>
-                        </div>
-                        <div class="stat-icon dark-green">
-                            <i class="fas fa-comments"></i>
+                <!-- Admin Stats - 7 cards dengan layout khusus -->
+                <div class="stats-row-admin">
+                    <!-- Baris Pertama - 4 Kartu -->
+                    <!-- Wisata Card -->
+                    <div class="col-card">
+                        <div class="dashboard-stat-card wisata">
+                            <div>
+                                <div class="stat-label">Wisata</div>
+                                <div class="stat-number"><?php echo $stats['wisata']; ?></div>
+                            </div>
+                            <div class="stat-icon brown">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Pesan Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card pesan">
-                        <div>
-                            <div class="stat-label">Pesan Baru</div>
-                            <div class="stat-number"><?php echo $stats['pesan']; ?></div>
-                        </div>
-                        <div class="stat-icon tan">
-                            <i class="fas fa-envelope"></i>
+                    <!-- Komentar Card -->
+                    <div class="col-card">
+                        <div class="dashboard-stat-card komentar">
+                            <div>
+                                <div class="stat-label">Komentar</div>
+                                <div class="stat-number"><?php echo $stats['komentar']; ?></div>
+                            </div>
+                            <div class="stat-icon dark-green">
+                                <i class="fas fa-comments"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- User Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card user">
-                        <div>
-                            <div class="stat-label">User</div>
-                            <div class="stat-number"><?php echo $stats['user']; ?></div>
-                        </div>
-                        <div class="stat-icon muted-green">
-                            <i class="fas fa-users"></i>
+                    <!-- Pesan Card -->
+                    <div class="col-card">
+                        <div class="dashboard-stat-card pesan">
+                            <div>
+                                <div class="stat-label">Pesan Baru</div>
+                                <div class="stat-number"><?php echo $stats['pesan']; ?></div>
+                            </div>
+                            <div class="stat-icon tan">
+                                <i class="fas fa-envelope"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Produk Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card produk">
-                        <div>
-                            <div class="stat-label">Produk</div>
-                            <div class="stat-number"><?php echo $stats['produk']; ?></div>
-                        </div>
-                        <div class="stat-icon brown">
-                            <i class="fas fa-box"></i>
+                    <!-- User Card -->
+                    <div class="col-card">
+                        <div class="dashboard-stat-card user">
+                            <div>
+                                <div class="stat-label">User</div>
+                                <div class="stat-number"><?php echo $stats['user']; ?></div>
+                            </div>
+                            <div class="stat-icon muted-green">
+                                <i class="fas fa-users"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Informasi Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card informasi">
-                        <div>
-                            <div class="stat-label">Informasi</div>
-                            <div class="stat-number"><?php echo $stats['informasi']; ?></div>
-                        </div>
-                        <div class="stat-icon dark-green">
-                            <i class="fas fa-info-circle"></i>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Baris Kedua - 3 Kartu di Tengah -->
+                    <div class="second-row-container">
+                        <div class="second-row-inner">
+                            <!-- Produk Card -->
+                            <div class="col-card">
+                                <div class="dashboard-stat-card produk">
+                                    <div>
+                                        <div class="stat-label">Produk</div>
+                                        <div class="stat-number"><?php echo $stats['produk']; ?></div>
+                                    </div>
+                                    <div class="stat-icon brown">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                </div>
+                            </div>
 
-                <!-- Galeri Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card galeri">
-                        <div>
-                            <div class="stat-label">Galeri</div>
-                            <div class="stat-number"><?php echo $stats['galeri']; ?></div>
-                        </div>
-                        <div class="stat-icon tan">
-                            <i class="fas fa-images"></i>
+                            <!-- Informasi Card -->
+                            <div class="col-card">
+                                <div class="dashboard-stat-card informasi">
+                                    <div>
+                                        <div class="stat-label">Informasi</div>
+                                        <div class="stat-number"><?php echo $stats['informasi']; ?></div>
+                                    </div>
+                                    <div class="stat-icon dark-green">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Galeri Card -->
+                            <div class="col-card">
+                                <div class="dashboard-stat-card galeri">
+                                    <div>
+                                        <div class="stat-label">Galeri</div>
+                                        <div class="stat-number"><?php echo $stats['galeri']; ?></div>
+                                    </div>
+                                    <div class="stat-icon tan">
+                                        <i class="fas fa-images"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             <?php else: ?>
-                <!-- User Stats -->
-                <!-- Comments Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card comments">
-                        <div>
-                            <div class="stat-label">Komentar Saya</div>
-                            <div class="stat-number"><?php echo $stats['comments']; ?></div>
-                        </div>
-                        <div class="stat-icon dark-green">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Messages Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card messages">
-                        <div>
-                            <div class="stat-label">Pesan Saya</div>
-                            <div class="stat-number"><?php echo $stats['messages']; ?></div>
-                        </div>
-                        <div class="stat-icon muted-green">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Registered Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-stat-card registered">
-                        <div>
-                            <div class="stat-label">Bergabung</div>
-                            <div class="stat-number">
-                                <?php 
-                                if ($stats['registered']) {
-                                    $date = new DateTime($stats['registered']);
-                                    echo $date->format('d M Y');
-                                } else {
-                                    echo '-';
-                                }
-                                ?>
+                <!-- User Stats - 3 cards dengan layout normal -->
+                <div class="row">
+                    <!-- Comments Card -->
+                    <div class="col-xl-4 col-md-4 col-sm-6">
+                        <div class="dashboard-stat-card comments">
+                            <div>
+                                <div class="stat-label">Komentar Saya</div>
+                                <div class="stat-number"><?php echo $stats['comments']; ?></div>
+                            </div>
+                            <div class="stat-icon dark-green">
+                                <i class="fas fa-comments"></i>
                             </div>
                         </div>
-                        <div class="stat-icon tan">
-                            <i class="fas fa-calendar"></i>
+                    </div>
+
+                    <!-- Messages Card -->
+                    <div class="col-xl-4 col-md-4 col-sm-6">
+                        <div class="dashboard-stat-card messages">
+                            <div>
+                                <div class="stat-label">Pesan Saya</div>
+                                <div class="stat-number"><?php echo $stats['messages']; ?></div>
+                            </div>
+                            <div class="stat-icon muted-green">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Registered Card -->
+                    <div class="col-xl-4 col-md-4 col-sm-6">
+                        <div class="dashboard-stat-card registered">
+                            <div>
+                                <div class="stat-label">Bergabung</div>
+                                <div class="stat-number">
+                                    <?php 
+                                    if ($stats['registered']) {
+                                        $date = new DateTime($stats['registered']);
+                                        echo $date->format('d M Y');
+                                    } else {
+                                        echo '-';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="stat-icon tan">
+                                <i class="fas fa-calendar"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -439,9 +558,9 @@
         </div>
 
         <!-- Charts Row -->
-        <div class="row">
+        <div class="row mt-3">
             <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7 mb-4">
+            <div class="col-xl-8 col-lg-7">
                 <div class="dashboard-chart-card">
                     <div class="chart-header">
                         <h6><i class="fas fa-chart-line"></i> <?php echo isAdmin() ? 'Ikhtisar Aktivitas' : 'Aktivitas Saya'; ?></h6>
@@ -455,7 +574,7 @@
             </div>
 
             <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5 mb-4">
+            <div class="col-xl-4 col-lg-5">
                 <div class="dashboard-chart-card">
                     <div class="chart-header">
                         <h6><i class="fas fa-chart-pie"></i> <?php echo isAdmin() ? 'Kategori Data' : 'Ringkasan'; ?></h6>
@@ -556,8 +675,9 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-                                padding: 20,
-                                usePointStyle: true
+                                padding: 15,
+                                usePointStyle: true,
+                                boxWidth: 10
                             }
                         }
                     }
