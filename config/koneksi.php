@@ -20,9 +20,4 @@ foreach ($folders as $folder) {
 
 // Set timezone
 date_default_timezone_set('Asia/Makassar');
-
-// Include settings helper functions (dengan error handling)
-if (file_exists(__DIR__ . '/settings_helper.php')) {
-    include __DIR__ . '/settings_helper.php';
-}
 ?>

@@ -30,7 +30,7 @@ $user_email = $_SESSION['email'] ?? '';
 // Tentukan page mana yang akan ditampilkan
 $current_page = isset($_GET['page']) ? basename($_GET['page']) : 'dashboard';
 $action = isset($_GET['action']) ? basename($_GET['action']) : null;
-$allowed_pages = ['dashboard', 'wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user', 'settings'];
+$allowed_pages = ['dashboard', 'wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user'];
 
 // Validasi page
 if (!in_array($current_page, $allowed_pages)) {
@@ -60,8 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['hapus']) || isset($_GET
         include __DIR__ . '/pages/crud_pesan_process.php';
     } elseif ($current_page === 'user' && isAdmin()) {
         include __DIR__ . '/pages/crud_user_process.php';
-    } elseif ($current_page === 'settings' && isAdmin()) {
-        include __DIR__ . '/pages/settings_process.php';
     }
 }
 
@@ -684,13 +682,6 @@ if (isAdmin()) {
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link <?php echo $current_page === 'settings' ? 'active' : ''; ?>" href="<?php echo $base; ?>/dashboard/index.php?page=settings">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Pengaturan Website</span>
-                </a>
-            </li>
-
             <hr class="sidebar-divider">
             <?php else: ?>
             <hr class="sidebar-divider">
@@ -773,8 +764,6 @@ if (isAdmin()) {
                                 include __DIR__ . '/pages/crud_pesan.php';
                             } elseif ($current_page === 'user' && isAdmin()) {
                                 include __DIR__ . '/pages/crud_user.php';
-                            } elseif ($current_page === 'settings' && isAdmin()) {
-                                include __DIR__ . '/pages/settings.php';
                             } else {
                                 include __DIR__ . '/pages/dashboard.php';
                             }
