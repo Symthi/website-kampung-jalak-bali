@@ -43,19 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: {$base}/dashboard/index.php");
             exit();
         } else {
-            $error = "Password salah!";
+            $error = t('wrong_password');
         }
     } else {
-        $error = "Email tidak ditemukan!";
+        $error = t('email_not_found');
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<?php echo ($_SESSION['language'] ?? 'id'); ?>">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><?php echo t('login_title'); ?> | Kampoeng Jalak Bali</title>
+    <title><?php echo t('login'); ?> | <?php echo get_setting('site_title', 'Kampoeng Jalak Bali'); ?></title>
   <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
   <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <section class="auth-section">
       <div class="auth-card">
-        <h2><i class="fas fa-sign-in-alt"></i> <?php echo t('login_title'); ?></h2>
+        <h2><i class="fas fa-sign-in-alt"></i> <?php echo t('login'); ?></h2>
         <?php if (!empty($error)): ?>
         <div class="alert-error">
           <?php echo $error; ?>
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php endif; ?>
         <form method="POST" action="">
           <div>
-            <label for="email"><i class="fas fa-envelope"></i> <?php echo t('email_address'); ?></label>
+            <label for="email"><i class="fas fa-envelope"></i> <?php echo t('email'); ?></label>
             <input type="email" id="email" name="email" placeholder="email@example.com" required />
           </div>
           <div>

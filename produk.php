@@ -26,7 +26,7 @@ function isAdmin() {
 }
 
 // Set page info
-$pageTitle = t('products_title') . ' | Kampoeng Jalak Bali';
+$pageTitle = t('products_title') . ' | ' . get_setting('site_title', 'Kampoeng Jalak Bali');
 $currentPage = 'produk';
 
 // Ambil data produk dengan pagination
@@ -41,11 +41,11 @@ $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<?php echo ($_SESSION['language'] ?? 'id'); ?>">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo t('products_title'); ?> | Kampoeng Jalak Bali</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -95,13 +95,13 @@ $produk_data = mysqli_fetch_all($result_produk, MYSQLI_ASSOC);
                     <!-- Price & Stock Info -->
                     <div class="merchandise-price-stock">
                       <div class="price-item">
-                        <span class="label"><i class="fas fa-tag"></i> Harga</span>
+                        <span class="label"><i class="fas fa-tag"></i> <?php echo t('price'); ?></span>
                         <span class="value">Rp <?php echo number_format($produk['harga'], 0, ',', '.'); ?></span>
                       </div>
                       <div class="stock-item">
-                        <span class="label"><i class="fas fa-boxes"></i> Stok</span>
+                        <span class="label"><i class="fas fa-boxes"></i> <?php echo t('stock'); ?></span>
                         <span class="value <?php echo $produk['stok'] > 0 ? 'in-stock' : 'out-stock'; ?>">
-                          <?php echo $produk['stok'] > 0 ? $produk['stok'] . ' pcs' : 'Habis'; ?>
+                          <?php echo $produk['stok'] > 0 ? $produk['stok'] . ' pcs' : t('out_of_stock'); ?>
                         </span>
                       </div>
                     </div>

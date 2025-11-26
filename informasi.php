@@ -26,7 +26,7 @@ function isAdmin() {
 }
 
 // Set page info
-$pageTitle = t('information_title') . ' | Kampoeng Jalak Bali';
+$pageTitle = t('information_title') . ' | ' . get_setting('site_title', 'Kampoeng Jalak Bali');
 $currentPage = 'informasi';
 
 // Ambil data informasi dengan pagination
@@ -41,11 +41,11 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<?php echo ($_SESSION['language'] ?? 'id'); ?>">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo t('information_title'); ?> | Kampoeng Jalak Bali</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />

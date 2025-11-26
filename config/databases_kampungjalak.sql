@@ -91,146 +91,325 @@ CREATE TABLE produk (
 );
 
 
-DROP TABLE wisata;
-DROP TABLE komentar;
+DROP TABLE pengaturan_tampilan;
+DROP TABLE homepage_sections;
 
--- ========================================
--- TABEL: website_settings
--- Menyimpan pengaturan umum website
--- ========================================
-CREATE TABLE IF NOT EXISTS website_settings (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nama_website VARCHAR(150) NOT NULL DEFAULT 'Kampung Jalak Bali',
-    deskripsi_website TEXT,
-    logo VARCHAR(255),
-    favicon VARCHAR(255),
-    email_kontak VARCHAR(100),
-    telepon VARCHAR(20),
-    alamat TEXT,
-    jam_kerja VARCHAR(100),
-    link_whatsapp VARCHAR(255),
-    link_facebook VARCHAR(255),
-    link_instagram VARCHAR(255),
-    link_youtube VARCHAR(255),
-    link_tiktok VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Hapus tabel lama jika ada
+DROP TABLE IF EXISTS pengaturan_tampilan;
+DROP TABLE IF EXISTS homepage_sections;
+DROP TABLE IF EXISTS pengaturan;
+DROP TABLE IF EXISTS language_strings;
+
+-- Tabel untuk semua pengaturan website
+CREATE TABLE pengaturan (
+  id_pengaturan INT AUTO_INCREMENT PRIMARY KEY,
+  kunci VARCHAR(100) NOT NULL UNIQUE,
+  nilai TEXT,
+  kategori VARCHAR(50) DEFAULT 'umum',
+  deskripsi TEXT,
+  tanggal_diubah TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- ========================================
--- TABEL: menu_navbar
--- Menyimpan item menu di navbar website
--- ========================================
-CREATE TABLE IF NOT EXISTS menu_navbar (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    label VARCHAR(100) NOT NULL,
-    url VARCHAR(255),
-    icon VARCHAR(50),
-    urutan INT DEFAULT 0,
-    aktif TINYINT DEFAULT 1,
-    tipe_menu ENUM('link_eksternal', 'halaman_internal', 'kategori') DEFAULT 'halaman_internal',
-    keterangan TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Tabel untuk bahasa dan terjemahan
+CREATE TABLE language_strings (
+  id_string INT AUTO_INCREMENT PRIMARY KEY,
+  string_key VARCHAR(255) NOT NULL,
+  bahasa VARCHAR(10) NOT NULL DEFAULT 'id',
+  terjemahan TEXT NOT NULL,
+  kategori VARCHAR(50) DEFAULT 'general',
+  tanggal_dibuat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  tanggal_diubah TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_key_lang (string_key, bahasa)
 );
 
--- ========================================
--- TABEL: sidebar_menu
--- Menyimpan label dan item menu sidebar admin
--- ========================================
-CREATE TABLE IF NOT EXISTS sidebar_menu (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    label VARCHAR(100) NOT NULL,
-    icon VARCHAR(50),
-    urutan INT DEFAULT 0,
-    aktif TINYINT DEFAULT 1,
-    page_id VARCHAR(50),
-    keterangan TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+-- Insert default settings untuk SEMUA bagian website
+INSERT INTO pengaturan (kunci, nilai, kategori, deskripsi) VALUES 
+-- Umum
+('site_title', 'Kampoeng Jalak Bali', 'umum', 'Judul website'),
+('site_description', 'Destinasi wisata edukasi yang memukau di Pulau Dewata', 'umum', 'Deskripsi website'),
+
+-- Kontak
+('contact_email', 'kampoengjalakbali@gmail.com', 'kontak', 'Email kontak utama'),
+('contact_phone', '083862519604', 'kontak', 'Nomor telepon kontak'),
+('contact_person', 'I Wayan Yudi Artana', 'kontak', 'Nama kontak person'),
+('address', 'Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali', 'kontak', 'Alamat lengkap'),
+
+-- Sosial Media
+('social_instagram', 'https://instagram.com/kampoengjalakbali/', 'sosial', 'Link Instagram'),
+('social_facebook', '#', 'sosial', 'Link Facebook'),
+
+-- Hero Section
+('hero_title', 'Selamat Datang di Kampoeng Jalak Bali', 'hero', 'Judul hero section'),
+('hero_description', 'Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.', 'hero', 'Deskripsi hero section'),
+('hero_button_text', 'Jelajahi Sekarang', 'hero', 'Teks tombol hero'),
+
+-- About Section
+('about_title', 'Tentang Kampoeng Jalak Bali', 'about', 'Judul section tentang'),
+('about_description', 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.', 'about', 'Deskripsi tentang'),
+('vision_text', 'Mewujudkan desa konservasi yang harmonis antara manusia, alam, dan budaya melalui pelestarian Jalak Bali sebagai warisan satwa endemik Pulau Bali.', 'about', 'Teks visi'),
+('history_paragraph1', 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.', 'about', 'Sejarah paragraf 1'),
+('history_paragraph2', 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.', 'about', 'Sejarah paragraf 2'),
+
+-- Struktur Organisasi
+('advisor_names', 'I KETUT SUARTANCA,Drh. I MADE SUGIARTA', 'struktur', 'Nama-nama pembina'),
+('advisor_positions', 'Perbekel Desa Tengkudak,FNPF', 'struktur', 'Jabatan pembina'),
+('chairperson_name', 'I NYOMAN OKA TRIADI', 'struktur', 'Nama ketua'),
+('chairperson_position', 'Bandes Adat Tingkihkerep', 'struktur', 'Jabatan ketua'),
+('secretary_name', 'I MADE SUKARATA', 'struktur', 'Nama sekretaris'),
+('treasurer_name', 'NI PUTU DESY ANGGRAENI', 'struktur', 'Nama bendahara'),
+('guide_names', 'I WAYAN EDDYAS PRIHANTARA,I KETUT MERTAJAYA,I WAYAN SUDARMA', 'struktur', 'Nama-nama pemandu'),
+('observer_names', 'I WAYAN YUDI ARTANA,NI WAYAN SUIKI', 'struktur', 'Nama-nama pengamat'),
+
+-- Wisata Section
+('wisata_title', 'Wisata Edukasi', 'wisata', 'Judul section wisata'),
+('wisata_subtitle', 'Jelajahi pengalaman unik konservasi dan budaya di Kampoeng Jalak Bali', 'wisata', 'Subjudul wisata'),
+
+-- Galeri Section
+('gallery_title', 'Galeri', 'galeri', 'Judul section galeri'),
+('gallery_subtitle', 'Momen-momen indah di Kampoeng Jalak Bali', 'galeri', 'Subjudul galeri'),
+
+-- Produk Section
+('products_title', 'Produk & Merchandise', 'produk', 'Judul section produk'),
+('products_subtitle', 'Dukung konservasi Jalak Bali dengan membeli produk kami', 'produk', 'Subjudul produk'),
+('merchandise_about_title', 'Tentang Merchandise Kami', 'produk', 'Judul tentang merchandise'),
+('merchandise_about_text1', 'Semua merchandise di Kampoeng Jalak Bali adalah pilihan spesial yang dirancang untuk mendukung konservasi Jalak Bali. Setiap pembelian Anda berkontribusi langsung pada program pelestarian burung Jalak Bali yang terancam punah.', 'produk', 'Teks tentang merchandise 1'),
+
+-- Informasi Section
+('information_title', 'Informasi Terbaru', 'informasi', 'Judul section informasi'),
+('information_subtitle', 'Update terbaru seputar Kampoeng Jalak Bali', 'informasi', 'Subjudul informasi'),
+
+-- Footer
+('footer_description', 'Website resmi Kampoeng Jalak Bali untuk promosi wisata, produk, dan informasi desa.', 'footer', 'Deskripsi footer'),
+('footer_copyright', 'Hak Cipta &copy; 2025 Kampoeng Jalak Bali. Semua Hak Dilindungi.', 'footer', 'Teks copyright'),
+
+-- Navbar
+('navbar_logo', 'uploads/Rancangan Logo.png', 'navbar', 'Path logo navbar'),
+('navbar_site_name', 'KJB', 'navbar', 'Nama singkat website'),
+
+-- Theme
+('primary_color', '#4c3d19', 'theme', 'Warna utama theme'),
+('secondary_color', '#354024', 'theme', 'Warna sekunder theme'),
+('accent_color', '#cfbb99', 'theme', 'Warna aksen theme');
+
+INSERT IGNORE INTO pengaturan (kunci, nilai, kategori, deskripsi) VALUES
+('navbar_about', 'Tentang', 'navbar', 'Nama menu About di navbar'),
+('navbar_tourism', 'Wisata', 'navbar', 'Nama menu Tourism di navbar'),
+('navbar_gallery', 'Galeri', 'navbar', 'Nama menu Gallery di navbar'),
+('navbar_information', 'Informasi', 'navbar', 'Nama menu Information di navbar'),
+('navbar_products', 'Produk', 'navbar', 'Nama menu Products di navbar'),
+('navbar_contact', 'Kontak', 'navbar', 'Nama menu Contact di navbar'),
+
+-- Tambah pengaturan untuk hero background
+('hero_background_1', 'uploads/hero1.jpg', 'hero', 'Hero background image 1'),
+('hero_background_2', 'uploads/hero2.jpg', 'hero', 'Hero background image 2'),
+('hero_background_3', 'uploads/hero3.jpg', 'hero', 'Hero background image 3');
 
 -- ========================================
--- TABEL: halaman
--- Menyimpan halaman/section yang bisa dibuat oleh admin
+-- INSERT DEFAULT LANGUAGE STRINGS - INDONESIAN
 -- ========================================
-CREATE TABLE IF NOT EXISTS halaman (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    judul VARCHAR(150) NOT NULL,
-    slug VARCHAR(150) NOT NULL UNIQUE,
-    konten TEXT,
-    gambar VARCHAR(255),
-    meta_deskripsi VARCHAR(255),
-    aktif TINYINT DEFAULT 1,
-    urutan INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+INSERT IGNORE INTO language_strings (string_key, bahasa, terjemahan, kategori) VALUES
+-- General Menu
+('home', 'id', 'Beranda', 'general'),
+('about', 'id', 'Tentang', 'general'),
+('tourism', 'id', 'Wisata', 'general'),
+('information', 'id', 'Informasi', 'general'),
+('gallery', 'id', 'Galeri', 'general'),
+('products', 'id', 'Produk', 'general'),
+('contact', 'id', 'Kontak', 'general'),
+('login', 'id', 'Masuk', 'general'),
+('logout', 'id', 'Keluar', 'general'),
+('dashboard', 'id', 'Dashboard', 'general'),
+('welcome', 'id', 'Selamat Datang', 'general'),
+('read_more', 'id', 'Baca Selengkapnya', 'general'),
+('see_all', 'id', 'Lihat Semua', 'general'),
+('send_message', 'id', 'Kirim Pesan', 'general'),
+('view_details', 'id', 'Lihat Detail', 'general'),
+('book_now', 'id', 'Pesan Sekarang', 'general'),
+('back', 'id', 'Kembali', 'general'),
+('next', 'id', 'Selanjutnya', 'general'),
+('previous', 'id', 'Sebelumnya', 'general'),
+('out_of_stock', 'id', 'Stok Habis', 'general'),
+
+-- Auth
+('register', 'id', 'Daftar', 'auth'),
+('email', 'id', 'Email', 'auth'),
+('full_name', 'id', 'Nama Lengkap', 'auth'),
+('password', 'id', 'Kata Sandi', 'auth'),
+('confirm_password', 'id', 'Konfirmasi Kata Sandi', 'auth'),
+('remember_me', 'id', 'Ingat Saya', 'auth'),
+('no_account', 'id', 'Belum punya akun?', 'auth'),
+('have_account', 'id', 'Sudah punya akun?', 'auth'),
+('register_here', 'id', 'Daftar di sini', 'auth'),
+('login_here', 'id', 'Masuk di sini', 'auth'),
+
+-- CRUD
+('add', 'id', 'Tambah', 'crud'),
+('edit', 'id', 'Ubah', 'crud'),
+('update', 'id', 'Perbarui', 'crud'),
+('save', 'id', 'Simpan', 'crud'),
+('cancel', 'id', 'Batal', 'crud'),
+('delete', 'id', 'Hapus', 'crud'),
+('search', 'id', 'Cari', 'crud'),
+('actions', 'id', 'Aksi', 'crud'),
+('title', 'id', 'Judul', 'crud'),
+('description', 'id', 'Deskripsi', 'crud'),
+('content', 'id', 'Konten', 'crud'),
+('category', 'id', 'Kategori', 'crud'),
+('price', 'id', 'Harga', 'crud'),
+('stock', 'id', 'Stok', 'crud'),
+('image', 'id', 'Gambar', 'crud'),
+('date', 'id', 'Tanggal', 'crud'),
+('name', 'id', 'Nama', 'crud'),
+('role', 'id', 'Peran', 'crud'),
+
+-- Contact & Footer
+('quick_links', 'id', 'Menu Cepat', 'footer'),
+('rights_reserved', 'id', 'Semua Hak Dilindungi', 'footer'),
+('footer_description', 'id', 'Website resmi Kampoeng Jalak Bali untuk promosi wisata, produk, dan informasi desa.', 'footer'),
+('contact_info', 'id', 'Informasi Kontak', 'contact'),
+('address', 'id', 'Alamat', 'contact'),
+('phone', 'id', 'Telepon', 'contact'),
+('follow_us', 'id', 'Ikuti Kami', 'contact'),
+
+-- Comments
+('comments', 'id', 'Komentar', 'comments'),
+('write_comment', 'id', 'Tulis Komentar', 'comments'),
+('post_comment', 'id', 'Kirim Komentar', 'comments'),
+('no_comments_yet', 'id', 'Belum ada komentar', 'comments'),
+('login_to_comment', 'id', 'Silakan login untuk menulis komentar', 'comments'),
+('confirm_delete', 'id', 'Yakin ingin menghapus?', 'comments'),
+
+-- Dashboard/Admin
+('settings_management', 'id', 'Pengaturan Website Lengkap', 'admin'),
+('general_settings', 'id', 'Pengaturan Umum', 'admin'),
+('language_management', 'id', 'Kelola Bahasa', 'admin'),
+('add_language_string', 'id', 'Tambah String Bahasa Baru', 'admin'),
+('string_key', 'id', 'Key String', 'admin'),
+('language', 'id', 'Bahasa', 'admin'),
+('select', 'id', 'Pilih', 'admin'),
+('translation', 'id', 'Terjemahan', 'admin'),
+('enter_translation', 'id', 'Masukkan terjemahan', 'admin'),
+
+-- Error Messages
+('email_already_exists', 'id', 'Email sudah terdaftar!', 'error'),
+('wrong_password', 'id', 'Password salah!', 'error'),
+('email_not_found', 'id', 'Email tidak ditemukan!', 'error'),
+('all_fields_required', 'id', 'Semua field wajib diisi!', 'error'),
+('account_created_failed', 'id', 'Gagal membuat akun! Silakan coba lagi.', 'error'),
+
+-- Success Messages
+('settings_updated', 'id', 'Pengaturan berhasil diperbarui!', 'success'),
+('translation_updated', 'id', 'Terjemahan berhasil diperbarui!', 'success'),
+('language_added', 'id', 'String bahasa berhasil ditambahkan!', 'success'),
+('language_deleted', 'id', 'String bahasa berhasil dihapus!', 'success'),
+
+-- Misc
+('no_data', 'id', 'Tidak ada data', 'general'),
+('no_tourism', 'id', 'Belum ada data wisata', 'general'),
+('no_gallery_images', 'id', 'Belum ada gambar di galeri', 'general'),
+('no_information', 'id', 'Belum ada informasi yang tersedia', 'general');
 
 -- ========================================
--- TABEL: pengaturan_tampilan
--- Menyimpan pengaturan tampilan website
+-- INSERT DEFAULT LANGUAGE STRINGS - ENGLISH
 -- ========================================
-CREATE TABLE IF NOT EXISTS pengaturan_tampilan (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    warna_utama VARCHAR(7) DEFAULT '#354024',
-    warna_sekunder VARCHAR(7) DEFAULT '#8BAC3F',
-    tampilkan_breadcrumb TINYINT DEFAULT 1,
-    tampilkan_search_bar TINYINT DEFAULT 1,
-    tampilkan_footer_newsletter TINYINT DEFAULT 1,
-    tampilkan_chat_widget TINYINT DEFAULT 0,
-    items_per_page INT DEFAULT 6,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+INSERT IGNORE INTO language_strings (string_key, bahasa, terjemahan, kategori) VALUES
+-- General Menu
+('home', 'en', 'Home', 'general'),
+('about', 'en', 'About', 'general'),
+('tourism', 'en', 'Tourism', 'general'),
+('information', 'en', 'Information', 'general'),
+('gallery', 'en', 'Gallery', 'general'),
+('products', 'en', 'Products', 'general'),
+('contact', 'en', 'Contact', 'general'),
+('login', 'en', 'Login', 'general'),
+('logout', 'en', 'Logout', 'general'),
+('dashboard', 'en', 'Dashboard', 'general'),
+('welcome', 'en', 'Welcome', 'general'),
+('read_more', 'en', 'Read More', 'general'),
+('see_all', 'en', 'See All', 'general'),
+('send_message', 'en', 'Send Message', 'general'),
+('view_details', 'en', 'View Details', 'general'),
+('book_now', 'en', 'Book Now', 'general'),
+('back', 'en', 'Back', 'general'),
+('next', 'en', 'Next', 'general'),
+('previous', 'en', 'Previous', 'general'),
+('out_of_stock', 'en', 'Out of Stock', 'general'),
 
-alter table pengaturan_tampilan drop font_utama;
+-- Auth
+('register', 'en', 'Register', 'auth'),
+('email', 'en', 'Email', 'auth'),
+('full_name', 'en', 'Full Name', 'auth'),
+('password', 'en', 'Password', 'auth'),
+('confirm_password', 'en', 'Confirm Password', 'auth'),
+('remember_me', 'en', 'Remember Me', 'auth'),
+('no_account', 'en', 'Don\'t have an account?', 'auth'),
+('have_account', 'en', 'Already have an account?', 'auth'),
+('register_here', 'en', 'Register here', 'auth'),
+('login_here', 'en', 'Login here', 'auth'),
 
--- ========================================
--- TABEL: homepage_sections
--- Menyimpan section yang ditampilkan di homepage
--- ========================================
-CREATE TABLE IF NOT EXISTS homepage_sections (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nama_section VARCHAR(100) NOT NULL,
-    tipe ENUM('wisata', 'galeri', 'produk', 'informasi', 'testimoni', 'custom') DEFAULT 'custom',
-    judul VARCHAR(150),
-    deskripsi TEXT,
-    urutan INT DEFAULT 0,
-    aktif TINYINT DEFAULT 1,
-    items_ditampilkan INT DEFAULT 6,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+-- CRUD
+('add', 'en', 'Add', 'crud'),
+('edit', 'en', 'Edit', 'crud'),
+('update', 'en', 'Update', 'crud'),
+('save', 'en', 'Save', 'crud'),
+('cancel', 'en', 'Cancel', 'crud'),
+('delete', 'en', 'Delete', 'crud'),
+('search', 'en', 'Search', 'crud'),
+('actions', 'en', 'Actions', 'crud'),
+('title', 'en', 'Title', 'crud'),
+('description', 'en', 'Description', 'crud'),
+('content', 'en', 'Content', 'crud'),
+('category', 'en', 'Category', 'crud'),
+('price', 'en', 'Price', 'crud'),
+('stock', 'en', 'Stock', 'crud'),
+('image', 'en', 'Image', 'crud'),
+('date', 'en', 'Date', 'crud'),
+('name', 'en', 'Name', 'crud'),
+('role', 'en', 'Role', 'crud'),
 
--- ========================================
--- Insert data default
--- ========================================
-INSERT INTO website_settings (nama_website, deskripsi_website, alamat, telepon, email_kontak) VALUES 
-('Kampung Jalak Bali', 'Destinasi Edukasi Wisata di Bali', 'Bali, Indonesia', '081234567890', 'info@kampungjalak.id');
+-- Contact & Footer
+('quick_links', 'en', 'Quick Links', 'footer'),
+('rights_reserved', 'en', 'All Rights Reserved', 'footer'),
+('footer_description', 'en', 'Official website of Kampoeng Jalak Bali for tourism promotion, products, and village information.', 'footer'),
+('contact_info', 'en', 'Contact Information', 'contact'),
+('address', 'en', 'Address', 'contact'),
+('phone', 'en', 'Phone', 'contact'),
+('follow_us', 'en', 'Follow Us', 'contact'),
 
-INSERT INTO menu_navbar (label, url, urutan, aktif) VALUES 
-('Beranda', '/', 1, 1),
-('Wisata', 'index.php#wisata', 2, 1),
-('Galeri', 'index.php#galeri', 3, 1),
-('Produk', 'produk.php', 4, 1),
-('Informasi', 'informasi.php', 5, 1),
-('Hubungi Kami', 'index.php#kontak', 6, 1);
+-- Comments
+('comments', 'en', 'Comments', 'comments'),
+('write_comment', 'en', 'Write Comment', 'comments'),
+('post_comment', 'en', 'Post Comment', 'comments'),
+('no_comments_yet', 'en', 'No comments yet', 'comments'),
+('login_to_comment', 'en', 'Please login to write a comment', 'comments'),
+('confirm_delete', 'en', 'Are you sure you want to delete?', 'comments'),
 
-INSERT INTO sidebar_menu (label, page_id, urutan, aktif) VALUES 
-('Manajemen Wisata', 'wisata', 1, 1),
-('Manajemen Galeri', 'galeri', 2, 1),
-('Manajemen Produk', 'produk', 3, 1),
-('Manajemen Informasi', 'informasi', 4, 1),
-('Manajemen Komentar', 'komentar', 5, 1),
-('Manajemen Pesan', 'pesan', 6, 1),
-('Manajemen User', 'user', 7, 1);
+-- Dashboard/Admin
+('settings_management', 'en', 'Website Settings', 'admin'),
+('general_settings', 'en', 'General Settings', 'admin'),
+('language_management', 'en', 'Language Management', 'admin'),
+('add_language_string', 'en', 'Add New Language String', 'admin'),
+('string_key', 'en', 'String Key', 'admin'),
+('language', 'en', 'Language', 'admin'),
+('select', 'en', 'Select', 'admin'),
+('translation', 'en', 'Translation', 'admin'),
+('enter_translation', 'en', 'Enter translation', 'admin'),
 
-INSERT INTO pengaturan_tampilan (warna_utama, warna_sekunder) VALUES 
-('#354024', '#8BAC3F');
+-- Error Messages
+('email_already_exists', 'en', 'Email already registered!', 'error'),
+('wrong_password', 'en', 'Wrong password!', 'error'),
+('email_not_found', 'en', 'Email not found!', 'error'),
+('all_fields_required', 'en', 'All fields are required!', 'error'),
+('account_created_failed', 'en', 'Failed to create account! Please try again.', 'error'),
 
-INSERT INTO homepage_sections (nama_section, tipe, judul, urutan, aktif) VALUES 
-('Wisata Terbaru', 'wisata', 'Wisata & Edukasi', 1, 1),
-('Galeri', 'galeri', 'Galeri Kegiatan', 2, 1),
-('Produk', 'produk', 'Produk Kami', 3, 1),
-('Informasi', 'informasi', 'Informasi Terkini', 4, 1);
+-- Success Messages
+('settings_updated', 'en', 'Settings updated successfully!', 'success'),
+('translation_updated', 'en', 'Translation updated successfully!', 'success'),
+('language_added', 'en', 'Language string added successfully!', 'success'),
+('language_deleted', 'en', 'Language string deleted successfully!', 'success'),
+
+-- Misc
+('no_data', 'en', 'No data available', 'general'),
+('no_tourism', 'en', 'No tourism data available', 'general'),
+('no_gallery_images', 'en', 'No images in the gallery yet', 'general'),
+('no_information', 'en', 'No information available', 'general');

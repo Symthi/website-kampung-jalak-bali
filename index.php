@@ -9,7 +9,7 @@ if (isset($_GET['lang'])) {
 }
 
 include __DIR__ . '/config/koneksi.php';
-include __DIR__ . '/config/language.php'; // Include language file
+include __DIR__ . '/config/language.php';
 
 // compute base URL (site root) dynamically, e.g. /uas
 $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
@@ -47,8 +47,8 @@ function isAdmin() {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kampoeng Jalak Bali - <?php echo t('tourism_subtitle'); ?></title>
-  <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
+    <title><?php echo t('site_title'); ?> - <?php echo t('tourism_subtitle'); ?></title>
+    <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
@@ -60,13 +60,19 @@ function isAdmin() {
     <section id="home" class="hero-section">
       <!-- Background Slider Container -->
       <div class="hero-slider-container">
-        <div class="hero-slide active" style="background-image: url(uploads/hero3.jpg);">
+        <?php
+        // Ambil hero background dari pengaturan
+        $hero_bg_1 = get_setting('hero_background_1', 'uploads/hero1.jpg');
+        $hero_bg_2 = get_setting('hero_background_2', 'uploads/hero2.jpg'); 
+        $hero_bg_3 = get_setting('hero_background_3', 'uploads/hero3.jpg');
+        ?>
+        <div class="hero-slide active" style="background-image: url(<?php echo public_url($hero_bg_1); ?>);">
           <div class="slide-overlay"></div>
         </div>
-        <div class="hero-slide" style="background-image: url(uploads/hero2.jpg);">
+        <div class="hero-slide" style="background-image: url(<?php echo public_url($hero_bg_2); ?>);">
           <div class="slide-overlay"></div>
         </div>
-        <div class="hero-slide" style="background-image: url(uploads/hero1.jpg);">
+        <div class="hero-slide" style="background-image: url(<?php echo public_url($hero_bg_3); ?>);">
           <div class="slide-overlay"></div>
         </div>
       </div>
@@ -218,7 +224,7 @@ function isAdmin() {
                 <h3 class="card-title"><?php echo t('mission'); ?></h3>
               </div>
               <ul class="mission-list">
-                <?php foreach (t('mission_items') as $index => $mission_item): ?>
+                <?php foreach (get_mission_items() as $index => $mission_item): ?>
                 <li class="mission-item">
                   <span class="mission-number"><?php echo $index + 1; ?></span>
                   <span class="mission-text"><?php echo $mission_item; ?></span>
@@ -237,14 +243,16 @@ function isAdmin() {
               <span class="structure-level"><?php echo t('advisor'); ?></span>
               <h4 class="structure-title"><?php echo t('advisor'); ?></h4>
               <div class="structure-members">
+                <?php 
+                $advisor_names = get_structure_names('advisor_names');
+                $advisor_positions = get_structure_names('advisor_positions');
+                for ($i = 0; $i < count($advisor_names); $i++): 
+                ?>
                 <div class="member">
-                  <div class="member-name">I KETUT SUARTANCA</div>
-                  <div class="member-position"><?php echo t('position_village_chief'); ?></div>
+                  <div class="member-name"><?php echo $advisor_names[$i]; ?></div>
+                  <div class="member-position"><?php echo $advisor_positions[$i]; ?></div>
                 </div>
-                <div class="member">
-                  <div class="member-name">Drh. I MADE SUGIARTA</div>
-                  <div class="member-position"><?php echo t('position_fnpf'); ?></div>
-                </div>
+                <?php endfor; ?>
               </div>
             </div>
 
@@ -266,7 +274,7 @@ function isAdmin() {
               <h4 class="structure-title"><?php echo t('chairperson'); ?></h4>
               <div class="structure-members">
                 <div class="member">
-                  <div class="member-name">I NYOMAN OKA TRIADI</div>
+                  <div class="member-name"><?php echo get_setting('chairperson_name', 'I NYOMAN OKA TRIADI'); ?></div>
                   <div class="member-position"><?php echo t('position_adat_leader'); ?></div>
                 </div>
               </div>
@@ -278,11 +286,11 @@ function isAdmin() {
               <h4 class="structure-title"><?php echo t('secretary_and_treasurer'); ?></h4>
               <div class="structure-members">
                 <div class="member">
-                  <div class="member-name">I MADE SUKARATA</div>
+                  <div class="member-name"><?php echo get_setting('secretary_name', 'I MADE SUKARATA'); ?></div>
                   <div class="member-position"><?php echo t('position_secretary'); ?></div>
                 </div>
                 <div class="member">
-                  <div class="member-name">NI PUTU DESY ANGGRAENI</div>
+                  <div class="member-name"><?php echo get_setting('treasurer_name', 'NI PUTU DESY ANGGRAENI'); ?></div>
                   <div class="member-position"><?php echo t('position_treasurer'); ?></div>
                 </div>
               </div>
@@ -293,18 +301,15 @@ function isAdmin() {
               <span class="structure-level"><?php echo t('member'); ?></span>
               <h4 class="structure-title"><?php echo t('position_guide'); ?></h4>
               <div class="structure-members">
+                <?php 
+                $guide_names = get_structure_names('guide_names');
+                foreach ($guide_names as $guide_name): 
+                ?>
                 <div class="member">
-                  <div class="member-name">I WAYAN EDDYAS PRIHANTARA</div>
+                  <div class="member-name"><?php echo $guide_name; ?></div>
                   <div class="member-position"><?php echo t('position_guide'); ?></div>
                 </div>
-                <div class="member">
-                  <div class="member-name">I KETUT MERTAJAYA</div>
-                  <div class="member-position"><?php echo t('position_guide'); ?></div>
-                </div>
-                <div class="member">
-                  <div class="member-name">I WAYAN SUDARMA</div>
-                  <div class="member-position"><?php echo t('position_guide'); ?></div>
-                </div>
+                <?php endforeach; ?>
               </div>
             </div>
 
@@ -313,14 +318,15 @@ function isAdmin() {
               <span class="structure-level"><?php echo t('member'); ?></span>
               <h4 class="structure-title"><?php echo t('position_observer'); ?></h4>
               <div class="structure-members">
+                <?php 
+                $observer_names = get_structure_names('observer_names');
+                foreach ($observer_names as $observer_name): 
+                ?>
                 <div class="member">
-                  <div class="member-name">I WAYAN YUDI ARTANA</div>
+                  <div class="member-name"><?php echo $observer_name; ?></div>
                   <div class="member-position"><?php echo t('position_observer'); ?></div>
                 </div>
-                <div class="member">
-                  <div class="member-name">NI WAYAN SUIKI</div>
-                  <div class="member-position"><?php echo t('member'); ?></div>
-                </div>
+                <?php endforeach; ?>
               </div>
             </div>
           </div>
@@ -339,28 +345,27 @@ function isAdmin() {
       </div>
     </section>
 
+    <script>
+    function switchTab(tabName) {
+      // Hide all tab contents
+      const tabContents = document.querySelectorAll('.about-section .tab-content');
+      tabContents.forEach(tab => {
+        tab.classList.remove('active');
+      });
 
-      <script>
-      function switchTab(tabName) {
-        // Hide all tab contents
-        const tabContents = document.querySelectorAll('.about-section .tab-content');
-        tabContents.forEach(tab => {
-          tab.classList.remove('active');
-        });
+      // Remove active class from all buttons
+      const tabBtns = document.querySelectorAll('.about-section .tab-btn');
+      tabBtns.forEach(btn => {
+        btn.classList.remove('active');
+      });
 
-        // Remove active class from all buttons
-        const tabBtns = document.querySelectorAll('.about-section .tab-btn');
-        tabBtns.forEach(btn => {
-          btn.classList.remove('active');
-        });
+      // Show selected tab content
+      document.getElementById(tabName).classList.add('active');
 
-        // Show selected tab content
-        document.getElementById(tabName).classList.add('active');
-
-        // Add active class to clicked button
-        event.target.closest('.tab-btn').classList.add('active');
-      }
-      </script>
+      // Add active class to clicked button
+      event.target.closest('.tab-btn').classList.add('active');
+    }
+    </script>
 
     <!-- Wisata Section -->
     <section id="wisata" class="wisata-section">
@@ -475,12 +480,8 @@ function isAdmin() {
           <?php endfor; ?>
         </div>
         <?php endif; ?>
-
-
       </div>
     </section>
-
-
 
     <!-- Kontak Section -->
     <section id="kontak" class="contact-section">
@@ -501,7 +502,7 @@ function isAdmin() {
                 </div>
                 <div class="contact-content">
                   <h4 class="item-title"><?php echo t('address'); ?></h4>
-                  <p class="item-text">Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali</p>
+                  <p class="item-text"><?php echo get_setting('address', 'Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali'); ?></p>
                 </div>
               </div>
 
@@ -511,7 +512,7 @@ function isAdmin() {
                 </div>
                 <div class="contact-content">
                   <h4 class="item-title"><?php echo t('phone'); ?></h4>
-                  <p class="item-text">I Wayan Yudi Artana (083862519604)</p>
+                  <p class="item-text"><?php echo get_setting('contact_person', 'I Wayan Yudi Artana'); ?> (<?php echo get_setting('contact_phone', '083862519604'); ?>)</p>
                 </div>
               </div>
             </div>
@@ -519,14 +520,14 @@ function isAdmin() {
             <div class="social-links">
               <h4 class="social-title"><?php echo t('follow_us'); ?></h4>
               <div class="social-icons">
-                <a href="https://instagram.com/kampoengjalakbali/" target="_blank" class="social-link"> 
+                <a href="<?php echo get_setting('social_instagram', 'https://instagram.com/kampoengjalakbali/'); ?>" target="_blank" class="social-link"> 
                   <i class="fab fa-instagram"></i>@kampoengjalakbali 
                 </a>
-                <a href="#" class="social-link"> 
+                <a href="<?php echo get_setting('social_facebook', '#'); ?>" class="social-link"> 
                   <i class="fab fa-facebook-f"></i>Kampoeng Jalak Bali 
                 </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kampoengjalakbali@gmail.com" class="social-link"> 
-                  <i class="fas fa-envelope"></i>kampoengjalakbali@gmail.com 
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=<?php echo get_setting('contact_email', 'kampoengjalakbali@gmail.com'); ?>" class="social-link"> 
+                  <i class="fas fa-envelope"></i><?php echo get_setting('contact_email', 'kampoengjalakbali@gmail.com'); ?> 
                 </a>
               </div>
             </div>
@@ -581,6 +582,74 @@ function isAdmin() {
 
   <?php include __DIR__ . '/includes/footer.php'; ?>
   
+  <script>
+  // Smooth scroll dengan offset yang lebih besar untuk navbar
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        // PERBAIKAN: Offset diperbesar dari 10px menjadi 80px
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 40;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL hash tanpa trigger scroll ulang
+        history.pushState(null, null, targetId);
+      }
+    });
+  });
+
+  // Handle URL hash on page load dengan offset yang sama
+  window.addEventListener('load', function() {
+    if (window.location.hash) {
+      const targetElement = document.querySelector(window.location.hash);
+      if (targetElement) {
+        setTimeout(() => {
+          const headerHeight = document.querySelector('.header').offsetHeight;
+          // PERBAIKAN: Offset diperbesar dari 10px menjadi 80px
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 40;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
+    }
+  });
+
+  // Tambahan: Handle resize untuk update offset jika navbar berubah ukuran
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      // Refresh scroll position jika ada hash di URL
+      if (window.location.hash) {
+        const targetElement = document.querySelector(window.location.hash);
+        if (targetElement) {
+          const headerHeight = document.querySelector('.header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 80;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'auto'
+          });
+        }
+      }
+    }, 250);
+  });
+  </script>
   </body>
 </html>
-<?php mysqli_close($koneksi); ?>
+<?php 
+// HAPUS INI: mysqli_close($koneksi); 
+?>

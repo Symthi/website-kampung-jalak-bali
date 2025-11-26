@@ -3,6 +3,11 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 
+// Set default language if not set
+if (!isset($_SESSION['language'])) {
+    $_SESSION['language'] = 'id';
+}
+
 // ensure $base is available (site root) when header is included from pages
 if (!isset($base)) {
   $base = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
@@ -11,6 +16,11 @@ if (!isset($base)) {
 // Tangani pergantian bahasa jika parameter lang ada
 if (isset($_GET['lang'])) {
   $_SESSION['language'] = ($_GET['lang'] === 'en') ? 'en' : 'id';
+  // Refresh language cache
+  if (function_exists('load_language_strings')) {
+      global $lang, $koneksi;
+      $lang[$_SESSION['language']] = load_language_strings($_SESSION['language']);
+  }
   // Redirect ke halaman sebelumnya tanpa parameter lang agar URL bersih
   $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : strtok($_SERVER['REQUEST_URI'], '?');
   header('Location: ' . $redirect);
@@ -19,7 +29,20 @@ if (isset($_GET['lang'])) {
 
 // Sertakan file bahasa sekali saja
 include_once __DIR__ . '/../config/language.php';
+
+// Fungsi untuk get navbar text dengan fallback
+function get_navbar_text($key) {
+    // Coba ambil dari pengaturan database
+    $setting = get_setting($key, '');
+    if (!empty($setting)) {
+        return $setting;
+    }
+    
+    // Fallback ke terjemahan bahasa
+    return t($key);
+}
 ?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css">
 <header class="header">
   <div class="header-container container">
     <!--bars-->
@@ -30,8 +53,9 @@ include_once __DIR__ . '/../config/language.php';
     <!--logo-->
     <div class="logo-title">
       <a href="<?php echo $base; ?>/index.php">
-        <img src="<?php echo $base; ?>/uploads/Rancangan Logo.png" alt="Logo Kampoeng Jalak Bali" width="50px" />
-        <h1>KJB</h1>
+        <img src="<?php echo $base . '/' . get_setting('navbar_logo', 'uploads/Rancangan Logo.png'); ?>" 
+             alt="Logo <?php echo get_setting('site_title', 'Kampoeng Jalak Bali'); ?>" width="50px" />
+        <h1><?php echo get_setting('navbar_site_name', 'KJB'); ?></h1>
       </a>
     </div>
     <nav class="navbar">
@@ -39,40 +63,26 @@ include_once __DIR__ . '/../config/language.php';
         <li><a href="<?php echo $base; ?>/index.php#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
         <li><a href="<?php echo $base; ?>/index.php#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
         <li><a href="<?php echo $base; ?>/index.php#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
-        <li><a href="<?php echo $base; ?>/index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
         <li><a href="<?php echo $base; ?>/informasi.php"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
         <li><a href="<?php echo $base; ?>/produk.php"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
-        <?php
-        // Determine logged-in state: prefer site function if exists, otherwise use session fallback
-        $loggedIn = false;
-        if (function_exists('isLoggedIn')) {
-          try {
-            $loggedIn = isLoggedIn();
-          } catch (Throwable $e) {
-            $loggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
-          }
-        } else {
-          $loggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
-        }
-
-        if ($loggedIn): ?>
-              <li><a href="<?php echo $base; ?>/dashboard/index.php"><i class="fa fa-tachometer-alt icon"></i> <?php echo t('dashboard'); ?></a></li>
-              <li><a href="<?php echo $base; ?>/auth/logout.php"><i class="fa fa-sign-out-alt icon"></i> <?php echo t('logout'); ?></a></li>
-            <?php else: ?>
-              <li><a href="<?php echo $base; ?>/auth/login.php"><i class="fa fa-sign-in-alt icon"></i> <?php echo t('login'); ?></a></li>
-            <?php endif; ?>
+        <li><a href="<?php echo $base; ?>/index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
       </ul>
     </nav>
     <!-- Language selector (flags) -->
     <div class="lang-switcher" id="langSwitcher">
       <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" title="Ganti Bahasa">
-        <span class="lang-flag" id="currentFlag"><?php echo (($_SESSION['language'] ?? 'id') === 'en') ? '🇬🇧' : '🇮🇩'; ?></span>
-        <span class="lang-code" id="currentLangCode"><?php echo strtoupper($_SESSION['language'] ?? 'id'); ?></span>
+        <span class="lang-flag" id="currentFlag">
+            <span class="fi fi-<?php echo (($_SESSION['language'] ?? 'id') === 'en') ? 'gb' : 'id'; ?>"></span>
+        </span>
         <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <ul class="lang-menu" id="langMenu" role="menu" aria-labelledby="langBtn">
-        <li role="none"><a role="menuitem" href="#" data-lang="id">🇮🇩 Indonesia</a></li>
-        <li role="none"><a role="menuitem" href="#" data-lang="en">🇬🇧 English</a></li>
+        <li role="none"><a role="menuitem" href="#" data-lang="id">
+            <span class="fi fi-id"></span> Indonesia
+        </a></li>
+        <li role="none"><a role="menuitem" href="#" data-lang="en">
+            <span class="fi fi-gb"></span> English
+        </a></li>
       </ul>
     </div>
 
@@ -81,7 +91,6 @@ include_once __DIR__ . '/../config/language.php';
         const btn = document.getElementById('langBtn');
         const menu = document.getElementById('langMenu');
         const currentFlag = document.getElementById('currentFlag');
-        const currentLangCode = document.getElementById('currentLangCode');
         const active = ("<?php echo $_SESSION['language'] ?? 'id'; ?>").toLowerCase();
 
         // Close menu on outside click
@@ -104,6 +113,8 @@ include_once __DIR__ . '/../config/language.php';
           a.addEventListener('click', function(ev){
             ev.preventDefault();
             const lang = a.getAttribute('data-lang');
+            // Update bendera saat ganti bahasa
+            currentFlag.innerHTML = '<span class="fi fi-' + (lang === 'en' ? 'gb' : 'id') + '"></span>';
             const url = new URL(window.location.href);
             url.searchParams.set('lang', lang);
             // navigate to same page with lang param; header.php will set session and redirect cleanly
@@ -114,6 +125,3 @@ include_once __DIR__ . '/../config/language.php';
     </script>
 
 </header>
-
-<!-- HERO SECTION DENGAN SLIDER GAMBAR -->
-

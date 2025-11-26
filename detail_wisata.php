@@ -65,16 +65,16 @@ $result_komentar = mysqli_stmt_get_result($stmt_komentar);
 $komentar_data = mysqli_fetch_all($result_komentar, MYSQLI_ASSOC);
 
 // Set page info
-$pageTitle = $wisata['judul'] . ' | Kampoeng Jalak Bali';
+$pageTitle = $wisata['judul'] . ' | ' . get_setting('site_title', 'Kampoeng Jalak Bali');
 $currentPage = 'wisata';
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<?php echo ($_SESSION['language'] ?? 'id'); ?>">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo htmlspecialchars($wisata['judul']); ?> | Kampoeng Jalak Bali</title>
+    <title><?php echo htmlspecialchars($wisata['judul']); ?> | <?php echo get_setting('site_title', 'Kampoeng Jalak Bali'); ?></title>
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css">
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -91,11 +91,11 @@ $currentPage = 'wisata';
           <!-- Breadcrumb -->
           <div class="breadcrumb">
             <a href="<?php echo $base; ?>/index.php" title="Home">
-              <i class="fas fa-home"></i> Home
+              <i class="fas fa-home"></i> <?php echo t('home'); ?>
             </a>
             <span class="separator">/</span>
             <a href="<?php echo $base; ?>/index.php#wisata" title="Wisata">
-              <i class="fas fa-map-marked-alt"></i> Wisata
+              <i class="fas fa-map-marked-alt"></i> <?php echo t('tourism'); ?>
             </a>
             <span class="separator">/</span>
             <span class="current" title="<?php echo htmlspecialchars($wisata['judul']); ?>">
@@ -130,7 +130,7 @@ $currentPage = 'wisata';
                 <span class="location">
                   <i class="fas fa-map-marker-alt"></i>
                   <strong><?php echo t('location'); ?>:</strong>
-                  Kampoeng Jalak Bali
+                  <?php echo get_setting('site_title', 'Kampoeng Jalak Bali'); ?>
                 </span>
               </div>
               
@@ -264,7 +264,7 @@ $currentPage = 'wisata';
                     <a 
                       href="?id=<?php echo (int)$wisata_id; ?>&page_komen=<?php echo ($page_k - 1); ?>#comments" 
                       class="page-nav"
-                      title="Previous Page">
+                      title="<?php echo t('previous'); ?>">
                       <i class="fas fa-chevron-left"></i> <?php echo t('previous'); ?>
                     </a>
                   <?php endif; ?>
@@ -289,7 +289,7 @@ $currentPage = 'wisata';
                     <a 
                       href="?id=<?php echo (int)$wisata_id; ?>&page_komen=<?php echo ($page_k + 1); ?>#comments" 
                       class="page-nav"
-                      title="Next Page">
+                      title="<?php echo t('next'); ?>">
                       <?php echo t('next'); ?> <i class="fas fa-chevron-right"></i>
                     </a>
                   <?php endif; ?>

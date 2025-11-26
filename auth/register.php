@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result_check = mysqli_stmt_get_result($stmt_check);
 
         if (mysqli_num_rows($result_check) > 0) {
-            $error = "Email sudah terdaftar!";
+            $error = t('email_already_exists');
         } else {
             // Hash password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -43,21 +43,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: {$base}/dashboard/index.php");
                 exit();
             } else {
-                $error = "Gagal membuat akun! Silakan coba lagi.";
+                $error = t('account_created_failed');
             }
         }
     } else {
-        $error = "Semua field wajib diisi!";
+        $error = t('all_fields_required');
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<?php echo ($_SESSION['language'] ?? 'id'); ?>">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo t('register_title'); ?> | Kampoeng Jalak Bali</title>
+    <title><?php echo t('register'); ?> | <?php echo get_setting('site_title', 'Kampoeng Jalak Bali'); ?></title>
   <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/styles.css" />
     <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/pages.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <section class="auth-section">
       <div class="auth-card">
-        <h2><i class="fas fa-user-plus"></i> <?php echo t('register_title'); ?></h2>
+        <h2><i class="fas fa-user-plus"></i> <?php echo t('register'); ?></h2>
 
         <?php if (!empty($error)): ?>
         <div class="alert-error">
@@ -77,12 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <form method="POST" action="">
           <div>
-            <label for="nama"><i class="fas fa-user"></i> <?php echo t('name'); ?></label>
+            <label for="nama"><i class="fas fa-user"></i> <?php echo t('full_name'); ?></label>
             <input type="text" id="nama" name="nama" required />
           </div>
 
           <div>
-            <label for="email"><i class="fas fa-envelope"></i> <?php echo t('email_address'); ?></label>
+            <label for="email"><i class="fas fa-envelope"></i> <?php echo t('email'); ?></label>
             <input type="email" id="email" name="email" required />
           </div>
 

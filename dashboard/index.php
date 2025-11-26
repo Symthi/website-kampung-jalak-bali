@@ -30,7 +30,7 @@ $user_email = $_SESSION['email'] ?? '';
 // Tentukan page mana yang akan ditampilkan
 $current_page = isset($_GET['page']) ? basename($_GET['page']) : 'dashboard';
 $action = isset($_GET['action']) ? basename($_GET['action']) : null;
-$allowed_pages = ['dashboard', 'wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user', 'settings'];
+$allowed_pages = ['dashboard', 'wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user', 'pengaturan'];
 
 // Validasi page
 if (!in_array($current_page, $allowed_pages)) {
@@ -38,7 +38,7 @@ if (!in_array($current_page, $allowed_pages)) {
 }
 
 // Jika bukan admin dan coba akses halaman management, redirect ke dashboard
-if (!isAdmin() && in_array($current_page, ['wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user'])) {
+if (!isAdmin() && in_array($current_page, ['wisata', 'informasi', 'produk', 'galeri', 'komentar', 'pesan', 'user', 'pengaturan'])) {
     $current_page = 'dashboard';
 }
 
@@ -60,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['hapus']) || isset($_GET
         include __DIR__ . '/pages/crud_pesan_process.php';
     } elseif ($current_page === 'user' && isAdmin()) {
         include __DIR__ . '/pages/crud_user_process.php';
-    } elseif ($current_page === 'settings' && isAdmin()) {
-        include __DIR__ . '/pages/settings_process.php';
+    } elseif ($current_page === 'pengaturan' && isAdmin()) {
+        include __DIR__ . '/pages/crud_pengaturan_process.php';
     }
 }
 
@@ -180,7 +180,7 @@ if (isAdmin()) {
     <meta name="description" content="Dashboard Kampung Jalak Bali">
     <meta name="author" content="Kampung Jalak Bali">
 
-    <title><?php echo isAdmin() ? 'Admin Dashboard' : 'User Dashboard'; ?> | Kampung Jalak Bali</title>
+    <title><?php echo isAdmin() ? 'Admin Dashboard' : 'User Dashboard'; ?> | <?php echo get_setting('site_title', 'Kampung Jalak Bali'); ?></title>
 
     <!-- ================================ -->
     <!-- CSS UTAMA - PENTING! -->
@@ -217,246 +217,249 @@ if (isAdmin()) {
     }
 
     /* ============================================ */
-    /* SIDEBAR STYLING */
+    /* SIDEBAR STYLING - CLEAN & PROFESSIONAL */
     /* ============================================ */
-    
+
     #wrapper {
-        background-color: var(--cream);
+        background-color: #f8f9fa;
     }
 
-    /* Sidebar Background */
+    /* Sidebar Background - Clean Hijau */
     .sidebar {
-        background: linear-gradient(180deg, var(--dark-green) 0%, var(--brown) 100%);
-        box-shadow: inset -3px 0 0 rgba(0, 0, 0, 0.1);
+        background: linear-gradient(180deg, #ffffff 0%, #e9e9e9 40%, #000000 100%);
+
+
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
     }
 
-    /* Sidebar Brand */
+    /* Sidebar Brand - Simple & Clean */
     .sidebar-brand {
-        background-color: var(--brown);
-        padding: 1.5rem 0;
-        border-bottom: 2px solid var(--tan);
+        background: #1a472a;
+        padding: 1.2rem 0;
+        border-bottom: 1px solid #4a7c59;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.75rem;
+        gap: 0.7rem;
     }
 
     .sidebar-brand-icon {
-        color: var(--tan);
-        font-size: 1.8rem;
+        color: #e8f5e8;
+        font-size: 1.5rem;
     }
 
     .sidebar-brand-text {
-        color: var(--tan);
-        font-weight: 700;
-        font-size: 1.4rem;
-        font-family: var(--font-heading);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1.5rem;
+        font-family: var(--font-body);
         margin: 0;
     }
 
     /* Sidebar Divider */
     .sidebar-divider {
-        border-color: rgba(207, 187, 153, 0.2);
+        border-color: rgba(255, 255, 255, 0.2);
+        margin: 0.5rem 1rem;
     }
 
     /* Sidebar Heading */
     .sidebar-heading {
-        padding: 1rem 1.5rem;
-        font-size: 0.8rem;
-        font-weight: 700;
+        padding: 0.7rem 1rem;
+        font-size: 0.7rem;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
-        color: var(--tan);
-        margin-top: 0.75rem;
+        letter-spacing: 1px;
+        color: #000 !important;
+        margin-top: 0.5rem;
     }
 
-    /* Nav Items */
+    /* Nav Items - Clean & Simple */
     .nav-item {
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.1rem;
     }
 
     .nav-link {
-        padding: 1rem 1.5rem !important;
-        color: rgba(255, 255, 255, 0.85) !important;
+        padding: 0.8rem 1rem !important;
+        color: #000 !important;
         font-weight: 500;
         font-family: var(--font-body);
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         border-left: 3px solid transparent;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.7rem;
     }
 
     .nav-link i {
-        width: 20px;
+        width: 18px;
         text-align: center;
-        color: rgba(207, 187, 153, 0.7);
-        transition: color 0.3s ease;
+        color: #000000 !important;
+        transition: color 0.2s ease;
     }
 
     .nav-link:hover {
-        background-color: rgba(207, 187, 153, 0.15);
-        border-left-color: var(--tan);
-        color: var(--tan) !important;
-        padding-left: 1.7rem !important;
+        background-color: rgba(0, 0, 0, 0.08);
+        border-left-color: #e8f5e8;
+        color: #000000 !important;
     }
 
     .nav-link:hover i {
-        color: var(--tan);
+        color: #000000 !important;
     }
 
     .nav-link.active {
-        background-color: rgba(207, 187, 153, 0.2);
-        border-left-color: var(--tan);
-        color: var(--tan) !important;
-        box-shadow: inset -3px 0 0 var(--tan);
+        background-color: rgba(0, 0, 0, 0.08);
+        border-left-color: #e8f5e8;
+        color: #000000 !important;
     }
 
     .nav-link.active i {
-        color: var(--tan);
+        color: # !important;
     }
 
+    /* Badge Counter */
     .badge-counter {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.6rem;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
         margin-left: auto;
         background: #dc3545;
-        border-radius: 50px;
+        border-radius: 10px;
+        color: white;
+        font-weight: 500;
+    }
+
+    /* Sidebar Toggle Button */
+    #sidebarToggle {
+        background: #f8f9fa;
+        color: #000000 ;
+        border: 1px solid #000000;
+    }
+
+    #sidebarToggle:hover {
+        background: #000000;
+        color: #ffffff;
     }
 
     /* ============================================ */
-    /* TOPBAR STYLING */
+    /* TOPBAR STYLING - CLEAN WHITE */
     /* ============================================ */
 
     .topbar {
-        background-color: var(--white);
-        border-bottom: 2px solid var(--tan);
-        box-shadow: 0 2px 8px rgba(76, 61, 25, 0.1);
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        padding: 0.5rem 0;
     }
 
     .topbar .nav-link {
-        padding: 0.75rem 1.5rem !important;
+        padding: 0.5rem 1rem !important;
         border: none !important;
         display: flex !important;
         align-items: center;
     }
 
-    .topbar .nav-link:hover {
-        background: transparent !important;
-        border: none !important;
-    }
-
     .topbar .text-gray-600 {
-        color: var(--text) !important;
+        color: #2d5a3d !important;
         font-weight: 500;
         font-family: var(--font-body);
+        font-size: 0.9rem;
     }
 
+    /* Profile Image */
     .img-profile {
-        width: 40px;
-        height: 40px;
-        border: 2px solid var(--tan);
+        width: 35px;
+        height: 35px;
+        border: 2px solid #4a7c59;
         object-fit: cover;
     }
 
-    /* Dropdown Menu */
+    /* Dropdown Menu - Clean White */
     .dropdown-menu {
-        box-shadow: 0 8px 25px rgba(76, 61, 25, 0.15);
-        border: 1px solid var(--tan);
-        border-radius: 12px;
-        padding: 0.5rem 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 0.3rem 0;
     }
 
     .dropdown-item {
-        color: var(--text);
+        color: #333333;
         font-family: var(--font-body);
-        font-size: 0.95rem;
-        padding: 0.75rem 1.5rem;
-        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+        transition: all 0.2s ease;
     }
 
     .dropdown-item:hover {
-        background-color: var(--cream);
-        color: var(--dark-green);
-        padding-left: 1.75rem;
+        background-color: #f8f9fa;
+        color: #2d5a3d;
     }
 
     .dropdown-item i {
-        color: var(--muted-text);
-        width: 18px;
+        color: #6c757d;
+        width: 16px;
         text-align: center;
         margin-right: 0.5rem;
     }
 
     .dropdown-divider {
-        border-color: var(--tan);
-        margin: 0.5rem 0;
+        border-color: #e9ecef;
+        margin: 0.3rem 0;
     }
 
     /* ============================================ */
-    /* SCROLL TO TOP BUTTON */
+    /* SCROLL TO TOP BUTTON - SIMPLE GREEN */
     /* ============================================ */
 
     .scroll-to-top {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, var(--dark-green), var(--muted-green));
-        color: var(--white);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 12px rgba(53, 64, 36, 0.2);
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-        text-decoration: none;
+        background: #4a7c59;
+        color: #ffffff;
+        border-radius: 6px;
+        transition: all 0.2s ease;
     }
 
     .scroll-to-top:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(53, 64, 36, 0.3);
+        background: #3d6b4f;
+        transform: translateY(-2px);
     }
 
     /* ============================================ */
-    /* FOOTER STYLING */
+    /* FOOTER STYLING - CLEAN */
     /* ============================================ */
 
     .sticky-footer {
-        background-color: var(--white);
-        border-top: 2px solid var(--tan);
-        padding: 1.5rem 0;
+        background-color: #ffffff;
+        border-top: 1px solid #e0e0e0;
+        padding: 0.8rem 0;
     }
 
     .copyright {
-        color: var(--muted-text);
-        font-size: 0.9rem;
-        font-weight: 500;
-        font-family: var(--font-body);
+        color: #6c757d;
+        font-size: 0.8rem;
+        font-weight: 400;
     }
 
     /* ============================================ */
-    /* MODAL STYLING */
+    /* MODAL STYLING - CLEAN GREEN */
     /* ============================================ */
 
     .modal-header {
-        background: linear-gradient(135deg, var(--tan) 0%, rgba(207, 187, 153, 0.8) 100%);
-        color: var(--brown);
-        border-bottom: 2px solid var(--brown);
-        padding: 1.25rem 1.5rem;
+        background: #4a7c59;
+        color: #ffffff;
+        border-bottom: 1px solid #3d6b4f;
+        padding: 1rem 1.2rem;
     }
 
     .modal-header .modal-title {
-        font-family: var(--font-heading);
+        font-family: var(--font-body);
         font-weight: 600;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .modal-header .close {
-        color: var(--brown);
-        opacity: 0.7;
-        transition: opacity 0.3s ease;
+        color: #ffffff;
+        opacity: 0.8;
+        transition: opacity 0.2s ease;
     }
 
     .modal-header .close:hover {
@@ -464,42 +467,40 @@ if (isAdmin()) {
     }
 
     .modal-body {
-        color: var(--text);
+        color: #333333;
         font-family: var(--font-body);
+        padding: 1.2rem;
     }
 
     .modal-footer {
-        background-color: var(--cream);
-        border-top: 1px solid var(--tan);
-        padding: 1rem 1.5rem;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+        padding: 0.8rem 1.2rem;
     }
 
     .modal-footer .btn-secondary {
-        background-color: var(--muted-text);
-        border-color: var(--muted-text);
-        color: var(--white);
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: #ffffff;
         font-weight: 500;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     .modal-footer .btn-secondary:hover {
-        background-color: var(--text);
-        border-color: var(--text);
-        transform: translateY(-2px);
+        background-color: #5a6268;
+        border-color: #545b62;
     }
 
     .modal-footer .btn-primary {
-        background: linear-gradient(135deg, var(--dark-green), var(--muted-green));
+        background: #4a7c59;
         border: none;
-        color: var(--white);
-        font-weight: 600;
-        transition: all 0.3s ease;
+        color: #ffffff;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
 
     .modal-footer .btn-primary:hover {
-        background: linear-gradient(135deg, var(--muted-green), var(--dark-green));
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(53, 64, 36, 0.3);
+        background: #3d6b4f;
     }
 
     /* ============================================ */
@@ -508,104 +509,164 @@ if (isAdmin()) {
 
     @media (max-width: 768px) {
         .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-        z-index: 1000;
-        overflow-y: auto;
-        }
-
-        .sidebar.show {
-        transform: translateX(0);
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar-backdrop {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        }
-
-        .sidebar-backdrop.show {
-        display: block;
+            background: #2d5a3d;
         }
 
         #sidebarToggleTop {
-        display: block !important;
-        background: var(--brown);
-        color: var(--cream);
-        border: none;
-        padding: 0.75rem 1rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
+            background: #4a7c59;
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         #sidebarToggleTop:hover {
-        background: var(--dark-green);
-        transform: scale(1.05);
+            background: #3d6b4f;
+        }
+        
+        .nav-link {
+            padding: 0.7rem 0.9rem !important;
+        }
+    }
+
+    /* ============================================ */
+    /* CONTENT AREA */
+    /* ============================================ */
+    #content {
+        padding: 0;
+    }
+    
+    .container-fluid {
+        padding: 0.8rem 1rem;
+    }
+    
+    #main-content {
+        min-height: calc(100vh - 180px);
+    }
+
+    /* ============================================ */
+    /* RESPONSIVE ADJUSTMENTS */
+    /* ============================================ */
+
+    @media (max-width: 768px) {
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        #sidebarToggleTop {
+            display: block !important;
+            background: var(--brown);
+            color: var(--cream);
+            border: none;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #sidebarToggleTop:hover {
+            background: var(--dark-green);
+            transform: scale(1.05);
         }
 
         #sidebarToggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: transparent;
-        color: var(--cream);
-        border: 2px solid var(--cream) !important;
-        cursor: pointer;
-        font-size: 1.2rem;
-        transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            color: var(--cream);
+            border: 2px solid var(--cream) !important;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
         #sidebarToggle:hover {
-        background: var(--cream);
-        color: var(--brown);
+            background: var(--cream);
+            color: var(--brown);
         }
 
         #sidebarToggle::before {
-        content: '\f00d';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
+            content: '\f00d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        
+        .container-fluid {
+            padding: 0.5rem 0.8rem;
+        }
+        
+        .topbar {
+            padding: 0.3rem 0;
+        }
+        
+        .topbar .text-gray-600 {
+            display: none;
         }
     }
 
     @media (max-width: 480px) {
         .sidebar-heading {
-        padding: 0.75rem 1.25rem;
-        font-size: 0.75rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.7rem;
         }
 
         .nav-link {
-        padding: 0.85rem 1.25rem !important;
+            padding: 0.7rem 1rem !important;
         }
 
         .sidebar-brand-text {
-        font-size: 1.1rem;
-        }
-
-        .topbar .text-gray-600 {
-        display: none;
+            font-size: 1rem;
         }
 
         .modal-header {
-        padding: 1rem 1.25rem;
+            padding: 0.8rem 1rem;
         }
 
         .modal-header .modal-title {
-        font-size: 1rem;
+            font-size: 1rem;
+        }
+        
+        .modal-body {
+            padding: 1rem;
+        }
+        
+        .modal-footer {
+            padding: 0.7rem 1rem;
         }
     }
     </style>
@@ -616,13 +677,13 @@ if (isAdmin()) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar accordion" id="accordionSidebar">
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo $base; ?>/dashboard/index.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-leaf"></i>
+                <div class="sidebar-brand-icon">
+                    <img src="<?php echo $base; ?>/uploads/Rancangan Logo.png" alt="Logo" style="height: 60px; width: auto;">
                 </div>
-                <div class="sidebar-brand-text mx-3">KJB</div>
+                <div class="sidebar-brand-text mx-3"><?php echo get_setting('navbar_site_name', 'KJB'); ?></div>
             </a>
 
             <hr class="sidebar-divider">
@@ -684,9 +745,16 @@ if (isAdmin()) {
                 </a>
             </li>
 
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Pengaturan Sistem
+            </div>
+
             <li class="nav-item">
-                <a class="nav-link <?php echo $current_page === 'settings' ? 'active' : ''; ?>" href="<?php echo $base; ?>/dashboard/index.php?page=settings">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link <?php echo $current_page === 'pengaturan' ? 'active' : ''; ?>" 
+                   href="<?php echo $base; ?>/dashboard/index.php?page=pengaturan">
+                    <i class="fas fa-fw fa-cogs"></i>
                     <span>Pengaturan Website</span>
                 </a>
             </li>
@@ -710,7 +778,7 @@ if (isAdmin()) {
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow">
 
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -773,8 +841,8 @@ if (isAdmin()) {
                                 include __DIR__ . '/pages/crud_pesan.php';
                             } elseif ($current_page === 'user' && isAdmin()) {
                                 include __DIR__ . '/pages/crud_user.php';
-                            } elseif ($current_page === 'settings' && isAdmin()) {
-                                include __DIR__ . '/pages/settings.php';
+                            } elseif ($current_page === 'pengaturan' && isAdmin()) {
+                                include __DIR__ . '/pages/crud_pengaturan.php';
                             } else {
                                 include __DIR__ . '/pages/dashboard.php';
                             }
@@ -790,7 +858,7 @@ if (isAdmin()) {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Hak Cipta &copy; 2025 Kampung Jalak Bali. Semua Hak Dilindungi.</span>
+                        <span><?php echo get_setting('footer_copyright', 'Hak Cipta &copy; 2025 Kampung Jalak Bali. Semua Hak Dilindungi.'); ?></span>
                     </div>
                 </div>
             </footer>
