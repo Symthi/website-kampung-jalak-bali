@@ -421,68 +421,85 @@ function isAdmin() {
       </div>
     </section>
 
-    <!-- Galeri Section -->
-    <section id="galeri" class="gallery-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title"><?php echo t('gallery_title'); ?></h2>
-          <p class="section-subtitle"><?php echo t('gallery_subtitle'); ?></p>
-        </div>
+<!-- Galeri Section -->
+<section id="galeri" class="gallery-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><?php echo t('gallery_title'); ?></h2>
+      <p class="section-subtitle"><?php echo t('gallery_subtitle'); ?></p>
+    </div>
 
-        <div class="gallery-grid">
-          <?php
-          // Pagination untuk galeri
-          $per_page_galeri = 5;
-          $page_galeri = isset($_GET['p_g']) ? max(1, (int)$_GET['p_g']) : 1;
-          $offset_galeri = ($page_galeri - 1) * $per_page_galeri;
-          
-          // Hitung total data galeri
-          $total_galeri_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM galeri");
-          $total_galeri = mysqli_fetch_assoc($total_galeri_q)['cnt'];
-          
-          // Query dengan pagination
-          $query_galeri = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT $per_page_galeri OFFSET $offset_galeri";
-          $result_galeri = mysqli_query($koneksi, $query_galeri);
-          $galeri_data = mysqli_fetch_all($result_galeri, MYSQLI_ASSOC);
-          
-          if (empty($galeri_data)): ?>
-            <p style="grid-column: 1 / -1; text-align: center; color: var(--muted-text);">
-              <?php echo t('no_gallery_images'); ?>
-            </p>
-          <?php else: ?>
-            <?php foreach ($galeri_data as $galeri): ?>
-            <div class="gallery-item">
-              <div class="image-container">
-                <img src="<?php echo $galeri['gambar'] ? public_url($galeri['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" alt="<?php echo $galeri['judul']; ?>" class="gallery-image" />
-                <div class="image-overlay">
-                  <div class="overlay-content">
-                    <h4 class="image-title"><?php echo $galeri['judul']; ?></h4>
-                  </div>
-                </div>
+    <div class="gallery-grid">
+      <?php
+      // Pagination untuk galeri
+      $per_page_galeri = 5;
+      $page_galeri = isset($_GET['p_g']) ? max(1, (int)$_GET['p_g']) : 1;
+      $offset_galeri = ($page_galeri - 1) * $per_page_galeri;
+      
+      // Hitung total data galeri
+      $total_galeri_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM galeri");
+      $total_galeri = mysqli_fetch_assoc($total_galeri_q)['cnt'];
+      
+      // Query dengan pagination
+      $query_galeri = "SELECT * FROM galeri ORDER BY tanggal_upload DESC LIMIT $per_page_galeri OFFSET $offset_galeri";
+      $result_galeri = mysqli_query($koneksi, $query_galeri);
+      $galeri_data = mysqli_fetch_all($result_galeri, MYSQLI_ASSOC);
+      
+      if (empty($galeri_data)): ?>
+        <p style="grid-column: 1 / -1; text-align: center; color: var(--muted-text);">
+          <?php echo t('no_gallery_images'); ?>
+        </p>
+      <?php else: ?>
+        <?php foreach ($galeri_data as $index => $galeri): ?>
+        <div class="gallery-item">
+          <div class="image-container">
+            <img src="<?php echo $galeri['gambar'] ? public_url($galeri['gambar']) : 'https://source.unsplash.com/random/600x400/?bali'; ?>" alt="<?php echo $galeri['judul']; ?>" class="gallery-image" />
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <h4 class="image-title"><?php echo $galeri['judul']; ?></h4>
+                <!-- Tombol Lihat Selengkapnya -->
+                <button class="view-more-btn" onclick="openLightbox(<?php echo $index; ?>)">
+                  <?php echo t('view_more'); ?>
+                  <i class="fas fa-expand"></i>
+                </button>
               </div>
             </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
+          </div>
         </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </div>
 
-        <?php 
-        // Tampilkan pagination untuk galeri jika ada lebih dari 1 halaman
-        $total_pages_g = (int)ceil($total_galeri / $per_page_galeri);
-        if ($total_pages_g > 1):
-        ?>
-        <div class="pagination">
-          <?php for ($p=1; $p<=$total_pages_g; $p++): ?>
-            <?php if ($p == $page_galeri): ?>
-              <span class="active"><?php echo $p; ?></span>
-            <?php else: ?>
-              <a href="?p_g=<?php echo $p; ?>#galeri"><?php echo $p; ?></a>
-            <?php endif; ?>
-          <?php endfor; ?>
-        </div>
+    <?php 
+    // Tampilkan pagination untuk galeri jika ada lebih dari 1 halaman
+    $total_pages_g = (int)ceil($total_galeri / $per_page_galeri);
+    if ($total_pages_g > 1):
+    ?>
+    <div class="pagination">
+      <?php for ($p=1; $p<=$total_pages_g; $p++): ?>
+        <?php if ($p == $page_galeri): ?>
+          <span class="active"><?php echo $p; ?></span>
+        <?php else: ?>
+          <a href="?p_g=<?php echo $p; ?>#galeri"><?php echo $p; ?></a>
         <?php endif; ?>
-      </div>
-    </section>
+      <?php endfor; ?>
+    </div>
+    <?php endif; ?>
 
+    </div>
+  </div>
+</section>
+
+<!-- Simple Lightbox Popup -->
+<div id="lightboxPopup" class="lightbox-popup">
+  <div class="popup-content">
+    <span class="popup-close" onclick="closeLightbox()">&times;</span>
+    <img id="popupImage" src="" alt="" class="popup-img">
+    <div class="popup-caption">
+      <h3 id="popupTitle"></h3>
+    </div>
+  </div>
+</div>
     <!-- Kontak Section -->
     <section id="kontak" class="contact-section">
       <div class="container">
@@ -648,6 +665,65 @@ function isAdmin() {
     }, 250);
   });
   </script>
+
+<!-- Simple Lightbox JavaScript -->
+<script>
+// Data gallery images
+let galleryImages = [];
+
+// Initialize gallery data
+function initGalleryData() {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  galleryImages = Array.from(galleryItems).map(item => {
+    const img = item.querySelector('.gallery-image');
+    const title = item.querySelector('.image-title').textContent;
+    return {
+      src: img.src,
+      title: title
+    };
+  });
+}
+
+// Open lightbox
+function openLightbox(index) {
+  const popup = document.getElementById('lightboxPopup');
+  const popupImage = document.getElementById('popupImage');
+  const popupTitle = document.getElementById('popupTitle');
+  
+  if (galleryImages[index]) {
+    popupImage.src = galleryImages[index].src;
+    popupTitle.textContent = galleryImages[index].title;
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// Close lightbox
+function closeLightbox() {
+  const popup = document.getElementById('lightboxPopup');
+  popup.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on ESC key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeLightbox();
+  }
+});
+
+// Close when clicking outside image
+document.getElementById('lightboxPopup').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeLightbox();
+  }
+});
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  initGalleryData();
+});
+</script>
   </body>
 </html>
 <?php 

@@ -135,6 +135,8 @@ function get_hardcoded_strings() {
             'gallery_title' => 'Galeri',
             'gallery_subtitle' => 'Momen-momen indah di Kampoeng Jalak Bali',
             'no_gallery_images' => 'Belum ada gambar di galeri',
+            'view_more' => 'Lihat Selengkapnya',
+            'view_full_gallery' => 'Lihat Galeri Lengkap',
             
             // ====== PRODUCTS SECTION ======
             'products_title' => 'Produk & Merchandise',
