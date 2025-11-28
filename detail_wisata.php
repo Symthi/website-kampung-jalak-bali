@@ -86,59 +86,58 @@ $currentPage = 'wisata';
     <section class="content-section bg-light">
       <div class="container">
         
-        <div class="wisata-detail">
-          
-          <!-- Breadcrumb -->
-          <div class="breadcrumb">
-            <a href="<?php echo $base; ?>/index.php" title="Home">
-              <i class="fas fa-home"></i> <?php echo t('home'); ?>
-            </a>
-            <span class="separator">/</span>
-            <a href="<?php echo $base; ?>/index.php#wisata" title="Wisata">
-              <i class="fas fa-map-marked-alt"></i> <?php echo t('tourism'); ?>
-            </a>
-            <span class="separator">/</span>
-            <span class="current" title="<?php echo htmlspecialchars($wisata['judul']); ?>">
-              <?php echo htmlspecialchars($wisata['judul']); ?>
-            </span>
-          </div>
+        <!-- Ganti bagian setelah breadcrumb dengan kode berikut -->
 
-          <!-- Main Content Card -->
-          <div class="detail-card">
-            
-            <!-- Hero Image -->
-            <div class="wj-wisata-hero">
-              <img 
-                src="<?php echo $wisata['gambar'] ? public_url($wisata['gambar']) : 'https://source.unsplash.com/random/900x400/?bali'; ?>" 
-                alt="<?php echo htmlspecialchars($wisata['judul']); ?>" 
-                class="wj-featured-image"
-                loading="lazy" />
-            </div>
-            
-            <!-- Wisata Info -->
-            <div class="wisata-info">
-              <h2 class="detail-title">
-                <i class="fas fa-map-pin"></i> <?php echo htmlspecialchars($wisata['judul']); ?>
-              </h2>
+        <div class="wisata-detail-new">
+  
+        <div class="breadcrumb-new">
+          <a href="<?php echo $base; ?>/index.php" title="Home">
+            <i class="fas fa-home"></i> <?php echo t('home'); ?>
+          </a>
+          <span class="separator">/</span>
+          <a href="<?php echo $base; ?>/index.php#wisata" title="Wisata">
+            <i class="fas fa-map-marked-alt"></i> <?php echo t('tourism'); ?>
+          </a>
+          <span class="separator">/</span>
+          <span class="current" title="<?php echo htmlspecialchars($wisata['judul']); ?>">
+            <?php echo htmlspecialchars($wisata['judul']); ?>
+          </span>
+        </div>
+
+        <div class="wisata-container">
+          
+          <div class="wisata-content">
+            <div>
+              <h1><?php echo htmlspecialchars($wisata['judul']); ?></h1>
               
-              <div class="wisata-meta">
-                <span class="duration">
-                  <i class="fas fa-clock"></i>
-                  <strong><?php echo t('duration'); ?>:</strong>
-                  <strong><?php echo ucfirst($wisata['waktu']); ?></strong> (<?php echo date('H:i', strtotime($wisata['jam'])); ?>)
-                </span>
-                <span class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <strong><?php echo t('location'); ?>:</strong>
-                  <?php echo get_setting('site_title', 'Kampoeng Jalak Bali'); ?>
-                </span>
-              </div>
-              
-              <div class="wisata-description">
+              <div class="wisata-description-new">
                 <?php echo nl2br(htmlspecialchars($wisata['deskripsi'])); ?>
               </div>
             </div>
+            
+            <div class="wisata-control">
+              <a href="<?php echo $base; ?>/index.php#kontak" class="wisata-btn">
+                <span class="location-icon"><i class="fas fa-map-location-dot"></i></span>
+                <span class="visit-text"><?php echo t('visit_us'); ?></span>
+              </a>
+            </div>
           </div>
+          
+          <div class="wisata-image-container">
+            <img 
+              src="<?php echo $wisata['gambar'] ? public_url($wisata['gambar']) : 'https://source.unsplash.com/random/900x600/?bali'; ?>" 
+              alt="<?php echo htmlspecialchars($wisata['judul']); ?>" 
+              loading="lazy" />
+            
+            <div class="wisata-info-overlay">
+              <h2>Informasi Wisata</h2>
+              <ul>
+                <li><strong>Waktu:</strong> <span><?php echo ucfirst($wisata['waktu']); ?></span></li>
+                <li><strong>Jam:</strong> <span><?php echo date('H:i', strtotime($wisata['jam'])); ?></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
           <!-- Comments Section -->
           <div class="comments-section" id="comments">

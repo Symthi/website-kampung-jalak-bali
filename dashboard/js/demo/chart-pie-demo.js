@@ -1,15 +1,15 @@
 // Pie Chart Example
 const ctxPie = document.getElementById("myPieChart");
 if (ctxPie) {
-  // 7 warna unik sesuai theme - pastikan urutan konsisten
+  // 7 warna biru sesuai theme - pastikan urutan konsisten
   const chartColors = [
-    { bg: "rgba(76, 61, 25, 0.85)", hover: "rgba(76, 61, 25, 1)", label: "Brown" }, // Wisata
-    { bg: "rgba(53, 64, 36, 0.85)", hover: "rgba(53, 64, 36, 1)", label: "Dark Green" }, // Komentar
-    { bg: "rgba(207, 187, 153, 0.85)", hover: "rgba(207, 187, 153, 1)", label: "Tan" }, // Pesan
-    { bg: "rgba(229, 215, 196, 0.85)", hover: "rgba(229, 215, 196, 1)", label: "Cream" }, // User
-    { bg: "rgba(212, 165, 116, 0.85)", hover: "rgba(212, 165, 116, 1)", label: "Med Tan" }, // Produk
-    { bg: "rgba(139, 119, 101, 0.85)", hover: "rgba(139, 119, 101, 1)", label: "Dark Tan" }, // Informasi
-    { bg: "rgba(101, 84, 66, 0.85)", hover: "rgba(101, 84, 66, 1)", label: "D Brown" }, // Galeri
+    { bg: "rgba(1, 134, 171, 0.85)", hover: "rgba(1, 134, 171, 1)", label: "Teal-Blue" }, // Wisata
+    { bg: "rgba(2, 69, 122, 0.85)", hover: "rgba(2, 69, 122, 1)", label: "Navy-Blue" }, // Komentar
+    { bg: "rgba(0, 27, 72, 0.85)", hover: "rgba(0, 27, 72, 1)", label: "Dark-Blue" }, // Pesan
+    { bg: "rgba(126, 200, 217, 0.85)", hover: "rgba(126, 200, 217, 1)", label: "Light-Blue" }, // User
+    { bg: "rgba(214, 232, 238, 0.85)", hover: "rgba(214, 232, 238, 1)", label: "Pale-Blue" }, // Produk
+    { bg: "rgba(231, 243, 255, 0.85)", hover: "rgba(231, 243, 255, 1)", label: "Very-Light-Blue" }, // Informasi
+    { bg: "rgba(74, 143, 173, 0.85)", hover: "rgba(74, 143, 173, 1)", label: "Medium-Blue" }, // Galeri
   ];
 
   let pieLabels = [];
@@ -78,7 +78,7 @@ if (ctxPie) {
             padding: 8,
             usePointStyle: true,
             pointStyle: "circle",
-            color: "#2d2a23",
+            color: "#001b48",
             boxWidth: 8,
             generateLabels: function (chart) {
               const data = chart.data;
@@ -95,7 +95,7 @@ if (ctxPie) {
           },
         },
         tooltip: {
-          backgroundColor: "rgba(76, 61, 25, 0.95)",
+          backgroundColor: "rgba(0, 27, 72, 0.95)",
           titleFont: {
             family: "'Playfair Display', serif",
             size: 14,
@@ -107,7 +107,7 @@ if (ctxPie) {
           },
           titleColor: "#ffffff",
           bodyColor: "#ffffff",
-          borderColor: "#cfbb99",
+          borderColor: "#0186ab",
           borderWidth: 1,
           padding: 12,
           displayColors: true,

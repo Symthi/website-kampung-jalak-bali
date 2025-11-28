@@ -1995,6 +1995,75 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
+/* Enhanced Map Full Width Section */
+.map-wrapper-full {
+  width: 100%;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 4rem calc(50vw - 50%);
+  background: linear-gradient(135deg, rgba(136, 144, 99, 0.1) 0%, rgba(207, 187, 153, 0.05) 100%);
+  margin-top: 4rem;
+}
+
+.map-iframe-full {
+  width: 100%;
+  height: 500px;
+  border: 0;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(76, 61, 25, 0.15), 0 10px 30px rgba(76, 61, 25, 0.1);
+  transition: all 0.4s ease;
+  display: block;
+}
+
+.map-iframe-full:hover {
+  box-shadow: 0 30px 70px rgba(76, 61, 25, 0.25), 0 15px 40px rgba(76, 61, 25, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Cloudflare Turnstile Styling */
+.turnstile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fcfaf6 0%, #fffaf5 100%);
+  border: 1px solid rgba(207, 187, 153, 0.2);
+}
+
+.cf-turnstile {
+  transform: scale(1);
+  transform-origin: center;
+}
+
+/* Same Height for Contact Cards */
+.contact-info,
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-info > div:first-child,
+.contact-info .social-links {
+  flex: 1;
+}
+
+.contact-form .form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Enhanced Contact Grid with equal heights */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+}
+
 /* Floating decorative elements */
 .contact-section::after {
   content: "";
@@ -2028,6 +2097,10 @@ nav a:hover {
   .contact-info,
   .contact-form {
     padding: 2.5rem;
+  }
+
+  .map-iframe-full {
+    height: 450px;
   }
 }
 
@@ -2071,6 +2144,15 @@ nav a:hover {
 
   .map-iframe {
     height: 350px;
+  }
+
+  .map-wrapper-full {
+    padding: 2.5rem calc(50vw - 50%);
+    margin-top: 3rem;
+  }
+
+  .map-iframe-full {
+    height: 400px;
   }
 }
 
@@ -2127,6 +2209,15 @@ nav a:hover {
   }
 
   .map-iframe {
+    height: 300px;
+  }
+
+  .map-wrapper-full {
+    padding: 2rem calc(50vw - 50%);
+    margin-top: 2rem;
+  }
+
+  .map-iframe-full {
     height: 300px;
   }
 

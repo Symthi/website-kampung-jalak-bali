@@ -30,7 +30,7 @@ $pageTitle = t('products_title') . ' | ' . get_setting('site_title', 'Kampoeng J
 $currentPage = 'produk';
 
 // Ambil data produk dengan pagination
-$per_page = 6;
+$per_page = 3;
 $page = isset($_GET['page_produk']) ? max(1, (int)$_GET['page_produk']) : 1;
 $offset = ($page - 1) * $per_page;
 $total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM produk");

@@ -8,13 +8,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --brown: #4c3d19;
-            --dark-green: #354024;
-            --muted-green: #889063;
-            --tan: #cfbb99;
-            --cream: #e5d7c4;
+            --brown: #0186ab;
+            --dark-green: #001b48;
+            --muted-green: #02457a;
+            --tan: #7ec8d9;
+            --cream: #d6e8ee;
             --text: #2d2a23;
-            --muted-text: #6b6458;
+            --muted-text: #001b48;
             --white: #ffffff;
             --font-heading: "Playfair Display", serif;
             --font-body: "Poppins", sans-serif;
@@ -66,7 +66,7 @@
             background: var(--white);
             border-radius: 12px;
             padding: 1.2rem;
-            box-shadow: 0 4px 10px rgba(76, 61, 25, 0.08);
+            box-shadow: 0 4px 10px rgba(0, 27, 72, 0.08);
             border-left: 4px solid var(--dark-green);
             transition: all 0.3s ease;
             height: 100%;
@@ -77,7 +77,7 @@
 
         .dashboard-stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(76, 61, 25, 0.12);
+            box-shadow: 0 8px 15px rgba(0, 27, 72, 0.12);
             border-left-color: var(--tan);
         }
 
@@ -94,7 +94,7 @@
         }
 
         .dashboard-stat-card.user {
-            border-left-color: #889063;
+            border-left-color: var(--muted-green);
         }
 
         .dashboard-stat-card.produk {
@@ -122,7 +122,7 @@
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 1rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -131,7 +131,7 @@
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: 700;
             color: var(--dark-green);
             font-family: var(--font-heading);
@@ -203,15 +203,15 @@
             background: var(--white);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(76, 61, 25, 0.08);
+            box-shadow: 0 4px 10px rgba(0, 27, 72, 0.08);
             transition: all 0.3s ease;
-            border: 1px solid rgba(207, 187, 153, 0.15);
+            border: 1px solid rgba(214, 232, 238, 0.15);
             margin-bottom: 1.5rem;
             height: 100%;
         }
 
         .dashboard-chart-card:hover {
-            box-shadow: 0 8px 15px rgba(76, 61, 25, 0.12);
+            box-shadow: 0 8px 15px rgba(0, 27, 72, 0.12);
         }
 
         .chart-header {
@@ -612,11 +612,17 @@
                     datasets: [{
                         label: isAdminUser ? 'Total Aktivitas' : 'Komentar Saya',
                         data: earningsData,
-                        backgroundColor: 'rgba(207, 187, 153, 0.2)',
-                        borderColor: 'rgba(76, 61, 25, 1)',
-                        borderWidth: 2,
+                        backgroundColor: 'rgba(1, 134, 171, 0.85)',
+                        borderColor: '#001b48',
+                        borderWidth: 2.5,
                         tension: 0.4,
-                        fill: true
+                        fill: true,
+                        pointBackgroundColor: '#001b48',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        pointHoverBackgroundColor: '#0186ab'
                     }]
                 },
                 options: {
@@ -648,13 +654,13 @@
             const pieCtx = document.getElementById('myPieChart').getContext('2d');
             
             const colors = [
-                'rgba(76, 61, 25, 0.8)',    // brown
-                'rgba(53, 64, 36, 0.8)',    // dark-green
-                'rgba(136, 144, 99, 0.8)',  // muted-green
-                'rgba(207, 187, 153, 0.8)', // tan
-                'rgba(229, 215, 196, 0.8)', // cream
-                'rgba(107, 100, 88, 0.8)',  // muted-text
-                'rgba(45, 42, 35, 0.8)'     // text
+                '#001b48',      // Navy-blue (dark-green)
+                '#0186ab',      // Teal-blue (muted-green)
+                '#02457a',      // Medium-blue (brown)
+                '#7ec8d9',      // Light-blue (tan)
+                '#d6e8ee',      // Pale-blue (cream)
+                '#e7f3ff',      // Very light blue (light-green)
+                '#4a8fad'       // Additional blue shade
             ];
 
             const pieChart = new Chart(pieCtx, {

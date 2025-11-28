@@ -30,7 +30,7 @@ $pageTitle = t('information_title') . ' | ' . get_setting('site_title', 'Kampoen
 $currentPage = 'informasi';
 
 // Ambil data informasi dengan pagination
-$per_page = 4;
+$per_page = 1;
 $page = isset($_GET['page_info']) ? max(1, (int)$_GET['page_info']) : 1;
 $offset = ($page - 1) * $per_page;
 $total_q = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM informasi");
@@ -60,27 +60,32 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
           <p class="section-subtitle"><?php echo t('information_subtitle'); ?></p>
         </div>
 
-        <div class="info-grid">
+        <!-- Ganti bagian info-grid dengan ini -->
+        <div class="info-grid-new">
           <?php if (count($informasi_data) > 0): ?>
             <?php foreach ($informasi_data as $informasi): ?>
-            <div class="info-card">
-              <div class="info-image">
-                <?php if ($informasi['gambar']): ?>
-                <img src="<?php echo $informasi['gambar'] ? public_url($informasi['gambar']) : ''; ?>" 
-                     alt="<?php echo $informasi['judul']; ?>"
-                     onerror="this.src='https://source.unsplash.com/random/800x400/?article,news'">
-                <?php endif; ?>
+            <div class="info-wrap animate pop">
+              <div class="info-overlay">
+                <div class="info-overlay-content animate slide-left delay-2">
+                  <div class="info-category-new animate slide-left delay-3">
+                    <i class="fas fa-tag"></i> <?php echo t($informasi['kategori']); ?>
+                  </div>
+                  <h1 class="info-title-new animate slide-left delay-4"><?php echo $informasi['judul']; ?></h1>
+                  <div class="info-date-new animate slide-left delay-5">
+                    <i class="fas fa-calendar-alt"></i> <?php echo date('d F Y', strtotime($informasi['tanggal_dibuat'])); ?>
+                  </div>
+                </div>
+                <div class="info-image-content animate slide delay-5" 
+                    style="background-image: url('<?php echo $informasi['gambar'] ? public_url($informasi['gambar']) : 'https://source.unsplash.com/random/800x600/?article,news'; ?>')">
+                </div>
+                <div class="info-dots animate">
+                  <div class="info-dot animate slide-up delay-1"></div>
+                  <div class="info-dot animate slide-up delay-2"></div>
+                  <div class="info-dot animate slide-up delay-3"></div>
+                </div>
               </div>
-              
-              <div class="info-content">
-                <div class="info-category">
-                  <i class="fas fa-tag"></i> <?php echo t($informasi['kategori']); ?>
-                </div>
-                <h3><?php echo $informasi['judul']; ?></h3>
-                <div class="info-date">
-                  <i class="fas fa-calendar-alt"></i> <?php echo date('d F Y', strtotime($informasi['tanggal_dibuat'])); ?>
-                </div>
-                <div class="info-text">
+              <div class="info-text">
+                <div class="info-content-new">
                   <?php echo nl2br($informasi['isi']); ?>
                 </div>
               </div>
@@ -88,19 +93,33 @@ $informasi_data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <?php endforeach; ?>
             
             <?php $total_pages = (int)ceil($total_informasi / $per_page); if ($total_pages > 1): ?>
-            <div class="pagination">
-              <?php for ($p=1; $p<=$total_pages; $p++): ?>
-                <?php if ($p == $page): ?>
-                  <span class="active"><?php echo $p; ?></span>
-                <?php else: ?>
-                  <a href="?page_info=<?php echo $p; ?>"><?php echo $p; ?></a>
-                <?php endif; ?>
-              <?php endfor; ?>
+            <div class="pagination-new">
+              <?php if ($page > 1): ?>
+                <a href="?page_info=<?php echo ($page - 1); ?>" class="page-nav" title="Previous">
+                  <i class="fas fa-chevron-left"></i> Prev
+                </a>
+              <?php endif; ?>
+
+              <div class="page-numbers">
+                <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+                  <?php if ($p == $page): ?>
+                    <span class="active"><?php echo $p; ?></span>
+                  <?php else: ?>
+                    <a href="?page_info=<?php echo $p; ?>"><?php echo $p; ?></a>
+                  <?php endif; ?>
+                <?php endfor; ?>
+              </div>
+
+              <?php if ($page < $total_pages): ?>
+                <a href="?page_info=<?php echo ($page + 1); ?>" class="page-nav" title="Next">
+                  Next <i class="fas fa-chevron-right"></i>
+                </a>
+              <?php endif; ?>
             </div>
             <?php endif; ?>
             
           <?php else: ?>
-            <div class="empty-state">
+            <div class="empty-state-new">
               <i class="fas fa-info-circle"></i>
               <p><?php echo t('no_information'); ?></p>
             </div>

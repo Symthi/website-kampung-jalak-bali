@@ -204,13 +204,13 @@ if (isAdmin()) {
 
     <style>
     :root {
-        --brown: #4c3d19;
-        --dark-green: #354024;
-        --muted-green: #889063;
-        --tan: #cfbb99;
-        --cream: #e5d7c4;
+        --brown: #0186ab;
+        --dark-green: #001b48;
+        --muted-green: #02457a;
+        --tan: #7ec8d9;
+        --cream: #d6e8ee;
         --text: #2d2a23;
-        --muted-text: #6b6458;
+        --muted-text: #001b48;
         --white: #ffffff;
         --font-heading: "Playfair Display", serif;
         --font-body: "Poppins", sans-serif;
@@ -226,7 +226,7 @@ if (isAdmin()) {
 
     /* Sidebar Background - Clean Hijau */
     .sidebar {
-        background: linear-gradient(180deg, #ffffff 0%, #e9e9e9 40%, #000000 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #dce6f2 35%, #4c6785 65%, #001b48 100%);
 
 
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
@@ -234,9 +234,9 @@ if (isAdmin()) {
 
     /* Sidebar Brand - Simple & Clean */
     .sidebar-brand {
-        background: #1a472a;
+        background: #001b48;
         padding: 1.2rem 0;
-        border-bottom: 1px solid #4a7c59;
+        border-bottom: 1px solid #0186ab;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -360,7 +360,7 @@ if (isAdmin()) {
     }
 
     .topbar .text-gray-600 {
-        color: #2d5a3d !important;
+        color: #001b48 !important;
         font-weight: 500;
         font-family: var(--font-body);
         font-size: 0.9rem;
@@ -370,7 +370,7 @@ if (isAdmin()) {
     .img-profile {
         width: 35px;
         height: 35px;
-        border: 2px solid #4a7c59;
+        border: 2px solid #001b48;
         object-fit: cover;
     }
 
@@ -392,7 +392,7 @@ if (isAdmin()) {
 
     .dropdown-item:hover {
         background-color: #f8f9fa;
-        color: #2d5a3d;
+        color: #001b48;
     }
 
     .dropdown-item i {
@@ -412,14 +412,14 @@ if (isAdmin()) {
     /* ============================================ */
 
     .scroll-to-top {
-        background: #4a7c59;
+        background: #001b48;
         color: #ffffff;
         border-radius: 6px;
         transition: all 0.2s ease;
     }
 
     .scroll-to-top:hover {
-        background: #3d6b4f;
+        background: #02457a;
         transform: translateY(-2px);
     }
 
@@ -444,9 +444,9 @@ if (isAdmin()) {
     /* ============================================ */
 
     .modal-header {
-        background: #4a7c59;
+        background: #001b48;
         color: #ffffff;
-        border-bottom: 1px solid #3d6b4f;
+        border-bottom: 1px solid #0186ab;
         padding: 1rem 1.2rem;
     }
 
@@ -492,7 +492,7 @@ if (isAdmin()) {
     }
 
     .modal-footer .btn-primary {
-        background: #4a7c59;
+        background: #001b48;
         border: none;
         color: #ffffff;
         font-weight: 500;
@@ -500,7 +500,7 @@ if (isAdmin()) {
     }
 
     .modal-footer .btn-primary:hover {
-        background: #3d6b4f;
+        background: #0186ab;
     }
 
     /* ============================================ */
