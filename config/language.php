@@ -94,9 +94,15 @@ function get_hardcoded_strings() {
             // ====== ABOUT SECTION ======
             'about_title' => 'Tentang Kampoeng Jalak Bali',
             'about_description' => 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.',
-            'history' => 'Sejarah dan Latar Belakang',
+            'history' => 'Sejarah',
             'history_paragraph1' => 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.',
             'history_paragraph2' => 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.',
+
+            // ====== BACKGROUND SECTION ======
+            'background' => 'Latar Belakang',
+            'background_paragraph1' => 'Latar belakang Kampoeng Jalak Bali merujuk pada informasi dasar dan konteks yang memberi pemahaman menyeluruh tentang kampung: kondisi geografis, potensi sumber daya, nilai budaya, dan dinamika sosial yang membentuk identitas dan arah pengembangannya.',
+            'background_paragraph2' => 'Sebagai pusat konservasi dan edukasi, kampung ini tumbuh melalui kolaborasi masyarakat adat, pemerintah, dan lembaga swadaya, mendorong ekonomi berbasis ekowisata sekaligus menjaga kelestarian lingkungan dan kearifan lokal.',
+
             'vision' => 'Visi',
             'mission' => 'Misi',
             'vision_text' => 'Mewujudkan desa konservasi yang harmonis antara manusia, alam, dan budaya melalui pelestarian Jalak Bali sebagai warisan satwa endemik Pulau Bali.',
@@ -278,6 +284,12 @@ function get_hardcoded_strings() {
             'history' => 'History and Background',
             'history_paragraph1' => 'The conservation program began in April 2024 by the Friends of Nature, People and Forests (FNPF) foundation, releasing 60 Bali Starlings. The Tengkudak Village location was selected after habitat studies by academics from Udayana University and is strongly supported by the local community culture.',
             'history_paragraph2' => 'The Tingkihkerep customary community has long protected wildlife through traditional regulations (Awig-Awig and Perarem) that prohibit hunting, grounded in the belief of the presence of the "Pelingsih Wewalungan" as a guardian spirit. This makes Kampoeng Jalak Bali a successful example of community-based conservation and was officially inaugurated by the Regent of Tabanan in June 2024.',
+
+            // ====== BACKGROUND SECTION ======
+            'background' => 'Background',
+            'background_paragraph1' => 'The background of Kampoeng Jalak Bali refers to foundational information and context that provide a comprehensive understanding of the village: its geographical setting, resource potentials, cultural values, and social dynamics that shape its identity and development direction.',
+            'background_paragraph2' => 'As a conservation and education hub, the village grows through collaborations among customary communities, government, and NGOs, promoting an ecotourism-based economy while preserving the environment and local wisdom.',
+
             'vision' => 'Vision',
             'mission' => 'Mission',
             'vision_text' => 'To realize a conservation village that harmonizes humans, nature, and culture through the preservation of Bali Starling as the endemic wildlife heritage of Bali Island.',

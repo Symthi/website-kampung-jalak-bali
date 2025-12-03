@@ -4,13 +4,55 @@
 // Proses form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['update_pengaturan'])) {
-        foreach ($_POST['pengaturan'] as $kunci => $nilai) {
-            $query = "UPDATE pengaturan SET nilai = ? WHERE kunci = ?";
-            $stmt = mysqli_prepare($koneksi, $query);
-            mysqli_stmt_bind_param($stmt, "ss", $nilai, $kunci);
-            mysqli_stmt_execute($stmt);
+        // First: handle file uploads for image keys
+        $image_keys = ['logo_1','logo_2','logo_3','logo_4','logo_5','background_image'];
+        $upload_errors = [];
+
+        foreach ($image_keys as $img_key) {
+            if (isset($_FILES[$img_key]) && isset($_FILES[$img_key]['name']) && $_FILES[$img_key]['error'] !== UPLOAD_ERR_NO_FILE) {
+                $upload_result = handle_file_upload($_FILES[$img_key], 'uploads');
+
+                if (is_array($upload_result) && isset($upload_result['errors'])) {
+                    $upload_errors = array_merge($upload_errors, $upload_result['errors']);
+                } else {
+                    // Successful upload: build path and delete old file if exists
+                    $new_path = 'uploads/' . $upload_result;
+
+                    // Get old value from database
+                    $old_q = "SELECT nilai FROM pengaturan WHERE kunci = ? LIMIT 1";
+                    $st = mysqli_prepare($koneksi, $old_q);
+                    mysqli_stmt_bind_param($st, "s", $img_key);
+                    mysqli_stmt_execute($st);
+                    $res_old = mysqli_stmt_get_result($st);
+                    if ($row_old = mysqli_fetch_assoc($res_old)) {
+                        $old_val = $row_old['nilai'];
+                        if (!empty($old_val) && file_exists($old_val)) {
+                            @unlink($old_val);
+                        }
+                    }
+
+                    // Put new path into POST pengaturan so the existing update loop will save it
+                    $_POST['pengaturan'][$img_key] = $new_path;
+                }
+            }
         }
-        $success_msg = t('settings_updated');
+
+        // Now update all posted pengaturan values
+        if (isset($_POST['pengaturan']) && is_array($_POST['pengaturan'])) {
+            foreach ($_POST['pengaturan'] as $kunci => $nilai) {
+                $query = "UPDATE pengaturan SET nilai = ? WHERE kunci = ?";
+                $stmt = mysqli_prepare($koneksi, $query);
+                mysqli_stmt_bind_param($stmt, "ss", $nilai, $kunci);
+                mysqli_stmt_execute($stmt);
+            }
+        }
+
+        // Prepare success or error message
+        if (!empty($upload_errors)) {
+            $success_msg = implode('<br>', array_map('htmlspecialchars', $upload_errors));
+        } else {
+            $success_msg = t('settings_updated');
+        }
     }
     
     if (isset($_POST['update_bahasa'])) {

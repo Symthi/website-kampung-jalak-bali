@@ -22,6 +22,18 @@ function public_url($path) {
   return $base . '/' . ltrim($path, '/');
 }
 
+// Create mitra table if doesn't exist
+$create_mitra = "CREATE TABLE IF NOT EXISTS mitra (
+    id_mitra INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255) NOT NULL,
+    gambar VARCHAR(500) NOT NULL,
+    link_partner VARCHAR(500),
+    urutan INT DEFAULT 0,
+    aktif TINYINT DEFAULT 1,
+    tanggal_ditambahkan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+mysqli_query($koneksi, $create_mitra);
+
 // Ambil data wisata dari database dengan pagination (section wisata)
 $per_page_wisata = 3;
 $page_wisata = isset($_GET['p_w']) ? max(1, (int)$_GET['p_w']) : 1;
@@ -31,6 +43,18 @@ $total_wisata_home = mysqli_fetch_assoc($total_wisata_q)['cnt'];
 $query_wisata = "SELECT * FROM wisata ORDER BY tanggal_ditambahkan DESC LIMIT $per_page_wisata OFFSET $offset_wisata";
 $result_wisata = mysqli_query($koneksi, $query_wisata);
 $wisata_data = mysqli_fetch_all($result_wisata, MYSQLI_ASSOC);
+
+// Ambil data mitra dari database
+$query_mitra = "SELECT * FROM mitra WHERE aktif = 1 ORDER BY urutan ASC, tanggal_ditambahkan DESC";
+$result_mitra = mysqli_query($koneksi, $query_mitra);
+$mitra_data = mysqli_fetch_all($result_mitra, MYSQLI_ASSOC);
+
+// Ambil 5 logo dari database
+$logo_1 = get_setting('logo_1', '');
+$logo_2 = get_setting('logo_2', '');
+$logo_3 = get_setting('logo_3', '');
+$logo_4 = get_setting('logo_4', '');
+$logo_5 = get_setting('logo_5', '');
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -192,6 +216,9 @@ function isAdmin() {
             <i class="fas fa-history"></i>
             <?php echo t('history'); ?>
           </button>
+          <button class="tab-btn-slide" data-tab="background">
+            <i class="fas fa-scroll"></i>
+            <?php echo t('background'); ?>
           <button class="tab-btn-slide" data-tab="vision-mission">
             <i class="fas fa-bullseye"></i>
             <?php echo t('vision'); ?> & <?php echo t('mission'); ?>
@@ -222,6 +249,30 @@ function isAdmin() {
             <h2 class="text-title"><i class="fas fa-landmark"></i> <?php echo t('history'); ?></h2>
             <p class="text-paragraph"><?php echo t('history_paragraph1'); ?></p>
             <p class="text-paragraph"><?php echo t('history_paragraph2'); ?></p>
+          </div>
+        </div>
+
+        <!-- Background Card (Hidden by default) -->
+        <div class="card-slide-container animate pop" id="background-card" style="display: none;">
+          <div class="overlay-slide">
+            <div class="overlay-content-slide animate slide-left delay-2">
+              <h1 class="overlay-title animate slide-left delay-4"><?php echo t('background'); ?></h1>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo get_setting('background_subtitle', 'Konservasi Jalak Bali berlandaskan Tri Hita Karana menjadi fondasi pelestarian budaya, lingkungan, dan ekonomi masyarakat.'); ?></p>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo get_setting('background_tagline', 'landasan Filosofi'); ?></p>
+            </div>
+            <?php $bg_image = get_setting('background_image', 'uploads/background-image.jpeg'); ?>
+            <div class="image-content-slide animate slide delay-5" 
+                style="background-image: url('<?php echo public_url($bg_image); ?>')"></div>
+            <div class="dots-slide animate">
+              <div class="dot-slide animate slide-up delay-6"></div>
+              <div class="dot-slide animate slide-up delay-7"></div>
+              <div class="dot-slide animate slide-up delay-8"></div>
+            </div>
+          </div>
+          <div class="text-content-slide">
+            <h2 class="text-title"><i class="fas fa-scroll"></i> <?php echo t('background'); ?></h2>
+            <p class="text-paragraph"><?php echo get_setting('background_paragraph1', t('background_paragraph1')); ?></p>
+            <p class="text-paragraph"><?php echo get_setting('background_paragraph2', t('background_paragraph2')); ?></p>
           </div>
         </div>
 
@@ -409,6 +460,7 @@ function isAdmin() {
       const tabButtons = document.querySelectorAll('.tab-btn-slide');
       const cards = {
         'history': document.getElementById('history-card'),
+        'background': document.getElementById('background-card'),
         'vision-mission': document.getElementById('vision-mission-card'),
         'structure': document.getElementById('structure-card')
       };
@@ -522,6 +574,36 @@ function isAdmin() {
       </div>
     </section>
 
+    <!-- Mitra/Partners Section -->
+    <section id="mitra" class="partners-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title"></i> Mitra Kami</h2>
+          <p class="section-subtitle">Dukungan dari Pemerintahan dan Yayasan</p>
+        </div>
+        <div class="partners-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; justify-items: center; align-items: center;">
+          <?php if (!empty($mitra_data)): ?>
+            <?php foreach ($mitra_data as $mitra): ?>
+              <div class="partners-card" style="width: 100%; max-width: 200px; display: flex; align-items: center; justify-content: center;">
+                <a href="<?php echo !empty($mitra['link_partner']) ? htmlspecialchars($mitra['link_partner']) : '#'; ?>" 
+                   <?php echo !empty($mitra['link_partner']) ? 'target="_blank" rel="noopener"' : ''; ?>
+                   style="display: block; width: 100%; height: 100%;">
+                  <img src="<?php echo public_url($mitra['gambar']); ?>" 
+                       alt="<?php echo htmlspecialchars($mitra['nama']); ?>" 
+                       style="width: 100%; height: auto; object-fit: contain; padding: 15px; max-height: 120px;" />
+                </a>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--muted-text); padding: 40px;">
+              <i class="fas fa-handshake" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+              <p>Belum ada data mitra yang tersedia</p>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </section>
+
     <!-- Galeri Section -->
     <section id="galeri" class="gallery-section-new">
       <div class="container">
@@ -620,38 +702,45 @@ function isAdmin() {
           <div>
             <h3 class="contact-title"><?php echo t('contact_info'); ?></h3>
             <div class="contact-list">
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="contact-content">
-                  <h4 class="item-title"><?php echo t('address'); ?></h4>
-                  <p class="item-text"><?php echo get_setting('address', 'Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali'); ?></p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-phone"></i>
-                </div>
-                <div class="contact-content">
-                  <h4 class="item-title"><?php echo t('phone'); ?></h4>
-                  <p class="item-text"><?php echo get_setting('contact_person', 'I Wayan Yudi Artana'); ?> (<?php echo get_setting('contact_phone', '083862519604'); ?>)</p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <div class="contact-content">
-                  <h4 class="item-title"><?php echo t('operational_hours'); ?></h4>
-                  <p class="item-text"><?php echo t('everyday'); ?>: 08:00 - 17:00 WITA</p>
-                  <p class="item-text" style="margin-top: 0.3rem; font-size: 0.85rem; color: var(--teal-blue);">
-                    <i class="fas fa-info-circle"></i> <?php echo t('open_daily'); ?>
-                  </p>
-                </div>
-              </div>
+            <div class="contact-item">
+            <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-content">
+            <h4 class="item-title"><?php echo t('address'); ?></h4>
+            <p class="item-text"><?php echo get_setting('address', 'Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali'); ?></p>
+            </div>
+            </div>
+            
+            <div class="contact-item">
+            <div class="contact-icon">
+            <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="contact-content">
+            <h4 class="item-title"><?php echo t('phone'); ?></h4>
+            <?php $wa = preg_replace('/\D+/', '', get_setting('contact_phone', '083862519604')); ?>
+            <p class="item-text">
+            <?php echo get_setting('contact_person', 'I Wayan Yudi Artana'); ?> (<?php echo get_setting('contact_phone', '083862519604'); ?>)
+            <br>
+            <a class="contact-whatsapp" href="https://wa.me/<?php echo (strpos($wa,'62')===0?$wa:'62'.$wa); ?>" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            </p>
+            </div>
+            </div>
+            
+            <div class="contact-item">
+            <div class="contact-icon">
+            <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-content">
+            <h4 class="item-title"><?php echo t('operational_hours'); ?></h4>
+            <p class="item-text"><?php echo t('everyday'); ?>: 08:00 - 17:00 WITA</p>
+            <p class="item-text" style="margin-top: 0.3rem; font-size: 0.85rem; color: var(--teal-blue);">
+            <i class="fas fa-info-circle"></i> <?php echo t('open_daily'); ?>
+            </p>
+            </div>
+            </div>
             </div>
           </div>
 
