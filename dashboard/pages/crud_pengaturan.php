@@ -630,10 +630,39 @@ document.addEventListener('DOMContentLoaded', function() {
         
         Object.values(categoryData).forEach(item => {
             const isTextarea = item.nilai.length > 100;
+
+            // Provide helpful placeholders and hints for image/path fields
+            const imageKeys = ['logo_1','logo_2','logo_3','logo_4','logo_5','background_image'];
+            let placeholder = '';
+            let helpHTML = '';
+
+            if (imageKeys.includes(item.kunci)) {
+                placeholder = item.kunci === 'background_image' ? 'uploads/background-image.jpg atau https://example.com/image.jpg' : 'uploads/logo1.png atau https://example.com/logo.png';
+                helpHTML = `<div style="margin-top:6px;"><small class="text-muted">Masukkan path relatif ke folder project (contoh: <code>uploads/logo1.png</code>) atau URL penuh (contoh: <code>https://domain.com/logo.png</code>).</small></div>`;
+            }
+
+            const valueEscaped = escapeHtml(item.nilai || '');
+            const placeholderEscaped = escapeHtml(placeholder);
+
             const fieldHTML = isTextarea 
-                ? `<textarea name="pengaturan[${item.kunci}]" class="form-control" rows="3">${escapeHtml(item.nilai)}</textarea>`
-                : `<input type="text" name="pengaturan[${item.kunci}]" value="${escapeHtml(item.nilai)}" class="form-control">`;
-            
+                ? `<textarea name="pengaturan[${item.kunci}]" class="form-control" rows="3" placeholder="${placeholderEscaped}">${valueEscaped}</textarea>`
+                : `<input type="text" name="pengaturan[${item.kunci}]" value="${valueEscaped}" class="form-control" placeholder="${placeholderEscaped}">`;
+
+            // If this setting is an image path, also provide a file input so admin can upload directly
+            let fileInputHTML = '';
+            let previewHTML = '';
+            if (imageKeys.includes(item.kunci)) {
+                fileInputHTML = `<div style="margin-top:8px;"><label class="form-label">Upload file (opsional)</label><input type="file" name="${item.kunci}" accept="image/*" class="form-control-file" data-preview-for="${item.kunci}"></div>`;
+
+                // If there's already a value (existing path), show a small preview
+                if (valueEscaped && valueEscaped !== '') {
+                    // Use valueEscaped directly as src (it can be relative path like uploads/...)
+                    previewHTML = `<div class="img-preview" style="margin-top:8px;"><img src="${valueEscaped}" alt="Preview ${item.kunci}" style="max-width:150px; max-height:80px; object-fit:contain; border:1px solid #ddd; padding:4px; border-radius:4px;"></div>`;
+                } else {
+                    previewHTML = `<div class="img-preview" style="margin-top:8px;"></div>`;
+                }
+            }
+
             contentHTML += `
                 <div class="compact-form-group">
                     <label>
@@ -641,7 +670,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         ${item.deskripsi}
                     </label>
                     ${fieldHTML}
+                    ${fileInputHTML}
+                    ${previewHTML}
                     <small>Kunci: ${item.kunci}</small>
+                    ${helpHTML}
                 </div>
             `;
         });
@@ -655,6 +687,35 @@ document.addEventListener('DOMContentLoaded', function() {
         contentArea.style.display = 'block';
         cardsContainer.style.display = 'none';
         mainSearchContainer.style.display = 'none';
+
+        // Attach live preview handlers to any file inputs we just inserted
+        const fileInputs = contentArea.querySelectorAll('input[type="file"]');
+        fileInputs.forEach(function(input){
+            input.addEventListener('change', function(e){
+                const file = this.files && this.files[0];
+                const container = this.closest('.compact-form-group');
+                if (!container) return;
+                let preview = container.querySelector('.img-preview');
+
+                if (!preview) {
+                    preview = document.createElement('div');
+                    preview.className = 'img-preview';
+                    preview.style.marginTop = '8px';
+                    this.parentNode.insertAdjacentElement('afterend', preview);
+                }
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev){
+                        preview.innerHTML = `<img src="${ev.target.result}" style="max-width:150px; max-height:80px; object-fit:contain; border:1px solid #ddd; padding:4px; border-radius:4px;" alt="preview">`;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    // if no file selected, clear preview
+                    preview.innerHTML = '';
+                }
+            });
+        });
     }
     
     // Helper functions

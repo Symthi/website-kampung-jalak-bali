@@ -90,6 +90,7 @@ CREATE TABLE produk (
     tanggal_ditambahkan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+show tables;
 
 DROP TABLE pengaturan_tampilan;
 DROP TABLE homepage_sections;
@@ -136,25 +137,27 @@ INSERT INTO pengaturan (kunci, nilai, kategori, deskripsi) VALUES
 
 -- Sosial Media
 ('social_instagram', 'https://instagram.com/kampoengjalakbali/', 'sosial', 'Link Instagram'),
-('social_facebook', '#', 'sosial', 'Link Facebook'),
+('social_facebook', 'https://web.facebook.com/kampoeng.jalak.bali', 'sosial', 'Link Facebook'),
 
 -- Hero Section
 ('hero_title', 'Selamat Datang di Kampoeng Jalak Bali', 'hero', 'Judul hero section'),
-('hero_description', 'Destinasi wisata edukasi yang memukau di Pulau Dewata, menawarkan pengalaman unik tentang konservasi burung Jalak Bali dan budaya lokal.', 'hero', 'Deskripsi hero section'),
+('hero_description', 'Kunjungi destinasi wisata edukasi yang memukau di Pulau Dewata. Saksikan langsung keberhasilan program pelestarian satwa endemik Bali yang didukung penuh oleh filosofi hidup masyarakat setempat.', 'hero', 'Deskripsi hero section'),
 ('hero_button_text', 'Jelajahi Sekarang', 'hero', 'Teks tombol hero'),
 
 -- About Section
-('about_title', 'Tentang Kampoeng Jalak Bali', 'about', 'Judul section tentang'),
-('about_description', 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.', 'about', 'Deskripsi tentang'),
+('about_title', 'Harmoni Konservasi Jalak Bali dan Kearifan Tri Hita Karana', 'about', 'Judul section tentang'),
+('about_description', 'Kampoeng Jalak Bali adalah label untuk Banjar Dinas/Desa Adat Tingkihkerep, di Desa Tengkudak, Tabanan, yang didedikasikan sebagai lokasi utama pelepasliaran dan perlindungan Burung Jalak Bali, satwa endemik asli Pulau Bali. Program konservasi Ex-Situ yang dimulai sejak April 2024 ini diinisiasi oleh Yayasan FNPF dengan dukungan akademisi dan Pemerintah Daerah. Kami mengimplementasikan pelestarian satwa liar berbasis partisipasi masyarakat yang berakar kuat pada filosofi Tri Hita Karana dan Awig-Awig Desa Adat.', 'about', 'Deskripsi tentang'),
 ('vision_text', 'Mewujudkan desa konservasi yang harmonis antara manusia, alam, dan budaya melalui pelestarian Jalak Bali sebagai warisan satwa endemik Pulau Bali.', 'about', 'Teks visi'),
 ('history_paragraph1', 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.', 'about', 'Sejarah paragraf 1'),
 ('history_paragraph2', 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.', 'about', 'Sejarah paragraf 2'),
+('background_paragraph1', 'Kampoeng Jalak Bali adalah nama label untuk Banjar Dinas/Desa Adat Tingkihkerep, di Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan. Wilayah ini, yang merupakan Banjar kecil di ujung barat Desa Tengkudak , dijadikan lokasi utama untuk kegiatan pelepasliaran dan perlindungan Burung Jalak Bali , spesies endemik asli Pulau Bali yang dilindungi di Indonesia. Penduduk Banjar/Desa Adat Tingkihkerep memiliki kesadaran untuk melaksanakan pelestarian dan perlindungan satwa di wilayah mereka. Kesadaran ini diperkuat dengan adanya Pelinggih Wewalungan yang diyakini sebagai stana (tempat suci) Dewa Satwa/Binatang.', 'about', 'latar Belakang paragraf 1'),
+('background_paragraph2', 'Fondasi Budaya Lokal: Masyarakat Bali memiliki hari pemuliaan khusus, yaitu Tumpek Kandang sebagai hari pemuliaan binatang/satwa, dan Tumpek Uduh/Bubuh sebagai hari pemuliaan tumbuhan. Pelestarian tumbuhan dan satwa adalah satu kesatuan yang tak terpisahkan dalam konsep Tri Hita Karana. Tri Hita Karana adalah filosofi hidup masyarakat Bali yang berarti tiga penyebab kebahagiaan, yaitu hubungan harmonis antara manusia dengan Tuhan (Parahyangan), manusia dengan sesama (Pawongan), dan manusia dengan lingkungan (Palemahan). Pengamalan konsep Tri Hita Karana ini dilakukan melalui Awig-Awig dan Perarem Desa Adat yang secara tegas melarang segala bentuk aktivitas perburuan, penangkapan, atau perdagangan satwa liar di wilayah desa.', 'about', 'Background paragraf 2'),
 
 -- Struktur Organisasi
 ('advisor_names', 'I KETUT SUARTANCA,Drh. I MADE SUGIARTA', 'struktur', 'Nama-nama pembina'),
 ('advisor_positions', 'Perbekel Desa Tengkudak,FNPF', 'struktur', 'Jabatan pembina'),
-('chairperson_name', 'I NYOMAN OKA TRIADI', 'struktur', 'Nama ketua'),
-('chairperson_position', 'Bandes Adat Tingkihkerep', 'struktur', 'Jabatan ketua'),
+('chairperson_name', 'I NYOMAN OKA TRIDADI', 'struktur', 'Nama ketua'),
+('chairperson_position', 'Bendesa Adat Tingkihkerep', 'struktur', 'Jabatan ketua'),
 ('secretary_name', 'I MADE SUKARATA', 'struktur', 'Nama sekretaris'),
 ('treasurer_name', 'NI PUTU DESY ANGGRAENI', 'struktur', 'Nama bendahara'),
 ('guide_names', 'I WAYAN EDDYAS PRIHANTARA,I KETUT MERTAJAYA,I WAYAN SUDARMA', 'struktur', 'Nama-nama pemandu'),
@@ -194,6 +197,7 @@ INSERT INTO pengaturan (kunci, nilai, kategori, deskripsi) VALUES
 INSERT IGNORE INTO pengaturan (kunci, nilai, kategori, deskripsi) VALUES
 ('navbar_about', 'Tentang', 'navbar', 'Nama menu About di navbar'),
 ('navbar_tourism', 'Wisata', 'navbar', 'Nama menu Tourism di navbar'),
+('navbar_partners', 'Mitra', 'navbar', 'Nama menu Mitra di navbar'),
 ('navbar_gallery', 'Galeri', 'navbar', 'Nama menu Gallery di navbar'),
 ('navbar_information', 'Informasi', 'navbar', 'Nama menu Information di navbar'),
 ('navbar_products', 'Produk', 'navbar', 'Nama menu Products di navbar'),
@@ -211,6 +215,7 @@ INSERT IGNORE INTO language_strings (string_key, bahasa, terjemahan, kategori) V
 -- General Menu
 ('home', 'id', 'Beranda', 'general'),
 ('about', 'id', 'Tentang', 'general'),
+('partners', 'id', 'Mitra', 'general'),
 ('tourism', 'id', 'Wisata', 'general'),
 ('information', 'id', 'Informasi', 'general'),
 ('gallery', 'id', 'Galeri', 'general'),
@@ -316,6 +321,7 @@ INSERT IGNORE INTO language_strings (string_key, bahasa, terjemahan, kategori) V
 -- General Menu
 ('home', 'en', 'Home', 'general'),
 ('about', 'en', 'About', 'general'),
+('partners', 'en', 'Partners', 'general'),
 ('tourism', 'en', 'Tourism', 'general'),
 ('information', 'en', 'Information', 'general'),
 ('gallery', 'en', 'Gallery', 'general'),

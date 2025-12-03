@@ -1258,6 +1258,7 @@ a:hover {
   max-width: 600px;
   margin: 30px auto 0;
   line-height: 1.8;
+  text-align: justify;
 }
 
 /* Tabs Navigation */
@@ -1414,6 +1415,7 @@ a:hover {
   line-height: 1.7;
   margin-bottom: 1.5rem;
   font-size: 1rem;
+  text-align: justify;
 }
 
 .inset-image {
@@ -2004,6 +2006,42 @@ a:hover {
   margin: 30px auto 0;
   line-height: 1.8;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Partners Section */
+.partners-section .section-header {
+  text-align: center;
+}
+
+.partners-section .section-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  color: #333;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.partners-section .section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #0d9dba, #17b8a0);
+  border-radius: 2px;
+}
+
+.partners-section .section-subtitle {
+  font-size: 1.1rem;
+  color: rgba(0, 0, 0, 0.7);
+  max-width: 600px;
+  margin: 30px auto 0;
+  line-height: 1.8;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.02);
 }
 
 /* Image Gallery Grid */

@@ -92,8 +92,8 @@ function get_hardcoded_strings() {
             'explore_now' => 'Jelajahi Sekarang',
             
             // ====== ABOUT SECTION ======
-            'about_title' => 'Tentang Kampoeng Jalak Bali',
-            'about_description' => 'Kampoeng Jalak Bali adalah sebuah pusat konservasi ex-situ bagi Burung Jalak Bali, satwa endemik yang dilindungi, yang terletak di Banjar Tingkihkerep, Desa Tengkudak, Tabanan, Bali.',
+            'about_title' => 'Harmoni Konservasi Jalak Bali dan Kearifan Tri Hita Karana',
+            'about_description' => 'Kampoeng Jalak Bali adalah label untuk Banjar Dinas/Desa Adat Tingkihkerep, di Desa Tengkudak, Tabanan, yang didedikasikan sebagai lokasi utama pelepasliaran dan perlindungan Burung Jalak Bali, satwa endemik asli Pulau Bali. Program konservasi Ex-Situ yang dimulai sejak April 2024 ini diinisiasi oleh Yayasan FNPF dengan dukungan akademisi dan Pemerintah Daerah. Kami mengimplementasikan pelestarian satwa liar berbasis partisipasi masyarakat yang berakar kuat pada filosofi Tri Hita Karana dan Awig-Awig Desa Adat.',
             'history' => 'Sejarah',
             'history_paragraph1' => 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.',
             'history_paragraph2' => 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.',
@@ -141,6 +141,23 @@ function get_hardcoded_strings() {
             'gallery_title' => 'Galeri',
             'gallery_subtitle' => 'Momen-momen indah di Kampoeng Jalak Bali',
             'no_gallery_images' => 'Belum ada gambar di galeri',
+
+            // ====== PARTNERS / MITRA ======
+            'partners_title' => 'Mitra Kami',
+            'partners_subtitle' => 'Dukungan dari Pemerintahan dan Yayasan',
+
+            // ====== ABOUT CARD TAGLINES ======
+            'history_title' => 'Sejarah',
+            'history_tagline' => 'Melestarikan budaya bukan hanya menjaga masa lalu, tapi juga membangun masa depan bagi penerus',
+            'history_tagline_short' => 'Warisan Budaya Bali',
+            'background_subtitle' => 'Konservasi Jalak Bali berlandaskan Tri Hita Karana menjadi fondasi pelestarian budaya, lingkungan, dan ekonomi masyarakat.',
+            'background_tagline' => 'Landasan Filosofi',
+            'vision_mission_title' => 'Visi & Misi',
+            'vision_tagline' => 'Kami tidak hanya menjaga tradisi, tetapi juga menciptakan inovasi yang relevan dengan zaman tanpa meninggalkan akar budaya',
+            'vision_tagline_short' => 'Pedoman Kami',
+            'structure_title' => 'Struktur',
+            'structure_tagline' => 'Struktur organisasi kami berlandaskan "menyama braya", menumbuhkan kebersamaan dalam keberagaman, menghargai setiap suara',
+            'structure_tagline_short' => 'Organisasi Kami',
             
             // ====== PRODUCTS SECTION ======
             'products_title' => 'Produk & Merchandise',
@@ -279,16 +296,16 @@ function get_hardcoded_strings() {
             'explore_now' => 'Explore Now',
             
             // ====== ABOUT SECTION ======
-            'about_title' => 'About Kampoeng Jalak Bali',
-            'about_description' => 'Kampoeng Jalak Bali is an ex-situ conservation center for the Bali Starling, a protected endemic species, located in Banjar Tingkihkerep, Tengkudak Village, Tabanan, Bali.',
-            'history' => 'History and Background',
+            'about_title' => 'Harmony of Bali Starling Conservation and Tri Hita Karana Wisdom',
+            'about_description' => 'Kampoeng Jalak Bali is the official label for the Tingkihkerep Traditional Village (Banjar Dinas/Desa Adat) in Tengkudak Village, Tabanan, dedicated as the primary location for the release and protection of the Bali Starling, an endemic bird species native to Bali Island. This Ex-Situ conservation program, which began in April 2024, was initiated by the FNPF Foundation with support from academics and local government. We implement wildlife conservation based on community participation that is deeply rooted in the Tri Hita Karana philosophy and the customary regulations of Adat Village.',
+            'history' => 'History',
             'history_paragraph1' => 'The conservation program began in April 2024 by the Friends of Nature, People and Forests (FNPF) foundation, releasing 60 Bali Starlings. The Tengkudak Village location was selected after habitat studies by academics from Udayana University and is strongly supported by the local community culture.',
             'history_paragraph2' => 'The Tingkihkerep customary community has long protected wildlife through traditional regulations (Awig-Awig and Perarem) that prohibit hunting, grounded in the belief of the presence of the "Pelingsih Wewalungan" as a guardian spirit. This makes Kampoeng Jalak Bali a successful example of community-based conservation and was officially inaugurated by the Regent of Tabanan in June 2024.',
 
             // ====== BACKGROUND SECTION ======
             'background' => 'Background',
-            'background_paragraph1' => 'The background of Kampoeng Jalak Bali refers to foundational information and context that provide a comprehensive understanding of the village: its geographical setting, resource potentials, cultural values, and social dynamics that shape its identity and development direction.',
-            'background_paragraph2' => 'As a conservation and education hub, the village grows through collaborations among customary communities, government, and NGOs, promoting an ecotourism-based economy while preserving the environment and local wisdom.',
+            'background_paragraph1' => 'Kampoeng Jalak Bali is the label name for the Tingkihkerep Traditional Hamlet/Village (Banjar Dinas/Desa Adat) in Tengkudak Village, Penebel District, Tabanan Regency. This area, which is a small hamlet at the western edge of Tengkudak Village, is designated as the primary location for the release and protection activities of the Bali Starling (Burung Jalak Bali), a species endemic to Bali Island protected in Indonesia. The residents of the Tingkihkerep Traditional Hamlet/Village possess an awareness to carry out the preservation and protection of fauna in their territory. This awareness is strengthened by the presence of the Pelinggih Wewalungan, which is believed to be the stana (sacred place) of the God of Fauna/Animals.',
+            'background_paragraph2' => 'Local Cultural Foundation: The Balinese community has special days for reverence: Tumpek Kandang as the day for honoring animals/fauna, and Tumpek Uduh/Bubuh as the day for honoring plants. The preservation of flora and fauna is an inseparable unit within the concept of Tri Hita Karana. Tri Hita Karana is the Balinese life philosophy meaning three causes of happiness: a harmonious relationship between humans and God (Parahyangan), humans with fellow humans (Pawongan), and humans with the environment (Palemahan). The practice of this Tri Hita Karana concept is implemented through the Awig-Awig and Perarem (Traditional Village Regulations) which strictly prohibit all forms of hunting, capture, or trade of wild fauna within the village area.',
 
             'vision' => 'Vision',
             'mission' => 'Mission',
@@ -328,6 +345,23 @@ function get_hardcoded_strings() {
             'gallery_title' => 'Gallery',
             'gallery_subtitle' => 'Beautiful moments at Kampoeng Jalak Bali',
             'no_gallery_images' => 'No images in the gallery yet',
+
+            // ====== PARTNERS / MITRA ======
+            'partners_title' => 'Our Partners',
+            'partners_subtitle' => 'Supported by Government and Foundations',
+
+            // ====== ABOUT CARD TAGLINES ======
+            'history_title' => 'History',
+            'history_tagline' => 'Preserving culture is not only keeping the past, but also building the future for the next generation',
+            'history_tagline_short' => 'Balinese Cultural Heritage',
+            'background_subtitle' => 'Bali Starling conservation based on Tri Hita Karana becomes the foundation for preserving culture, environment, and local economy.',
+            'background_tagline' => 'Philosophical Foundation',
+            'vision_mission_title' => 'Vision & Mission',
+            'vision_tagline' => 'We not only preserve tradition, but also create innovations relevant to the times without leaving our cultural roots',
+            'vision_tagline_short' => 'Our Guiding Principles',
+            'structure_title' => 'Structure',
+            'structure_tagline' => 'Our organizational structure is grounded in "nyama braya" (togetherness), fostering unity in diversity and respecting every voice',
+            'structure_tagline_short' => 'Our Organization',
             
             // ====== PRODUCTS SECTION ======
             'products_title' => 'Products & Merchandise',
