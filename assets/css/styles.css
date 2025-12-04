@@ -3483,3 +3483,60 @@ a:hover {
     font-size: 0.85rem;
   }
 }
+
+/* Dekorasi ikon matahari pada detail wisata */
+.wisata-decoration {
+    margin-top: 25px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.wisata-decoration i {
+    font-size: 48px;
+    color: #f4c542; /* warna emas matahari */
+    animation: spin-sun 12s linear infinite;
+}
+
+/* Animasi kecil agar hidup, tidak mengganggu */
+@keyframes spin-sun {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* === POIN 11: Konsistensi ukuran gambar produk === */
+.product-card img,
+.produk-item img,
+.item-produk img {
+    width: 100%;
+    height: 250px;            /* tinggi seragam */
+    object-fit: cover;        /* foto tidak gepeng */
+    border-radius: 10px;      /* opsional: biar rapi */
+}
+
+/* === POIN 12: Layout ikon kiri & teks kanan === */
+.fasilitas-item,
+.feature-item,
+.icon-text,
+.service-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;                 /* jarak ikon dan teks */
+}
+
+/* === Ukuran ikon dibuat proporsional === */
+.fasilitas-item i,
+.feature-item i,
+.icon-text i,
+.service-item i {
+    font-size: 28px;           /* ukuran proporsional */
+    min-width: 28px;           /* memastikan kolom ikon sejajar */
+    color: #0d669b;            /* tone biru sesuai tema */
+}
+
+/* Membuat teks fasilitas tidak bertumpuk */
+.fasilitas-item span,
+.feature-item span,
+.icon-text span {
+    flex: 1;
+    line-height: 1.4;
+}

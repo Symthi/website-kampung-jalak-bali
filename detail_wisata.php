@@ -111,8 +111,14 @@ $currentPage = 'wisata';
               <h1><?php echo htmlspecialchars($wisata['judul']); ?></h1>
               
               <div class="wisata-description-new">
-                <?php echo nl2br(htmlspecialchars($wisata['deskripsi'])); ?>
+                  <?php echo nl2br(htmlspecialchars($wisata['deskripsi'])); ?>
               </div>
+
+              <!-- Dekorasi Ikon Matahari untuk Meminimalkan Ruang Kosong -->
+              <div class="wisata-decoration">
+                  <i class="fas fa-sun"></i>
+</div>
+
             </div>
             
             <div class="wisata-control">
