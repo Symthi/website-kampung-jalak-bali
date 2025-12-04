@@ -22,6 +22,36 @@ function public_url($path) {
   return $base . '/' . ltrim($path, '/');
 }
 
+// Create mitra table if doesn't exist
+$create_mitra = "CREATE TABLE IF NOT EXISTS mitra (
+    id_mitra INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255) NOT NULL,
+    gambar VARCHAR(500) NOT NULL,
+    link_partner VARCHAR(500),
+    urutan INT DEFAULT 0,
+    aktif TINYINT DEFAULT 1,
+    tanggal_ditambahkan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+mysqli_query($koneksi, $create_mitra);
+
+// Insert default mitra data if table is empty
+$check_mitra = mysqli_query($koneksi, "SELECT COUNT(*) as cnt FROM mitra");
+$mitra_count = mysqli_fetch_assoc($check_mitra)['cnt'];
+if ($mitra_count == 0) {
+    $default_mitra = [
+        ['Nama Mitra 1', 'uploads/mitra/bksda bali-mitra1.PNG', 'https://ksda-bali.go.id/', 1, 1],
+        ['Nama Mitra 2', 'uploads/mitra/Kab Tabanan-mitra2.jpg', 'https://tabanankab.go.id/', 2, 1],
+        ['Nama Mitra 3', 'uploads/mitra/desa tengkudak-mitra3.png', 'https://tengkudak.desa.id/', 3, 1],
+        ['Nama Mitra 4', 'uploads/mitra/fnpf-mitra4.png', 'https://www.fnpf.org/', 4, 1],
+        ['Nama Mitra 5', 'uploads/mitra/mitra5.png', 'https://missionerde.de/', 5, 1],
+    ];
+    foreach ($default_mitra as $mitra) {
+        $stmt = mysqli_prepare($koneksi, "INSERT INTO mitra (nama, gambar, link_partner, urutan, aktif) VALUES (?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "ssssi", $mitra[0], $mitra[1], $mitra[2], $mitra[3], $mitra[4]);
+        mysqli_stmt_execute($stmt);
+    }
+}
+
 // Ambil data wisata dari database dengan pagination (section wisata)
 $per_page_wisata = 3;
 $page_wisata = isset($_GET['p_w']) ? max(1, (int)$_GET['p_w']) : 1;
@@ -31,6 +61,12 @@ $total_wisata_home = mysqli_fetch_assoc($total_wisata_q)['cnt'];
 $query_wisata = "SELECT * FROM wisata ORDER BY tanggal_ditambahkan DESC LIMIT $per_page_wisata OFFSET $offset_wisata";
 $result_wisata = mysqli_query($koneksi, $query_wisata);
 $wisata_data = mysqli_fetch_all($result_wisata, MYSQLI_ASSOC);
+
+// Ambil data mitra dari database
+$query_mitra = "SELECT * FROM mitra WHERE aktif = 1 ORDER BY urutan ASC, tanggal_ditambahkan DESC";
+$result_mitra = mysqli_query($koneksi, $query_mitra);
+$mitra_data = mysqli_fetch_all($result_mitra, MYSQLI_ASSOC);
+
 
 // Fungsi cek login
 function isLoggedIn() {
@@ -192,6 +228,9 @@ function isAdmin() {
             <i class="fas fa-history"></i>
             <?php echo t('history'); ?>
           </button>
+          <button class="tab-btn-slide" data-tab="background">
+            <i class="fas fa-scroll"></i>
+            <?php echo t('background'); ?>
           <button class="tab-btn-slide" data-tab="vision-mission">
             <i class="fas fa-bullseye"></i>
             <?php echo t('vision'); ?> & <?php echo t('mission'); ?>
@@ -206,9 +245,9 @@ function isAdmin() {
         <div class="card-slide-container animate pop" id="history-card">
           <div class="overlay-slide">
             <div class="overlay-content-slide animate slide-left delay-2">
-              <h1 class="overlay-title animate slide-left delay-4">Sejarah</h1>
-              <p class="overlay-subtitle animate slide-left delay-5">Melestarikan budaya bukan hanya menjaga masa lalu, tapi juga membangun masa depan bagi penerus</p>
-              <p class="overlay-subtitle animate slide-left delay-5">Warisan Budaya Bali</p>
+              <h1 class="overlay-title animate slide-left delay-4"><?php echo t('history_title'); ?></h1>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('history_tagline'); ?></p>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('history_tagline_short'); ?></p>
             </div>
             <div class="image-content-slide animate slide delay-5" 
                 style="background-image: url('<?php echo $base; ?>/uploads/history-image.jpg')"></div>
@@ -225,13 +264,37 @@ function isAdmin() {
           </div>
         </div>
 
+        <!-- Background Card (Hidden by default) -->
+        <div class="card-slide-container animate pop" id="background-card" style="display: none;">
+          <div class="overlay-slide">
+            <div class="overlay-content-slide animate slide-left delay-2">
+              <h1 class="overlay-title animate slide-left delay-4"><?php echo t('background'); ?></h1>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('background_subtitle'); ?></p>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('background_tagline'); ?></p>
+            </div>
+            <?php $bg_image = get_setting('background_image', 'uploads/background-image.jpeg'); ?>
+            <div class="image-content-slide animate slide delay-5" 
+                style="background-image: url('<?php echo public_url($bg_image); ?>')"></div>
+            <div class="dots-slide animate">
+              <div class="dot-slide animate slide-up delay-6"></div>
+              <div class="dot-slide animate slide-up delay-7"></div>
+              <div class="dot-slide animate slide-up delay-8"></div>
+            </div>
+          </div>
+          <div class="text-content-slide">
+            <h2 class="text-title"><i class="fas fa-scroll"></i> <?php echo t('background'); ?></h2>
+            <p class="text-paragraph"><?php echo get_setting('background_paragraph1', t('background_paragraph1')); ?></p>
+            <p class="text-paragraph"><?php echo get_setting('background_paragraph2', t('background_paragraph2')); ?></p>
+          </div>
+        </div>
+
         <!-- Visi Misi Card (Hidden by default) -->
         <div class="card-slide-container animate pop" id="vision-mission-card" style="display: none;">
           <div class="overlay-slide">
             <div class="overlay-content-slide animate slide-left delay-2">
-              <h1 class="overlay-title animate slide-left delay-4">Visi & Misi</h1>
-              <p class="overlay-subtitle animate slide-left delay-5">Kami tidak hanya menjaga tradisi, tetapi juga menciptakan inovasi yang relevan dengan zaman tanpa meninggalkan akar budaya</p>
-              <p class="overlay-subtitle animate slide-left delay-5">Pedoman Kami</p>
+              <h1 class="overlay-title animate slide-left delay-4"><?php echo t('vision_mission_title'); ?></h1>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('vision_tagline'); ?></p>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('vision_tagline_short'); ?></p>
             </div>
             <div class="image-content-slide animate slide delay-5" 
                 style="background-image: url('<?php echo $base; ?>/uploads/vision-image.jpg')"></div>
@@ -242,15 +305,15 @@ function isAdmin() {
             </div>
           </div>
           <div class="text-content-slide">
-            <h2 class="text-title"><i class="fas fa-bullseye"></i> Visi & Misi</h2>
+            <h2 class="text-title"><i class="fas fa-bullseye"></i> <?php echo t('vision_mission_title'); ?></h2>
             
             <h3 class="text-title" style="font-size: 1.4rem; margin-top: 1rem;"><i class="fas fa-eye"></i> <?php echo t('vision'); ?></h3>
             <p class="text-paragraph"><?php echo t('vision_text'); ?></p>
             
             <h3 class="text-title" style="font-size: 1.4rem; margin-top: 1.5rem;"><i class="fas fa-target"></i> <?php echo t('mission'); ?></h3>
-            <ul style="color: var(--muted-text); line-height: 1.7; padding-left: 1.5rem;">
+            <ul style="color: var(--muted-text); line-height: 1.7; padding-left: 1.5rem; text-align: justify;">
               <?php foreach (get_mission_items() as $index => $mission_item): ?>
-              <li style="margin-bottom: 0.8rem;"><?php echo $mission_item; ?></li>
+              <li style="margin-bottom: 0.8rem; text-align: justify;"><?php echo $mission_item; ?></li>
               <?php endforeach; ?>
             </ul>
           </div>
@@ -260,9 +323,9 @@ function isAdmin() {
         <div class="card-slide-container animate pop" id="structure-card" style="display: none;">
           <div class="overlay-slide">
             <div class="overlay-content-slide animate slide-left delay-2">
-              <h1 class="overlay-title animate slide-left delay-4">Struktur</h1>
-              <p class="overlay-subtitle animate slide-left delay-5">Struktur organisasi kami berlandaskan “menyama braya”, menumbuhkan kebersamaan dalam keberagaman, menghargai setiap suara</p>
-              <p class="overlay-subtitle animate slide-left delay-5">Organisasi Kami</p>
+              <h1 class="overlay-title animate slide-left delay-4"><?php echo t('structure_title'); ?></h1>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('structure_tagline'); ?></p>
+              <p class="overlay-subtitle animate slide-left delay-5"><?php echo t('structure_tagline_short'); ?></p>
             </div>
             <div class="image-content-slide animate slide delay-5" 
                 style="background-image: url('<?php echo $base; ?>/uploads/structure-image.jpg')"></div>
@@ -273,7 +336,7 @@ function isAdmin() {
             </div>
           </div>
           <div class="text-content-slide structure-content-slide">
-            <h2 class="text-title"><i class="fas fa-sitemap"></i> Struktur Organisasi</h2>
+            <h2 class="text-title"><i class="fas fa-sitemap"></i> <?php echo t('structure_title'); ?></h2>
             
             <div class="structure-grid-slide">
               <!-- Advisor -->
@@ -409,6 +472,7 @@ function isAdmin() {
       const tabButtons = document.querySelectorAll('.tab-btn-slide');
       const cards = {
         'history': document.getElementById('history-card'),
+        'background': document.getElementById('background-card'),
         'vision-mission': document.getElementById('vision-mission-card'),
         'structure': document.getElementById('structure-card')
       };
@@ -439,6 +503,36 @@ function isAdmin() {
       document.querySelector('.tab-btn-slide.active').click();
     });
     </script>
+
+    <!-- Mitra/Partners Section -->
+    <section id="mitra" class="partners-section">
+      <div class="container">
+        <div class="section-header" style="text-align: center;">
+          <h2 class="section-title"><?php echo t('partners_title'); ?></h2>
+          <p class="section-subtitle"><?php echo t('partners_subtitle'); ?></p>
+        </div>
+        <div class="partners-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; justify-items: center; align-items: center;">
+          <?php if (!empty($mitra_data)): ?>
+            <?php foreach ($mitra_data as $mitra): ?>
+              <div class="partners-card" style="width: 100%; max-width: 300px; display: flex; align-items: center; justify-content: center;">
+                <a href="<?php echo !empty($mitra['link_partner']) ? htmlspecialchars($mitra['link_partner']) : '#'; ?>" 
+                   <?php echo !empty($mitra['link_partner']) ? 'target="_blank" rel="noopener"' : ''; ?>
+                   style="display: block; width: 100%; height: 100%;">
+                  <img src="<?php echo public_url($mitra['gambar']); ?>" 
+                       alt="<?php echo htmlspecialchars($mitra['nama']); ?>" 
+                       style="width: 100%; height: auto; object-fit: contain; padding: 6px; max-height: 200px;" />
+                </a>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--muted-text); padding: 40px;">
+              <i class="fas fa-handshake" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+              <p><?php echo t('no_data'); ?></p>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </section>
 
     <!-- Wisata Section -->
     <section id="wisata" class="wisata-section-new">
@@ -521,6 +615,8 @@ function isAdmin() {
         <?php endif; ?>
       </div>
     </section>
+
+    
 
     <!-- Galeri Section -->
     <section id="galeri" class="gallery-section-new">
@@ -620,38 +716,45 @@ function isAdmin() {
           <div>
             <h3 class="contact-title"><?php echo t('contact_info'); ?></h3>
             <div class="contact-list">
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="contact-content">
-                  <h4 class="item-title"><?php echo t('address'); ?></h4>
-                  <p class="item-text"><?php echo get_setting('address', 'Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali'); ?></p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-phone"></i>
-                </div>
-                <div class="contact-content">
-                  <h4 class="item-title"><?php echo t('phone'); ?></h4>
-                  <p class="item-text"><?php echo get_setting('contact_person', 'I Wayan Yudi Artana'); ?> (<?php echo get_setting('contact_phone', '083862519604'); ?>)</p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <div class="contact-content">
-                  <h4 class="item-title"><?php echo t('operational_hours'); ?></h4>
-                  <p class="item-text"><?php echo t('everyday'); ?>: 08:00 - 17:00 WITA</p>
-                  <p class="item-text" style="margin-top: 0.3rem; font-size: 0.85rem; color: var(--teal-blue);">
-                    <i class="fas fa-info-circle"></i> <?php echo t('open_daily'); ?>
-                  </p>
-                </div>
-              </div>
+            <div class="contact-item">
+            <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-content">
+            <h4 class="item-title"><?php echo t('address'); ?></h4>
+            <p class="item-text"><?php echo get_setting('address', 'Desa Adat Tingkihkerep, Desa Tengkudak, Kecamatan Penebel, Kabupaten Tabanan, Bali'); ?></p>
+            </div>
+            </div>
+            
+            <div class="contact-item">
+            <div class="contact-icon">
+            <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="contact-content">
+            <h4 class="item-title"><?php echo t('phone'); ?></h4>
+            <?php $wa = preg_replace('/\D+/', '', get_setting('contact_phone', '083862519604')); ?>
+            <p class="item-text">
+            <?php echo get_setting('contact_person', 'I Wayan Yudi Artana'); ?> (<?php echo get_setting('contact_phone', '083862519604'); ?>)
+            <br>
+            <a class="contact-whatsapp" href="https://wa.me/<?php echo (strpos($wa,'62')===0?$wa:'62'.$wa); ?>" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            </p>
+            </div>
+            </div>
+            
+            <div class="contact-item">
+            <div class="contact-icon">
+            <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-content">
+            <h4 class="item-title"><?php echo t('operational_hours'); ?></h4>
+            <p class="item-text"><?php echo t('everyday'); ?>: 08:00 - 17:00 WITA</p>
+            <p class="item-text" style="margin-top: 0.3rem; font-size: 0.85rem; color: var(--teal-blue);">
+            <i class="fas fa-info-circle"></i> <?php echo t('open_daily'); ?>
+            </p>
+            </div>
+            </div>
             </div>
           </div>
 

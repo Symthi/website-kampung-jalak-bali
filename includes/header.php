@@ -58,14 +58,22 @@ function get_navbar_text($key) {
         <h1><?php echo get_setting('navbar_site_name', 'KJB'); ?></h1>
       </a>
     </div>
+    <?php
+      // aktifkan menu berdasarkan halaman
+      $currentPath = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+      $isHome = ($currentPath === '' || $currentPath === 'index.php');
+      $isInformasi = ($currentPath === 'informasi.php');
+      $isProduk = ($currentPath === 'produk.php');
+    ?>
     <nav class="navbar">
       <ul>
-        <li><a href="<?php echo $base; ?>/index.php#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
-        <li><a href="<?php echo $base; ?>/index.php#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
-        <li><a href="<?php echo $base; ?>/index.php#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
-        <li><a href="<?php echo $base; ?>/informasi.php"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
-        <li><a href="<?php echo $base; ?>/produk.php"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
-        <li><a href="<?php echo $base; ?>/index.php#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#tentang" data-section="#tentang"><i class="fa fa-info-circle icon"></i> <?php echo t('about'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#mitra" data-section="#mitra"><i class="fa fa-handshake icon"></i> <?php echo t('partners'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#wisata" data-section="#wisata"><i class="fa fa-map-marked-alt icon"></i> <?php echo t('tourism'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#galeri" data-section="#galeri"><i class="fa fa-image icon"></i> <?php echo t('gallery'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/informasi.php" class="<?php echo $isInformasi ? 'active' : ''; ?>"><i class="fa fa-info-circle icon"></i> <?php echo t('information'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/produk.php" class="<?php echo $isProduk ? 'active' : ''; ?>"><i class="fa fa-box icon"></i> <?php echo t('products'); ?></a></li>
+        <li><a href="<?php echo $base; ?>/index.php#kontak" data-section="#kontak"><i class="fa fa-envelope icon"></i> <?php echo t('contact'); ?></a></li>
       </ul>
     </nav>
     <!-- Language selector (flags) -->

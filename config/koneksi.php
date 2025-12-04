@@ -27,7 +27,8 @@ $folders = [
     'uploads/galeri', 
     'uploads/produk', 
     'uploads/informasi',
-    'uploads/hero'
+    'uploads/hero',
+    'uploads/mitra'
 ];
 
 foreach ($folders as $folder) {
@@ -214,6 +215,13 @@ function check_and_create_tables() {
             ['history_paragraph1', 'Program konservasi ini dimulai pada April 2024 oleh Yayasan Friends of Nature, People and Forests (FNPF) dengan melepasliarkan 60 ekor Jalak Bali. Lokasi Desa Tengkudak dipilih setelah melalui kajian habitat oleh akademisi Universitas Udayana dan didukung kuat oleh budaya masyarakat setempat.', 'about', 'Sejarah paragraf 1'],
             ['history_paragraph2', 'Masyarakat adat Tingkihkerep telah lama melestarikan satwa melalui Awig-Awig dan Perarem (hukum adat) yang melarang perburuan, didasari oleh keyakinan akan keberadaan "Pelingsih Wewalungan" sebagai stana dewa pelindung satwa. Hal ini menjadikan Kampoeng Jalak Bali sebagai contoh sukses konservasi berbasis kearifan lokal dan resmi diresmikan oleh Bupati Tabanan pada Juni 2024.', 'about', 'Sejarah paragraf 2'],
             
+            // Background Section (Dinamis)
+            ['background_image', 'uploads/background-image.jpeg', 'about', 'Gambar background section'],
+            ['background_subtitle', 'Konservasi Jalak Bali berlandaskan Tri Hita Karana menjadi fondasi pelestarian budaya, lingkungan, dan ekonomi masyarakat.', 'about', 'Subtitle background card'],
+            ['background_tagline', 'landasan Filosofi', 'about', 'Tagline background card'],
+            ['background_paragraph1', 'Latar belakang Kampoeng Jalak Bali merujuk pada informasi dasar dan konteks yang memberi pemahaman menyeluruh tentang kampung: kondisi geografis, potensi sumber daya, nilai budaya, dan dinamika sosial yang membentuk identitas dan arah pengembangannya.', 'about', 'Background paragraf 1'],
+            ['background_paragraph2', 'Sebagai pusat konservasi dan edukasi, kampung ini tumbuh melalui kolaborasi masyarakat adat, pemerintah, dan lembaga swadaya, mendorong ekonomi berbasis ekowisata sekaligus menjaga kelestarian lingkungan dan kearifan lokal.', 'about', 'Background paragraf 2'],
+            
             // Struktur Organisasi
             ['advisor_names', 'I KETUT SUARTANCA,Drh. I MADE SUGIARTA', 'struktur', 'Nama-nama pembina'],
             ['advisor_positions', 'Perbekel Desa Tengkudak,FNPF', 'struktur', 'Jabatan pembina'],
@@ -310,7 +318,7 @@ function check_and_create_tables() {
 }
 
 // Panggil fungsi untuk check dan create tables
-// check_and_create_tables();
+check_and_create_tables();
 
 // // Close connection function (optional, for explicit closing)
 // function close_database_connection() {
